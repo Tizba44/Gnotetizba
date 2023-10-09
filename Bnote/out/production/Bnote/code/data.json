@@ -1,0 +1,14 @@
+{
+  "admins": [
+    {
+      "username": "tizba",
+      "password": "123"
+    }
+  ],
+  "profs": [
+    {
+      "username": "prof",
+      "password": "123"
+    }
+  ]
+}
