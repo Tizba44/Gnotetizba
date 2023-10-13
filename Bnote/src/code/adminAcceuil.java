@@ -4,16 +4,16 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import java.io.IOException;
 
-public class admin {
+public class adminAcceuil {
 
     @FXML
     private Button logout;
     @FXML
-    private Button mprof;
+    private Button modifierProf;
     @FXML
-    private Button  metudiant;
+    private Button  modifierEtudiant;
     @FXML
-    private Button  mmatiere;
+    private Button  modifierMatiere;
     @FXML
     public void userLogOut(ActionEvent event) throws IOException {
         Main m = new Main();
@@ -22,16 +22,16 @@ public class admin {
     @FXML
     public void usermprof(ActionEvent event) throws IOException {
         Main m = new Main();
-        m.changeScene("mprof.fxml");
+        m.changeScene("modifierProf.fxml");
     }
     @FXML
     public void usermetudiant(ActionEvent event) throws IOException {
         Main m = new Main();
-        m.changeScene("metudiant.fxml"); // changed from "connexion.fxml"
+        m.changeScene("modifierEtudiant.fxml");
     }
     @FXML
     public void usermatiere(ActionEvent event) throws IOException {
         Main m = new Main();
-        m.changeScene("mmatiere.fxml"); // changed from "connexion.fxml"
+        m.changeScene("modifierMatiere.fxml");
     }
 }

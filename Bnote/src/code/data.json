@@ -1,14 +1,3 @@
-{
-  "admins": [
-    {
-      "username": "tizba",
-      "password": "123"
-    }
-  ],
-  "profs": [
-    {
-      "username": "prof",
-      "password": "123"
-    }
-  ]
-}
+{"admins":[{"username":"tizba","password":"123"}],
+  "profs":[{"mot":"123","mail":"snj@.com","nomUtilisateur":"slydart","nom":"garel","prenom":"sylvain"}],
+  "etudiants":[{}]}

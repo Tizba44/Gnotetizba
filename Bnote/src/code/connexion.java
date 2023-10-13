@@ -14,11 +14,9 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import java.util.List;
 import java.util.Map;
 
-public class LogIn {
+public class connexion {
 
-    public LogIn() {
 
-    }
     @FXML
     private Button button;
     @FXML
@@ -47,17 +45,17 @@ public class LogIn {
             // Vérifier les informations d'identification de l'administrateur
             for (Map<String, String> user : admins) {
                 if (username.getText().equals(user.get("username")) && password.getText().equals(user.get("password"))) {
-                    wrongLogIn.setText("Bienvenue Chef");
-                    m.changeScene("admin.fxml");
+                    wrongLogIn.setText("Bienvenue Chef!");
+                    m.changeScene("adminAcceuil.fxml");
                     return;
                 }
             }
 
             // Vérifier les informations d'identification des professeurs
             for (Map<String, String> user : profs) {
-                if (username.getText().equals(user.get("username")) && password.getText().equals(user.get("password"))) {
+                if (username.getText().equals(user.get("nomUtilisateur")) && password.getText().equals(user.get("mot"))) {
                     wrongLogIn.setText("Bienvenue Professeur!");
-                    m.changeScene("prof.fxml");
+                    m.changeScene("profAcceuil.fxml");
                     return;
                 }
             }
