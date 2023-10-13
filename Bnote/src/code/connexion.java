@@ -46,7 +46,7 @@ public class connexion {
             for (Map<String, String> user : admins) {
                 if (username.getText().equals(user.get("username")) && password.getText().equals(user.get("password"))) {
                     wrongLogIn.setText("Bienvenue Chef!");
-                    m.changeScene("adminAcceuil.fxml");
+                    m.changeScene("admin/adminAcceuil.fxml");
                     return;
                 }
             }
@@ -55,7 +55,7 @@ public class connexion {
             for (Map<String, String> user : profs) {
                 if (username.getText().equals(user.get("nomUtilisateur")) && password.getText().equals(user.get("mot"))) {
                     wrongLogIn.setText("Bienvenue Professeur!");
-                    m.changeScene("profAcceuil.fxml");
+                    m.changeScene("prof/profAcceuil.fxml");
                     return;
                 }
             }

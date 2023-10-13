@@ -1,4 +1,5 @@
-package code;
+package code.admin;
+import code.Main;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -10,10 +11,9 @@ public class adminAcceuil {
     private Button logout;
     @FXML
     private Button modifierProf;
+
     @FXML
     private Button  modifierEtudiant;
-    @FXML
-    private Button  modifierMatiere;
     @FXML
     public void userLogOut(ActionEvent event) throws IOException {
         Main m = new Main();
@@ -22,16 +22,12 @@ public class adminAcceuil {
     @FXML
     public void usermprof(ActionEvent event) throws IOException {
         Main m = new Main();
-        m.changeScene("modifierProf.fxml");
+        m.changeScene("admin/prof/modifierProf.fxml");
     }
     @FXML
     public void usermetudiant(ActionEvent event) throws IOException {
         Main m = new Main();
-        m.changeScene("modifierEtudiant.fxml");
+        m.changeScene("admin/etudiant/modifierEtudiant.fxml");
     }
-    @FXML
-    public void usermatiere(ActionEvent event) throws IOException {
-        Main m = new Main();
-        m.changeScene("modifierMatiere.fxml");
-    }
+
 }

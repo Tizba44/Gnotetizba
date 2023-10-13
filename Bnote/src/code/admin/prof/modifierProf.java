@@ -1,5 +1,7 @@
-package code;
+package code.admin.prof;
 
+import code.Main;
+import code.admin.prof.dataProf;
 import javafx.collections.ObservableList;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
@@ -24,9 +26,16 @@ import java.util.Map;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
+import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
 
 
 public class modifierProf implements Initializable {
+
+
+
+
+
 
         @FXML
         private Button button;
@@ -34,10 +43,8 @@ public class modifierProf implements Initializable {
         @FXML
         public void userRetour(ActionEvent event) throws IOException {
                 Main m = new Main();
-                m.changeScene("adminAcceuil.fxml");
+                m.changeScene("admin/adminAcceuil.fxml");
         }
-
-
 
         @FXML
         private TableView<dataProf> table;
@@ -57,6 +64,16 @@ public class modifierProf implements Initializable {
         @FXML
         private TableColumn<dataProf, String> mot;
 
+        @FXML
+        private TableColumn<dataProf, String> numero;
+
+        @FXML
+        private TableColumn<dataProf, String> matiere;
+
+        @FXML
+        private Label erreur;
+
+
         @Override
         public void initialize(URL url, ResourceBundle resourceBundle) {
                 mail.setCellValueFactory(new PropertyValueFactory<dataProf, String>("mail"));
@@ -64,6 +81,8 @@ public class modifierProf implements Initializable {
                 nomUtilisateur.setCellValueFactory(new PropertyValueFactory<dataProf,String >("nomUtilisateur"));
                 prenom.setCellValueFactory(new PropertyValueFactory<dataProf,String >("prenom"));
                 mot.setCellValueFactory(new PropertyValueFactory<dataProf,String >("mot"));
+                numero.setCellValueFactory(new PropertyValueFactory<dataProf,String >("numero"));
+                matiere.setCellValueFactory(new PropertyValueFactory<dataProf,String >("matiere"));
 
                 table.setEditable(true); // Ajoutez cette ligne pour rendre le TableView éditable
 
@@ -75,6 +94,7 @@ public class modifierProf implements Initializable {
                                         ((dataProf) t.getTableView().getItems().get(
                                                 t.getTablePosition().getRow())
                                         ).setMail(t.getNewValue());
+                                        enregistrer();
                                 }
                         }
                 );
@@ -86,6 +106,7 @@ public class modifierProf implements Initializable {
                                         ((dataProf) t.getTableView().getItems().get(
                                                 t.getTablePosition().getRow())
                                         ).setNom(t.getNewValue());
+                                        enregistrer();
                                 }
                         }
                 );
@@ -97,6 +118,7 @@ public class modifierProf implements Initializable {
                                         ((dataProf) t.getTableView().getItems().get(
                                                 t.getTablePosition().getRow())
                                         ).setNomUtilisateur(t.getNewValue());
+                                        enregistrer();
                                 }
                         }
                 );
@@ -108,6 +130,7 @@ public class modifierProf implements Initializable {
                                         ((dataProf) t.getTableView().getItems().get(
                                                 t.getTablePosition().getRow())
                                         ).setPrenom(t.getNewValue());
+                                        enregistrer();
                                 }
                         }
                 );
@@ -119,6 +142,31 @@ public class modifierProf implements Initializable {
                                         ((dataProf) t.getTableView().getItems().get(
                                                 t.getTablePosition().getRow())
                                         ).setMot(t.getNewValue());
+                                        enregistrer();
+                                }
+                        }
+                );
+                numero.setCellFactory(TextFieldTableCell.forTableColumn());
+                numero.setOnEditCommit(
+                        new EventHandler<CellEditEvent<dataProf, String>>() {
+                                @Override
+                                public void handle(CellEditEvent<dataProf, String> t) {
+                                        ((dataProf) t.getTableView().getItems().get(
+                                                t.getTablePosition().getRow())
+                                        ).setNumero(t.getNewValue());
+                                        enregistrer();
+                                }
+                        }
+                );
+                matiere.setCellFactory(TextFieldTableCell.forTableColumn());
+                matiere.setOnEditCommit(
+                        new EventHandler<CellEditEvent<dataProf, String>>() {
+                                @Override
+                                public void handle(CellEditEvent<dataProf, String> t) {
+                                        ((dataProf) t.getTableView().getItems().get(
+                                                t.getTablePosition().getRow())
+                                        ).setMatiere(t.getNewValue());
+                                        enregistrer();
                                 }
                         }
                 );
@@ -126,7 +174,7 @@ public class modifierProf implements Initializable {
                 // Read JSON file and populate TableView
                 ObjectMapper mapper = new ObjectMapper();
                 try {
-                        Map<String, List<Map<String, String>>> usersMap = mapper.readValue(new File("C:\\Users\\bapto\\OneDrive\\Bureau\\Gnotetizba\\Bnote\\src\\code\\data.json"), new TypeReference<Map<String, List<Map<String, String>>>>() {});
+                        Map<String, List<Map<String, String>>> usersMap = mapper.readValue( new File("src/code/data.json"), new TypeReference<Map<String, List<Map<String, String>>>>() {});
                         List<Map<String, String>> profsMap = usersMap.get("profs");
                         ObservableList<dataProf> dataProfs = FXCollections.observableArrayList();
                         for (Map<String, String> map : profsMap) {
@@ -135,41 +183,13 @@ public class modifierProf implements Initializable {
                                         map.get("nom"),
                                         map.get("nomUtilisateur"),
                                         map.get("prenom"),
-                                        map.get("mot")
+                                        map.get("mot"),
+                                        map.get("numero"),
+                                        map.get("matiere")
                                 );
                                 dataProfs.add(prof);
                         }
                         table.setItems(dataProfs);
-                } catch (IOException e) {
-                        e.printStackTrace();
-                }
-        }
-
-
-
-        public void enregistrer() {
-                // Créer un ObjectMapper
-                ObjectMapper mapper = new ObjectMapper();
-                try {
-                        // Lire le fichier JSON existant
-                        Map<String, List<Map<String, String>>> usersMap = mapper.readValue(getClass().getResource("data.json"), new TypeReference<Map<String, List<Map<String, String>>>>() {});
-
-                        // Convertir la liste de dataProf en liste de Map
-                        List<Map<String, String>> newProfsMap = new ArrayList<>();
-                        for (dataProf prof : table.getItems()) { // Use table.getItems() instead of profs
-                                Map<String, String> map = new HashMap<>();
-                                map.put("mail", prof.getMail());
-                                map.put("nom", prof.getNom());
-                                map.put("nomUtilisateur", prof.getNomUtilisateur());
-                                map.put("prenom", prof.getPrenom());
-                                map.put("mot", prof.getMot());
-                                newProfsMap.add(map);
-                        }
-
-                        // Update the 'profs' list in usersMap and write it back to the JSON file
-                        usersMap.put("profs", newProfsMap);
-                        mapper.writeValue(new File("C:\\Users\\bapto\\OneDrive\\Bureau\\Gnotetizba\\Bnote\\src\\code\\data.json"), usersMap);
-
                 } catch (IOException e) {
                         e.printStackTrace();
                 }
@@ -189,22 +209,71 @@ public class modifierProf implements Initializable {
         private TextField prenomInput;
 
         @FXML
-        private TextField motInput;
+        private PasswordField motInput;
+
+        @FXML
+        private TextField numeroInput;
+
+        @FXML
+        private TextField matiereInput;
+
+
+        public void enregistrer() {
+                erreur.setText(""); // Effacez le message d'erreur si tous les champs sont valides
+                // Créer un ObjectMapper
+                ObjectMapper mapper = new ObjectMapper();
+                try {
+                        // Lire le fichier JSON existant
+                        Map<String, List<Map<String, String>>> usersMap = mapper.readValue(new File("src/code/data.json"), new TypeReference<Map<String, List<Map<String, String>>>>() {});
+
+                        // Convertir la liste de dataProf en liste de MapgetClass().getResource("data.json")
+                        List<Map<String, String>> newProfsMap = new ArrayList<>();
+                        for (dataProf prof : table.getItems()) { // Use table.getItems() instead of profs
+                                Map<String, String> map = new HashMap<>();
+                                map.put("mail", prof.getMail());
+                                map.put("nom", prof.getNom());
+                                map.put("nomUtilisateur", prof.getNomUtilisateur());
+                                map.put("prenom", prof.getPrenom());
+                                map.put("mot", prof.getMot());
+                                map.put("numero", prof.getNumero());
+                                map.put("matiere", prof.getMatiere());
+                                newProfsMap.add(map);
+                        }
+
+                        // Update the 'profs' list in usersMap and write it back to the JSON file
+                        usersMap.put("profs", newProfsMap);
+
+                        mapper.writeValue(new File("src/code/data.json"), usersMap);
+
+
+                } catch (IOException e) {
+                        e.printStackTrace();
+                }
+        }
+
+
+
 
         @FXML
         void entrer(ActionEvent event) {
+                if (mailInput.getText().isEmpty() || nomInput.getText().isEmpty() || nomInput.getText().isEmpty() || prenomInput.getText().isEmpty() || motInput.getText().isEmpty() || numeroInput.getText().isEmpty() || matiereInput.getText().isEmpty()) {
+                        erreur.setText("Veuillez remplir tous les champs.");
 
+                } else {
                 dataProf dataProf = new dataProf(
                         mailInput.getText(),
                         nomInput.getText(),
                         nUInput.getText(),
                         prenomInput.getText(),
-                        motInput.getText()
+                        motInput.getText(),
+                        numeroInput.getText(),
+                        matiereInput.getText()
                 );
                 ObservableList<dataProf> dataProfs = table.getItems();
                 dataProfs.add(dataProf);
                 table.setItems(dataProfs);
                 enregistrer();
+                }
         }
 
         @FXML
@@ -215,13 +284,6 @@ public class modifierProf implements Initializable {
                         enregistrer();
                 }
         }
-
-
-
-
-
-
-
 }
 
 

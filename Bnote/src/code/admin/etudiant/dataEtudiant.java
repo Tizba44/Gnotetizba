@@ -1,4 +1,4 @@
-package code;
+package code.admin.etudiant;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
@@ -8,18 +8,17 @@ public class dataEtudiant {
     private StringProperty nom;
     private StringProperty nomUtilisateur;
     private StringProperty prenom;
-
-    private StringProperty mot;
-
+    private StringProperty numero;
 
 
-    public dataEtudiant(String mail, String nom, String nomUtilisateur, String prenom, String mot) {
+    public dataEtudiant(String mail, String nom, String nomUtilisateur, String prenom, String numero) {
         this.mail = new SimpleStringProperty(mail);
         this.nom = new SimpleStringProperty(nom);
         this.nomUtilisateur = new SimpleStringProperty(nomUtilisateur);
         this.prenom = new SimpleStringProperty(prenom);
-        this .mot = new SimpleStringProperty(mot);
+        this .numero = new SimpleStringProperty(numero);
     }
+
 
     public String getMail() {
         return mail.get();
@@ -49,11 +48,11 @@ public class dataEtudiant {
         this.prenom.set(prenom);
     }
 
-    public String getMot() {
-        return mot.get();
+    public String getNumero() {
+        return numero.get();
     }
-    public void setMot(String mot) {
-        this.mot.set(mot);
+    public void setNumero(String numero) {
+        this.numero.set(numero);
     }
 
 }

@@ -1,3 +1,1 @@
-{"admins":[{"username":"tizba","password":"123"}],
-  "profs":[{"mot":"123","mail":"snj@.com","nomUtilisateur":"slydart","nom":"garel","prenom":"sylvain"}],
-  "etudiants":[{}]}
+{"admins":[{"username":"tizba","password":"123"}],"profs":[{"mot":"1","mail":"@","numero":"06","nomUtilisateur":"slydart","nom":"doussin garel","prenom":"sylvain","matiere":"bogoti"}],"Etudiants":[{"mail":"1","numero":"1","nomUtilisateur":"1","nom":"1","prenom":"1"},{"mail":"2","numero":"2","nomUtilisateur":"2","nom":"2","prenom":"2"},{"mail":"3","numero":"3","nomUtilisateur":"3","nom":"3","prenom":"3"},{"mail":"4","numero":"4","nomUtilisateur":"4","nom":"4","prenom":"4"},{"mail":"5","numero":"5","nomUtilisateur":"5","nom":"5","prenom":"5"}]}
