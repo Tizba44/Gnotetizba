@@ -53,7 +53,7 @@ public class connexion {
 
             // Vérifier les informations d'identification des professeurs
             for (Map<String, String> user : profs) {
-                if (username.getText().equals(user.get("nomUtilisateur")) && password.getText().equals(user.get("mot"))) {
+                if (username.getText().equals(user.get("nomUtilisateur")) && password.getText().equals(user.get("motDePasse"))) {
                     wrongLogIn.setText("Bienvenue Professeur!");
                     m.changeScene("prof/profAcceuil.fxml");
                     return;

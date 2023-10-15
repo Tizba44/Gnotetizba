@@ -174,7 +174,6 @@ public class modifierEtudiant implements Initializable {
 
 
         public void enregistrer() {
-                erreur.setText(""); // Effacez le message d'erreur si tous les champs sont valides
                 // Créer un ObjectMapper
                 ObjectMapper mapper = new ObjectMapper();
                 try {
@@ -209,10 +208,11 @@ public class modifierEtudiant implements Initializable {
 
         @FXML
         void entrer(ActionEvent event) {
-                if (mailInput.getText().isEmpty() || nomInput.getText().isEmpty() || nomInput.getText().isEmpty() || prenomInput.getText().isEmpty() ) {
+                if (mailInput.getText().isEmpty()  || nomInput.getText().isEmpty() || prenomInput.getText().isEmpty() || nUInput.getText().isEmpty() || numeroInput.getText().isEmpty()) {
                         erreur.setText("Veuillez remplir tous les champs.");
 
                 } else {
+                erreur.setText(""); // Effacez le message d'erreur si tous les champs sont valides
                 dataEtudiant dataEtudiant = new dataEtudiant(
                         mailInput.getText(),
                         nomInput.getText(),

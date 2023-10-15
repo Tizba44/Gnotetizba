@@ -1,0 +1,7 @@
+{
+  "admins":[{"username":"tizba","password":"1"}],
+  "profs":[{"motDePasse":"1","mail":"@","numero":"06","nomUtilisateur":"slydart","nom":"garel","prenom":"sylvain","matiere":"math"}],
+  "Etudiants":[{"mail":"max44.g.com","numero":"09","nomUtilisateur":"max","nom":"maxime","prenom":"audeon"}],
+  "Matieres":[{"nomUtilisateur":"max", "matiere":"math", "controle":"eval1"}],
+  "controles":[{ "nomUtilisateur":"max", "matiere": "math", "note":10, "appreciation":"bien", "coef":1 ,"controle":"eval1"}]
+}

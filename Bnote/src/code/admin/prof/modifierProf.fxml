@@ -18,7 +18,7 @@
                 <TableColumn fx:id="mail" prefWidth="57.59990692138672" text="mail" />
                 <TableColumn fx:id="nom" prefWidth="52.800048828125" text="nom" />
                 <TableColumn fx:id="prenom" prefWidth="75.0" text="prenom" />
-            <TableColumn fx:id="mot" prefWidth="102.4000244140625" text="mot de passe" />
+            <TableColumn fx:id="motDePasse" prefWidth="102.4000244140625" text="mot de passe" />
             <TableColumn fx:id="numero" prefWidth="85.5999755859375" text="telephone" />
             <TableColumn fx:id="matiere" prefWidth="72.7999267578125" text="matiere" />
             </columns>
@@ -34,7 +34,7 @@
                   <Text layoutX="-21.0" layoutY="26.0" strokeType="OUTSIDE" strokeWidth="0.0" text="prenom" />
                   <TextField fx:id="prenomInput" layoutX="-24.0" layoutY="36.0" />
                   <Text layoutX="317.0" layoutY="33.0" strokeType="OUTSIDE" strokeWidth="0.0" text="mot de passe " wrappingWidth="133.66015625" />
-                  <PasswordField fx:id="motInput" layoutX="309.0" layoutY="49.0" />
+                  <PasswordField fx:id="motDePasseInput" layoutX="309.0" layoutY="49.0" />
                   <Button layoutX="426.0" layoutY="78.0" mnemonicParsing="false" onAction="#entrer" prefHeight="26.0" prefWidth="134.0" text="entrer" />
                   <Text layoutX="146.0" layoutY="34.0" strokeType="OUTSIDE" strokeWidth="0.0" text="numero de telephone" />
                   <TextField fx:id="numeroInput" layoutX="146.0" layoutY="49.0" />
