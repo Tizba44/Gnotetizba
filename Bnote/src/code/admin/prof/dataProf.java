@@ -10,18 +10,18 @@ public class dataProf {
     private StringProperty prenom;
     private StringProperty motDePasse;
     private StringProperty numero;
-    private StringProperty matiere;
 
 
 
-    public dataProf(String mail, String nom, String nomUtilisateur, String prenom, String motDePasse , String numero , String matiere) {
+
+    public dataProf(String mail, String nom, String nomUtilisateur, String prenom, String motDePasse , String numero ) {
         this.mail = new SimpleStringProperty(mail);
         this.nom = new SimpleStringProperty(nom);
         this.nomUtilisateur = new SimpleStringProperty(nomUtilisateur);
         this.prenom = new SimpleStringProperty(prenom);
         this .motDePasse = new SimpleStringProperty(motDePasse);
         this .numero = new SimpleStringProperty(numero);
-        this .matiere = new SimpleStringProperty(matiere);
+
 
     }
 
@@ -67,12 +67,7 @@ public class dataProf {
         this.numero.set(numero);
     }
 
-    public String getMatiere() {
-        return matiere.get();
-    }
-    public void setMatiere(String matiere) {
-        this.matiere.set(matiere);
-    }
+
 
 }
 

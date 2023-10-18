@@ -20,7 +20,6 @@
                 <TableColumn fx:id="prenom" prefWidth="75.0" text="prenom" />
             <TableColumn fx:id="motDePasse" prefWidth="102.4000244140625" text="mot de passe" />
             <TableColumn fx:id="numero" prefWidth="85.5999755859375" text="telephone" />
-            <TableColumn fx:id="matiere" prefWidth="72.7999267578125" text="matiere" />
             </columns>
         </TableView>
     </bottom>
@@ -39,13 +38,11 @@
                   <Text layoutX="146.0" layoutY="34.0" strokeType="OUTSIDE" strokeWidth="0.0" text="numero de telephone" />
                   <TextField fx:id="numeroInput" layoutX="146.0" layoutY="49.0" />
                   <Button layoutX="434.0" layoutY="164.0" mnemonicParsing="false" onAction="#supprimer" prefHeight="26.0" prefWidth="134.0" text="supprimer" />
-                  <Label fx:id="erreur" layoutX="170.0" layoutY="168.0" prefHeight="18.0" prefWidth="228.0" />
+                  <Label fx:id="erreur" layoutX="170.0" layoutY="167.0" prefHeight="18.0" prefWidth="228.0" />
                   <TextField fx:id="mailInput" layoutX="-11.0" layoutY="100.0" />
                   <Text layoutX="15.0" layoutY="88.0" strokeType="OUTSIDE" strokeWidth="0.0" text="mail" />
                   <Text layoutX="161.0" layoutY="97.0" strokeType="OUTSIDE" strokeWidth="0.0" text="nom" />
                   <TextField fx:id="nomInput" layoutX="146.0" layoutY="100.0" />
-                  <TextField fx:id="matiereInput" layoutX="329.0" layoutY="113.0" />
-                  <Text layoutX="317.0" layoutY="105.0" strokeType="OUTSIDE" strokeWidth="0.0" text="matiere" />
                </children></AnchorPane>
                 <Button fx:id="button" layoutX="515.0" layoutY="28.0" mnemonicParsing="false" onAction="#userRetour" prefWidth="63.0" style="-fx-background-color: #00b3d4;" text="retour" textFill="WHITE" />
             </children>

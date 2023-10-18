@@ -9,8 +9,6 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.text.Text?>
 
-
-<?import java.util.ArrayList?>
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: ffffff;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="code.prof.note.note">
    <top>
         <AnchorPane prefHeight="200.0" prefWidth="615.0" BorderPane.alignment="CENTER">
@@ -22,29 +20,20 @@
                   <Button layoutX="201.0" layoutY="99.0" mnemonicParsing="false" onAction="#entrer" prefHeight="26.0" prefWidth="134.0" text="entrer" />
                   <Button layoutX="208.0" layoutY="50.0" mnemonicParsing="false" onAction="#supprimer" prefHeight="26.0" prefWidth="134.0" text="supprimer" />
                   <Label fx:id="erreur" layoutX="208.0" layoutY="144.0" prefHeight="18.0" prefWidth="228.0" />
-                  <TextField fx:id="inputNote" layoutX="414.0" layoutY="87.0" />
-                  <TextField fx:id="inputappreciation" layoutX="414.0" layoutY="141.0" />
                   <Text layoutX="26.0" layoutY="68.0" strokeType="OUTSIDE" strokeWidth="0.0" text="controle" wrappingWidth="85.7640380859375" />
                   <TextField fx:id="inputControle" layoutX="14.0" layoutY="74.0" />
-                  <Text layoutX="420.0" layoutY="76.0" strokeType="OUTSIDE" strokeWidth="0.0" text="note" wrappingWidth="24.1640625" />
-                  <Text layoutX="414.0" layoutY="133.0" strokeType="OUTSIDE" strokeWidth="0.0" text="appréciation" wrappingWidth="78.56402587890625" />
                </children></AnchorPane>
                 <Button fx:id="button" layoutX="515.0" layoutY="28.0" mnemonicParsing="false" onAction="#userRetour" prefWidth="63.0" style="-fx-background-color: #00b3d4;" text="retour" textFill="WHITE" />
                 <TableView fx:id="table" layoutY="172.0" prefHeight="235.0" prefWidth="600.0">
                     <columns>
                         <TableColumn fx:id="nomUtilisateur" prefWidth="96.0" text="étudiant" />
                         <TableColumn fx:id="moyenne" prefWidth="83.20001220703125" text="moyenne" />
-                        <fx:define>
-                            <ArrayList fx:id="controleColumns" />
-                        </fx:define>
+
                     </columns>
                 </TableView>
+            <TextField fx:id="inputsuppr" layoutX="440.0" layoutY="86.0" />
+            <Text layoutX="427.0" layoutY="70.0" strokeType="OUTSIDE" strokeWidth="0.0" text="suppr " wrappingWidth="85.7640380859375" />
             </children>
         </AnchorPane>
    </top>
 </BorderPane>
-
-
-
-
-

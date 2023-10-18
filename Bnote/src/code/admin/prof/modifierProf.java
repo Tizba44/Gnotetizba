@@ -67,8 +67,7 @@ public class modifierProf implements Initializable {
         @FXML
         private TableColumn<dataProf, String> numero;
 
-        @FXML
-        private TableColumn<dataProf, String> matiere;
+
 
         @FXML
         private Label erreur;
@@ -82,7 +81,7 @@ public class modifierProf implements Initializable {
                 prenom.setCellValueFactory(new PropertyValueFactory<dataProf,String >("prenom"));
                 motDePasse.setCellValueFactory(new PropertyValueFactory<dataProf,String >("motDePasse"));
                 numero.setCellValueFactory(new PropertyValueFactory<dataProf,String >("numero"));
-                matiere.setCellValueFactory(new PropertyValueFactory<dataProf,String >("matiere"));
+
 
                 table.setEditable(true); // Ajoutez cette ligne pour rendre le TableView éditable
 
@@ -158,18 +157,6 @@ public class modifierProf implements Initializable {
                                 }
                         }
                 );
-                matiere.setCellFactory(TextFieldTableCell.forTableColumn());
-                matiere.setOnEditCommit(
-                        new EventHandler<CellEditEvent<dataProf, String>>() {
-                                @Override
-                                public void handle(CellEditEvent<dataProf, String> t) {
-                                        ((dataProf) t.getTableView().getItems().get(
-                                                t.getTablePosition().getRow())
-                                        ).setMatiere(t.getNewValue());
-                                        enregistrer();
-                                }
-                        }
-                );
 
                 // Read JSON file and populate TableView
                 ObjectMapper mapper = new ObjectMapper();
@@ -184,8 +171,7 @@ public class modifierProf implements Initializable {
                                         map.get("nomUtilisateur"),
                                         map.get("prenom"),
                                         map.get("motDePasse"),
-                                        map.get("numero"),
-                                        map.get("matiere")
+                                        map.get("numero")
                                 );
                                 dataProfs.add(prof);
                         }
@@ -214,8 +200,7 @@ public class modifierProf implements Initializable {
         @FXML
         private TextField numeroInput;
 
-        @FXML
-        private TextField matiereInput;
+
 
 
         public void enregistrer() {
@@ -235,7 +220,6 @@ public class modifierProf implements Initializable {
                                 map.put("prenom", prof.getPrenom());
                                 map.put("motDePasse", prof.getMotDePasse());
                                 map.put("numero", prof.getNumero());
-                                map.put("matiere", prof.getMatiere());
                                 newProfsMap.add(map);
                         }
 
@@ -255,7 +239,7 @@ public class modifierProf implements Initializable {
 
         @FXML
         void entrer(ActionEvent event) {
-                if (mailInput.getText().isEmpty() || nomInput.getText().isEmpty()  || prenomInput.getText().isEmpty() || motDePasseInput.getText().isEmpty() || numeroInput.getText().isEmpty() || matiereInput.getText().isEmpty() || nUInput.getText().isEmpty())  {
+                if (mailInput.getText().isEmpty() || nomInput.getText().isEmpty()  || prenomInput.getText().isEmpty() || motDePasseInput.getText().isEmpty() || numeroInput.getText().isEmpty() ||  nUInput.getText().isEmpty())  {
                         erreur.setText("Veuillez remplir tous les champs.");
 
                 } else {
@@ -266,14 +250,15 @@ public class modifierProf implements Initializable {
                         nUInput.getText(),
                         prenomInput.getText(),
                         motDePasseInput.getText(),
-                        numeroInput.getText(),
-                        matiereInput.getText()
+                        numeroInput.getText()
+
                 );
                 ObservableList<dataProf> dataProfs = table.getItems();
                 dataProfs.add(dataProf);
                 table.setItems(dataProfs);
+
                 enregistrer();
-                }
+        }
         }
 
         @FXML

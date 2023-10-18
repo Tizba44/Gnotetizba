@@ -4,66 +4,44 @@ import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import java.util.HashMap;
+import java.util.Map;
 
 
 public class noteData {
+        private SimpleStringProperty nomUtilisateur;
+        private Map<String, ControleData> controles;
 
 
-    private SimpleStringProperty controle;
-    private SimpleIntegerProperty coef;
-    private SimpleStringProperty nomUtilisateur;
-    private SimpleIntegerProperty note;
-    private SimpleStringProperty appreciation;
+        public noteData(String nomUtilisateur) {
+            this.nomUtilisateur = new SimpleStringProperty(nomUtilisateur);
+            this.controles = new HashMap<>();
+        }
+        public void addControle(String controleName, ControleData controleData) {
+            this.controles.put(controleName, controleData);
+        }
 
-    public noteData(String nomUtilisateur, Integer note, String controle, Integer coef , String appreciation) {
-        this.nomUtilisateur = new SimpleStringProperty(nomUtilisateur);
-        this.note = new SimpleIntegerProperty(note);
-        this.controle = new SimpleStringProperty(controle);
-        this.coef = new SimpleIntegerProperty(coef);
-        this.appreciation = new SimpleStringProperty(appreciation);
-//        this.moyenne = new SimpleIntegerProperty(moyenne);
+        // getters and setters...
+
+        public String getNomUtilisateur() {
+            return nomUtilisateur.get();
+        }
+
+        public void setNomUtilisateur(String nomUtilisateur) {
+            this.nomUtilisateur.set(nomUtilisateur);
+        }
+
+//        public StringProperty nomUtilisateurProperty() {
+//            return nomUtilisateur;
+//        }
+
+        public Map<String, ControleData> getControles() {
+            return controles;
+        }
+
+//        public void setControles(Map<String, ControleData> controles) {
+//            this.controles = controles;
+//        }
+
+
     }
-
-
-    public String getNomUtilisateur() {
-        return nomUtilisateur.get();
-    }
-
-    public void setNomUtilisateur(String nomUtilisateur) {
-        this.nomUtilisateur.set(nomUtilisateur);
-    }
-
-    public Integer getNote() {
-        return note.get();
-    }
-
-    public void setNote(Integer note) {
-        this.note.set(note);
-    }
-
-    public String getControle() {
-        return controle.get();
-    }
-
-    public void setControle(String controle) {
-        this.controle.set(controle);
-    }
-
-    public Integer getCoef() {
-        return coef.get();
-    }
-
-    public void setCoef(Integer coef) {
-        this.coef.set(coef);
-    }
-
-    public String getAppreciation() {
-        return appreciation.get();
-    }
-
-    public void setAppreciation(String appreciation) {
-        this.appreciation.set(appreciation);
-    }
-
-
-}

@@ -16,7 +16,6 @@ import java.util.Map;
 
 public class connexion {
 
-
     @FXML
     private Button button;
     @FXML
@@ -41,6 +40,13 @@ public class connexion {
             // Obtenir les listes d'utilisateurs
             List<Map<String, String>> admins = usersMap.get("admins");
             List<Map<String, String>> profs = usersMap.get("profs");
+            List<Map<String, String>> Matieres = usersMap.get("Matieres");
+
+
+
+
+
+
 
             // Vérifier les informations d'identification de l'administrateur
             for (Map<String, String> user : admins) {
@@ -55,10 +61,18 @@ public class connexion {
             for (Map<String, String> user : profs) {
                 if (username.getText().equals(user.get("nomUtilisateur")) && password.getText().equals(user.get("motDePasse"))) {
                     wrongLogIn.setText("Bienvenue Professeur!");
+                    // Stocker la matière du professeur
+                    for (Map<String, String> matiere : Matieres) {
+                        if (user.get("nomUtilisateur").equals(matiere.get("nomUtilisateur"))) {
+                            Main.matiereProf = matiere.get("matiere");
+                            break;
+                        }
+                    }
                     m.changeScene("prof/profAcceuil.fxml");
                     return;
                 }
             }
+
 
             // Si aucune correspondance n'a été trouvée
             if (username.getText().isEmpty() && password.getText().isEmpty()) {

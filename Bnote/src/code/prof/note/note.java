@@ -6,24 +6,33 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
+
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
-import javafx.scene.control.TableColumn.CellEditEvent;
+
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.control.cell.TextFieldTableCell;
-import javafx.util.converter.IntegerStringConverter;
 
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.*;
 
-import static javafx.scene.control.cell.TextFieldTableCell.forTableColumn;
 import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
+
+import javafx.beans.property.SimpleIntegerProperty;
+
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.util.converter.IntegerStringConverter;
+import javafx.event.EventHandler;
+import javafx.scene.control.TableColumn.CellEditEvent;
+import javafx.scene.control.TextField;
+
+//import event
+import javafx.event.ActionEvent;
+
 
 
 
@@ -48,16 +57,15 @@ public class note implements Initializable {
         private TableColumn<noteData, String> nomUtilisateur;
 
         @FXML
-        private TableColumn<noteData, String> appreciation;
+        private TableColumn<ControleData, String> appreciation;
+
+
 
         @FXML
-        private TableColumn<noteData, Integer> moyenne;
+        private TableColumn<ControleData, Integer> note;
 
         @FXML
-        private TableColumn<noteData, Integer> note;
-
-        @FXML
-        private TableColumn<noteData, Integer> coef;
+        private TableColumn<ControleData, Integer> coef;
 
         @FXML
         private TableColumn<noteData, String> controle;
@@ -69,38 +77,29 @@ public class note implements Initializable {
         private TextField inputControle;
 
         @FXML
-        private TextField inputNote;
-
-        @FXML
-        private TextField inputappreciation;
+        private TextField inputsuppr;
 
 
-sls
+
+
+
+
 
         @FXML
         public void initialize(URL url, ResourceBundle resourceBundle) {
-                // Configuration des colonnes du TableView en utilisant PropertyValueFactory
                 nomUtilisateur.setCellValueFactory(new PropertyValueFactory<noteData, String>("nomUtilisateur"));
-//                moyenne.setCellValueFactory(new PropertyValueFactory<noteData, Integer>("moyenne"));
-
-                // Lecture du fichier JSON et peuplement du TableView
                 ObjectMapper mapper = new ObjectMapper();
+                table.setEditable(true);
                 try {
-                        // Lecture des données du fichier JSON dans une structure de données Java
                         Map<String, List<Map<String, String>>> usersMap = mapper.readValue(new File("src/code/data.json"), new TypeReference<Map<String, List<Map<String, String>>>>(){});
-
-                        // Extraction des listes d'utilisateurs et de contrôles depuis les données JSON
                         List<Map<String, String>> EtudiantsMap = usersMap.get("Etudiants");
                         List<Map<String, String>> controlesMap = usersMap.get("controles");
-
-                        // Création d'une liste observable pour stocker les données à afficher dans le TableView
                         ObservableList<noteData> notes = FXCollections.observableArrayList();
-
-                        // Création d'une liste pour stocker dynamiquement les colonnes "controle"
                         ArrayList<TableColumn<noteData, ?>> controleColumns = new ArrayList<>();
-
                         for (Map<String, String> controle : controlesMap) {
-                                // Vérification si une colonne "controle" existe déjà
+                                if (Main.matiereProf == null || !Main.matiereProf.equals(controle.get("matiere"))) {
+                                        continue;
+                                }
                                 boolean columnExists = false;
                                 for (TableColumn<noteData, ?> column : controleColumns) {
                                         if (column.getText().equals(controle.get("controle"))) {
@@ -108,52 +107,83 @@ sls
                                                 break;
                                         }
                                 }
-
                                 if (!columnExists) {
-                                        // Création d'une nouvelle colonne "controle"
                                         TableColumn<noteData, String> newControleColumn = new TableColumn<>(controle.get("controle"));
                                         newControleColumn.setPrefWidth(217.5999755859375);
-
-                                        // Ajout des sous-colonnes pour "coef," "note," et "appreciation"
                                         TableColumn<noteData, String> coefColumn = new TableColumn<>("coef");
                                         coefColumn.setPrefWidth(150.4000244140625);
-                                        TableColumn<noteData, Integer> noteColumn = new TableColumn<>("note");
+                                        TableColumn<noteData, String> noteColumn = new TableColumn<>("note");
                                         noteColumn.setPrefWidth(75.0);
                                         TableColumn<noteData, String> appreciationColumn = new TableColumn<>("appréciation");
                                         appreciationColumn.setPrefWidth(75.0);
+                                        coefColumn.setCellValueFactory(cellData -> {
+                                                noteData note = cellData.getValue();
+                                                ControleData controleData = note.getControles().get(controle.get("controle"));
+                                                return new SimpleStringProperty(controleData != null ? String.valueOf(controleData.getCoef()) : "N/A");
+                                        });
+                                        noteColumn.setCellValueFactory(cellData -> {
+                                                noteData note = cellData.getValue();
+                                                ControleData controleData = note.getControles().get(controle.get("controle"));
+                                                return new SimpleStringProperty (controleData != null ? String.valueOf(controleData.getNote()) : "N/A");
+                                        });
+                                        appreciationColumn.setCellValueFactory(cellData -> {
+                                                noteData note = cellData.getValue();
+                                                ControleData controleData = note.getControles().get(controle.get("controle"));
+                                                return new SimpleStringProperty(controleData != null ? controleData.getAppreciation() : "N/A");
+                                        });
 
-                                        // Configuration des factories de valeur des sous-colonnes
-                                        coefColumn.setCellValueFactory(new PropertyValueFactory<>("coef"));
-                                        noteColumn.setCellValueFactory(new PropertyValueFactory<>("note"));
-                                        appreciationColumn.setCellValueFactory(new PropertyValueFactory<>("appreciation"));
+                                        table.setEditable(true);
 
-                                        // Ajout des sous-colonnes à la nouvelle colonne "controle"
+                                        coefColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+                                        noteColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+                                        appreciationColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+
+
+                                        noteColumn.setOnEditCommit(event -> {
+                                                noteData note = event.getRowValue();
+                                                ControleData controleData = note.getControles().get(controle.get("controle"));
+                                                controleData.setNote(Integer.parseInt(event.getNewValue()));
+                                                enregistrer();
+                                        });
+                                        coefColumn.setOnEditCommit(event -> {
+                                                noteData note = event.getRowValue();
+                                                ControleData controleData = note.getControles().get(controle.get("controle"));
+                                                controleData.setCoef(Integer.parseInt(event.getNewValue()));
+                                                enregistrer();
+                                        });
+                                        appreciationColumn.setOnEditCommit(event -> {
+                                                noteData note = event.getRowValue();
+                                                ControleData controleData = note.getControles().get(controle.get("controle"));
+                                                controleData.setAppreciation(event.getNewValue());
+                                                enregistrer();
+                                        });
+
+
+
+
+
+
+
+
                                         newControleColumn.getColumns().addAll(coefColumn, noteColumn, appreciationColumn);
-
-                                        // Ajout de la nouvelle colonne "controle" au TableView
                                         table.getColumns().add(newControleColumn);
-
-                                        // Ajout de la nouvelle colonne "controle" à la liste pour référence
                                         controleColumns.add(newControleColumn);
                                 }
-                                for (Map<String, String> etudiant : EtudiantsMap) {
-                                        // Vérification si le nom d'utilisateur de l'étudiant correspond au "nomUtilisateur" du contrôle
-                                        if (etudiant.get("nomUtilisateur").equals(controle.get("nomUtilisateur"))) {
-                                                noteData note = new noteData(
-                                                        controle.get("nomUtilisateur"),
-                                                        controle.get("note") != null ? Integer.parseInt(controle.get("note")) : 0,
-                                                        controle.get("controle"),
-                                                        controle.get("coef") != null ? Integer.parseInt(controle.get("coef")) : 0,
-                                                        controle.get("appreciation")
-//                                                        controle.get("moyenne") != null ? Integer.parseInt(controle.get("moyenne")) : 0
-                                                );
-                                                // Ajout de la note à la liste observable
-                                                notes.add(note);
+                        }
+                        for (Map<String, String> etudiant : EtudiantsMap) {
+                                noteData newEtudiant = new noteData(etudiant.get("nomUtilisateur"));
+                                for (Map<String, String> controle : controlesMap) {
+                                        if (controle.get("nomUtilisateur").equals(etudiant.get("nomUtilisateur")) ) {
+                                                ControleData newControle = new ControleData(Integer.parseInt(controle.get("coef")), Integer.parseInt(controle.get("note")), controle.get("appreciation"));
+                                                newEtudiant.addControle(controle.get("controle"), newControle);
                                         }
                                 }
+                                notes.add(newEtudiant);
                         }
 
-                        // Définition des données du TableView
+
+
+
                         table.setItems(notes);
                 } catch (IOException e) {
                         e.printStackTrace();
@@ -162,74 +192,187 @@ sls
 
 
 
+
+        public void modifiersave(){
+
+        }
+
+
+
+
+
+
         public void enregistrer() {
+                ObjectMapper mapper = new ObjectMapper();
+                try {
+                        // Read the existing data from the JSON file
+                        Map<String, List<Map<String, String>>> usersMap = mapper.readValue(new File("src/code/data.json"), new TypeReference<Map<String, List<Map<String, String>>>>(){});
 
-//                // Créer un ObjectMapper
-//                ObjectMapper mapper = new ObjectMapper();
-//                try {
-//                        // Lire le fichier JSON existant
-//                        Map<String, List<Map<String, String>>> usersMap = mapper.readValue(new File("src/code/data.json"), new TypeReference<Map<String, List<Map<String, String>>>>() {});
-//
-//                        // Convertir la liste de dataEtudiant en liste de MapgetClass().getResource("data.json")
-//                        List<Map<String, String>> newEtudiantsMap = new ArrayList<>();
-//                        for (noteData Etudiant : table.getItems()) { // Use table.getItems() instead of Etudiants
-//                                Map<String, String> map = new HashMap<>();
-//                                map.put("mail", Etudiant.getMail());
-//                                map.put("nom", Etudiant.getNom());
-//                                map.put("nomUtilisateur", Etudiant.getNomUtilisateur());
-//                                map.put("prenom", Etudiant.getPrenom());
-//                                map.put("numero", Etudiant.getNumero());
-//                                newEtudiantsMap.add(map);
-//                        }
-//
-//                        // Update the 'Etudiants' list in usersMap and write it back to the JSON file
-//                        usersMap.put("Etudiants", newEtudiantsMap);
-//
-//                        mapper.writeValue(new File("src/code/data.json"), usersMap);
-//
-//
-//                } catch (IOException e) {
-//                        e.printStackTrace();
-//                }
-        }
+                        // Get the current data from the table
+                        ObservableList<noteData> notes = table.getItems();
 
+                        // Prepare the lists for 'Etudiants' and 'controles'
+                        List<Map<String, String>> EtudiantsMap = new ArrayList<>();
+                        List<Map<String, String>> controlesMap = new ArrayList<>(usersMap.get("controles")); // copy existing controls
 
+                        // Iterate over the notes
+                        for (noteData note : notes) {
+                                // Add each student to 'EtudiantsMap'
+                                Map<String, String> etudiant = new HashMap<>();
+                                etudiant.put("nomUtilisateur", note.getNomUtilisateur());
+                                EtudiantsMap.add(etudiant);
 
+                                // Add or update each control in 'controlesMap'
+                                Map<String, ControleData> controles = note.getControles();
+                                for (Map.Entry<String, ControleData> entry : controles.entrySet()) {
+                                        Map<String, String> controle = new HashMap<>();
+                                        controle.put("nomUtilisateur", note.getNomUtilisateur());
+                                        controle.put("controle", entry.getKey());
+                                        controle.put("coef", String.valueOf(entry.getValue().getCoef()));
+                                        controle.put("note", String.valueOf(entry.getValue().getNote()));
+                                        controle.put("appreciation", entry.getValue().getAppreciation());
+                                        controle.put("matiere", Main.matiereProf); // add the current subject
 
-        @FXML
-        void entrer(ActionEvent event) {
-//                if (  inputCoef.getText().isEmpty() || inputControle.getText().isEmpty() || inputNote.getText().isEmpty() || inputappreciation.getText().isEmpty()) {
-//                        erreur.setText("Veuillez remplir tous les champs.");
-//
-//                } else {
-//                erreur.setText(""); // Effacez le message d'erreur si tous les champs sont valides
-//                noteData note = new noteData(
-//                        "nomUtilisateur"
-//                        , Integer.parseInt(inputNote.getText())
-//                        , inputControle.getText()
-//                        , Integer.parseInt(inputCoef.getText())
-//                        , inputappreciation.getText()
-//                        , 0
-//                );
-//                ObservableList<noteData> notes = table.getItems();
-//                notes.add(note);
-//                table.setItems(notes);
-//                enregistrer();
-//                }
-        }
+                                        // Find and remove the existing control if it exists
+                                        controlesMap.removeIf(existingControle -> existingControle.get("nomUtilisateur").equals(note.getNomUtilisateur()) && existingControle.get("controle").equals(entry.getKey()) && existingControle.get("matiere").equals(Main.matiereProf));
 
-        @FXML
-        void supprimer(ActionEvent event) {
-                int selectedID = table.getSelectionModel().getSelectedIndex();
-                if (selectedID >= 0) { // Check if an item is selected
-                        table.getItems().remove(selectedID);
-                        enregistrer();
+                                        // Add the updated control
+                                        controlesMap.add(controle);
+                                }
+
+                        }
+
+                        // Update 'Etudiants' and 'controles' in 'usersMap'
+                        usersMap.put("Etudiants", EtudiantsMap);
+                        usersMap.put("controles", controlesMap);
+
+                        // Write all data back to the JSON file
+                        mapper.writeValue(new File("src/code/data.json"), usersMap);
+                } catch (IOException e) {
+                        e.printStackTrace();
                 }
         }
 
 
 
 
+
+        @FXML
+        void entrer(ActionEvent event) {
+                if (inputControle.getText().isEmpty() || inputCoef.getText().isEmpty())  {
+                        erreur.setText("Veuillez remplir tous les champs.");
+                } else {
+
+                        table.setEditable(true);
+                        erreur.setText(""); // Clear the error message if all fields are valid
+// Create a new control
+                        ControleData newControle = new ControleData(Integer.parseInt(inputCoef.getText())  ,0,"N/A");
+// Add the new control to the list of controls
+                        for (noteData note : table.getItems()) {
+                                note.addControle(inputControle.getText(), newControle);
+                        }
+// Add the new "control" column to the TableView
+                        TableColumn<noteData, String> newControleColumn = new TableColumn<>(inputControle.getText());
+                        newControleColumn.setPrefWidth(217.5999755859375);
+                        TableColumn<noteData, String> coefColumn = new TableColumn<>("coef");
+                        coefColumn.setPrefWidth(150.4000244140625);
+                        TableColumn<noteData, String> noteColumn = new TableColumn<>("note");
+                        noteColumn.setPrefWidth(75.0);
+                        TableColumn<noteData, String> appreciationColumn = new TableColumn<>("appréciation");
+                        appreciationColumn.setPrefWidth(75.0);
+// Set the data in the column
+                        coefColumn.setCellValueFactory(cellData -> {
+                                noteData note = cellData.getValue();
+                                ControleData controleData = note.getControles().get(inputControle.getText());
+                                return new SimpleStringProperty(controleData != null ? String.valueOf(controleData.getCoef()) : "N/A");
+                        });
+                        noteColumn.setCellValueFactory(cellData -> {
+                                noteData note = cellData.getValue();
+                                ControleData controleData = note.getControles().get(inputControle.getText());
+                                return new SimpleStringProperty (controleData != null ? String.valueOf(controleData.getNote()) : "N/A");
+                        });
+                        appreciationColumn.setCellValueFactory(cellData -> {
+                                noteData note = cellData.getValue();
+                                ControleData controleData = note.getControles().get(inputControle.getText());
+                                return new SimpleStringProperty(controleData != null ? controleData.getAppreciation() : "N/A");
+                        });
+
+                        table.setEditable(true);
+
+                        coefColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+                        noteColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+                        appreciationColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+
+
+                        noteColumn.setOnEditCommit(event1 -> {
+                                noteData note = event1.getRowValue();
+                                ControleData controleData = note.getControles().get(inputControle.getText());
+                                controleData.setNote(Integer.parseInt(event1.getNewValue()));
+                                enregistrer();
+                        });
+                        coefColumn.setOnEditCommit(event1 -> {
+                                noteData note = event1.getRowValue();
+                                ControleData controleData = note.getControles().get(inputControle.getText());
+                                controleData.setCoef(Integer.parseInt(event1.getNewValue()));
+                                enregistrer();
+                        });
+                        appreciationColumn.setOnEditCommit(event1 -> {
+                                noteData note = event1.getRowValue();
+                                ControleData controleData = note.getControles().get(inputControle.getText());
+                                controleData.setAppreciation(event1.getNewValue());
+                                enregistrer();
+                        });
+
+                        newControleColumn.getColumns().addAll(coefColumn, noteColumn, appreciationColumn);
+                        table.getColumns().add(newControleColumn);
+
+                        enregistrer();
+
+                }
+        }
+
+        @FXML
+        void supprimer(ActionEvent event) {
+                ObjectMapper mapper = new ObjectMapper();
+                try {
+                        // Read the existing data from the JSON file
+                        Map<String, List<Map<String, String>>> usersMap = mapper.readValue(new File("src/code/data.json"), new TypeReference<Map<String, List<Map<String, String>>>>(){});
+
+                        // Get the control to be deleted from 'inputsuppr'
+                        String controleToDelete = inputsuppr.getText();
+
+                        // Get the list of controls
+                        List<Map<String, String>> controlesMap = usersMap.get("controles");
+
+                        // Check if the control exists
+                        boolean controlExists = controlesMap.stream().anyMatch(controle -> controle.get("controle").equals(controleToDelete) && controle.get("matiere").equals(Main.matiereProf));
+
+                        if (!controlExists) {
+                                erreur.setText("Il n'y a pas de contrôle avec ce nom à supprimer.");
+                                return;
+                        }
+
+                        // Remove the controls that match 'controleToDelete' and 'Main.matiereProf'
+                        controlesMap.removeIf(controle -> controle.get("controle").equals(controleToDelete) && controle.get("matiere").equals(Main.matiereProf));
+
+                        // Update 'controles' in 'usersMap'
+                        usersMap.put("controles", controlesMap);
+
+                        // Write all data back to the JSON file
+                        mapper.writeValue(new File("src/code/data.json"), usersMap);
+
+                        // Remove the corresponding column from the table
+                        for (TableColumn<noteData, ?> column : new ArrayList<>(table.getColumns())) {
+                                if (column.getText().equals(controleToDelete)) {
+                                        table.getColumns().remove(column);
+                                }
+                        }
+
+                        erreur.setText(""); // Clear the error message if all fields are valid
+                } catch (IOException e) {
+                        e.printStackTrace();
+                }
+        }
 }
 
 
