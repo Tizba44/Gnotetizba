@@ -96,17 +96,27 @@ public class note implements Initializable {
                         List<Map<String, String>> controlesMap = usersMap.get("controles");
                         ObservableList<noteData> notes = FXCollections.observableArrayList();
                         ArrayList<TableColumn<noteData, ?>> controleColumns = new ArrayList<>();
+
+
                         for (Map<String, String> controle : controlesMap) {
                                 if (Main.matiereProf == null || !Main.matiereProf.equals(controle.get("matiere"))) {
                                         continue;
                                 }
+
+                                // Obtenez la liste des colonnes existantes
+                                ObservableList<TableColumn<noteData, ?>> existingColumns = table.getColumns();
+
+                                // Vérifiez si la colonne existe déjà
                                 boolean columnExists = false;
-                                for (TableColumn<noteData, ?> column : controleColumns) {
+                                for (TableColumn<noteData, ?> column : existingColumns) {
                                         if (column.getText().equals(controle.get("controle"))) {
                                                 columnExists = true;
                                                 break;
                                         }
                                 }
+
+
+
                                 if (!columnExists) {
                                         TableColumn<noteData, String> newControleColumn = new TableColumn<>(controle.get("controle"));
                                         newControleColumn.setPrefWidth(217.5999755859375);
@@ -157,12 +167,6 @@ public class note implements Initializable {
                                                 controleData.setAppreciation(event.getNewValue());
                                                 enregistrer();
                                         });
-
-
-
-
-
-
 
 
                                         newControleColumn.getColumns().addAll(coefColumn, noteColumn, appreciationColumn);
@@ -262,8 +266,6 @@ public class note implements Initializable {
                 if (inputControle.getText().isEmpty() || inputCoef.getText().isEmpty())  {
                         erreur.setText("Veuillez remplir tous les champs.");
                 } else {
-
-                        table.setEditable(true);
                         erreur.setText(""); // Clear the error message if all fields are valid
 // Create a new control
                         ControleData newControle = new ControleData(Integer.parseInt(inputCoef.getText())  ,0,"N/A");
@@ -271,63 +273,9 @@ public class note implements Initializable {
                         for (noteData note : table.getItems()) {
                                 note.addControle(inputControle.getText(), newControle);
                         }
-// Add the new "control" column to the TableView
-                        TableColumn<noteData, String> newControleColumn = new TableColumn<>(inputControle.getText());
-                        newControleColumn.setPrefWidth(217.5999755859375);
-                        TableColumn<noteData, String> coefColumn = new TableColumn<>("coef");
-                        coefColumn.setPrefWidth(150.4000244140625);
-                        TableColumn<noteData, String> noteColumn = new TableColumn<>("note");
-                        noteColumn.setPrefWidth(75.0);
-                        TableColumn<noteData, String> appreciationColumn = new TableColumn<>("appréciation");
-                        appreciationColumn.setPrefWidth(75.0);
-// Set the data in the column
-                        coefColumn.setCellValueFactory(cellData -> {
-                                noteData note = cellData.getValue();
-                                ControleData controleData = note.getControles().get(inputControle.getText());
-                                return new SimpleStringProperty(controleData != null ? String.valueOf(controleData.getCoef()) : "N/A");
-                        });
-                        noteColumn.setCellValueFactory(cellData -> {
-                                noteData note = cellData.getValue();
-                                ControleData controleData = note.getControles().get(inputControle.getText());
-                                return new SimpleStringProperty (controleData != null ? String.valueOf(controleData.getNote()) : "N/A");
-                        });
-                        appreciationColumn.setCellValueFactory(cellData -> {
-                                noteData note = cellData.getValue();
-                                ControleData controleData = note.getControles().get(inputControle.getText());
-                                return new SimpleStringProperty(controleData != null ? controleData.getAppreciation() : "N/A");
-                        });
-
-                        table.setEditable(true);
-
-                        coefColumn.setCellFactory(TextFieldTableCell.forTableColumn());
-                        noteColumn.setCellFactory(TextFieldTableCell.forTableColumn());
-                        appreciationColumn.setCellFactory(TextFieldTableCell.forTableColumn());
-
-
-                        noteColumn.setOnEditCommit(event1 -> {
-                                noteData note = event1.getRowValue();
-                                ControleData controleData = note.getControles().get(inputControle.getText());
-                                controleData.setNote(Integer.parseInt(event1.getNewValue()));
-                                enregistrer();
-                        });
-                        coefColumn.setOnEditCommit(event1 -> {
-                                noteData note = event1.getRowValue();
-                                ControleData controleData = note.getControles().get(inputControle.getText());
-                                controleData.setCoef(Integer.parseInt(event1.getNewValue()));
-                                enregistrer();
-                        });
-                        appreciationColumn.setOnEditCommit(event1 -> {
-                                noteData note = event1.getRowValue();
-                                ControleData controleData = note.getControles().get(inputControle.getText());
-                                controleData.setAppreciation(event1.getNewValue());
-                                enregistrer();
-                        });
-
-                        newControleColumn.getColumns().addAll(coefColumn, noteColumn, appreciationColumn);
-                        table.getColumns().add(newControleColumn);
-
                         enregistrer();
-
+                        // jouer initialize
+                        initialize(null, null);
                 }
         }
 

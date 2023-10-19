@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.text.Text?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: ffffff;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="code.admin.matiere.modifierMatiere">
+    <bottom>
+        <TableView fx:id="table" prefHeight="220.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+            <columns>
+                <TableColumn fx:id="nomUtilisateur" prefWidth="115.9999771118164" text="nom d'utilisateur" />
+            <TableColumn fx:id="matiere" prefWidth="85.5999755859375" text="matiere" />
+            </columns>
+        </TableView>
+    </bottom>
+   <top>
+        <AnchorPane prefHeight="200.0" prefWidth="615.0" BorderPane.alignment="CENTER">
+            <children>
+                <AnchorPane layoutX="24.0" layoutY="7.0" prefHeight="200.0" prefWidth="178.0">
+               <children>
+                              <TextField fx:id="nUInput" layoutX="-11.0" layoutY="151.0" />
+                              <Text layoutY="83.0" strokeType="OUTSIDE" strokeWidth="0.0" text="nom d'utilisateur" />
+                  <Button layoutX="426.0" layoutY="78.0" mnemonicParsing="false" onAction="#entrer" prefHeight="26.0" prefWidth="134.0" text="entrer" />
+                  <Button layoutX="434.0" layoutY="164.0" mnemonicParsing="false" onAction="#supprimer" prefHeight="26.0" prefWidth="134.0" text="supprimer" />
+                  <Label fx:id="erreur" layoutX="170.0" layoutY="167.0" prefHeight="18.0" prefWidth="228.0" />
+                  <TextField fx:id="matiereInput" layoutX="-11.0" layoutY="100.0" />
+                  <Text layoutX="-6.0" layoutY="139.0" strokeType="OUTSIDE" strokeWidth="0.0" text="matiere" />
+               </children></AnchorPane>
+                <Button fx:id="button" layoutX="515.0" layoutY="28.0" mnemonicParsing="false" onAction="#userRetour" prefWidth="63.0" style="-fx-background-color: #00b3d4;" text="retour" textFill="WHITE" />
+            </children>
+        </AnchorPane>
+   </top>
+</BorderPane>

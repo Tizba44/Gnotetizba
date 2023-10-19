@@ -4,6 +4,9 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import java.io.IOException;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+
 
 public class adminAcceuil {
 
@@ -11,14 +14,17 @@ public class adminAcceuil {
     private Button logout;
     @FXML
     private Button modifierProf;
-
     @FXML
     private Button  modifierEtudiant;
+    @FXML
+    private Button  modifierMatiere;
+
     @FXML
     public void userLogOut(ActionEvent event) throws IOException {
         Main m = new Main();
         m.changeScene("connexion.fxml");
     }
+
     @FXML
     public void usermprof(ActionEvent event) throws IOException {
         Main m = new Main();
@@ -28,6 +34,12 @@ public class adminAcceuil {
     public void usermetudiant(ActionEvent event) throws IOException {
         Main m = new Main();
         m.changeScene("admin/etudiant/modifierEtudiant.fxml");
+    }
+
+    @FXML
+    public void usermmatiere(ActionEvent event) throws IOException {
+        Main m = new Main();
+        m.changeScene("admin/matiere/modifierMatiere.fxml");
     }
 
 }

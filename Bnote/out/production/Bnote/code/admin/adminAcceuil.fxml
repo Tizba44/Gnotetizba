@@ -14,12 +14,17 @@
                   <Font size="27.0" />
                </font>
             </Button>
-            <Button fx:id="modifierProf" layoutX="101.0" layoutY="199.0" mnemonicParsing="false" onAction="#usermprof" prefHeight="44.0" prefWidth="134.0" style="-fx-background-color: #ffffff;" text="M prof">
+            <Button fx:id="modifierProf" layoutX="62.0" layoutY="83.0" mnemonicParsing="false" onAction="#usermprof" prefHeight="58.0" prefWidth="217.0" style="-fx-background-color: #ffffff;" text="ajouter prof">
                <font>
                   <Font size="27.0" />
                </font>
             </Button>
-            <Button fx:id="modifierEtudiant" layoutX="325.0" layoutY="199.0" mnemonicParsing="false" onAction="#usermetudiant" prefHeight="57.0" prefWidth="175.0" style="-fx-background-color: #ffffff;" text="M etudiant">
+            <Button fx:id="modifierEtudiant" layoutX="62.0" layoutY="171.0" mnemonicParsing="false" onAction="#usermetudiant" prefHeight="58.0" prefWidth="244.0" style="-fx-background-color: #ffffff;" text="Ajouter etudiant">
+               <font>
+                  <Font size="27.0" />
+               </font>
+            </Button>
+            <Button fx:id="modifierMatiere" layoutX="62.0" layoutY="263.0" mnemonicParsing="false" onAction="#usermmatiere" prefHeight="58.0" prefWidth="244.0" style="-fx-background-color: #ffffff;" text="Ajouter matiere">
                <font>
                   <Font size="27.0" />
                </font>

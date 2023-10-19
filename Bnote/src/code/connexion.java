@@ -14,10 +14,14 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import java.util.List;
 import java.util.Map;
 
-public class connexion {
+import javafx.fxml.Initializable;
+import java.net.URL;
+import java.util.ResourceBundle;
 
-    @FXML
-    private Button button;
+
+public class connexion  {
+
+
     @FXML
     private Label wrongLogIn;
     @FXML
@@ -33,23 +37,10 @@ public class connexion {
         Main m = new Main();
         // Créer un ObjectMapper
         ObjectMapper mapper = new ObjectMapper();
+
         try {
-            // Lire le fichier JSON
-            Map<String, List<Map<String, String>>> usersMap = mapper.readValue(getClass().getResource("data.json"), new TypeReference<Map<String, List<Map<String, String>>>>() {});
-
-            // Obtenir les listes d'utilisateurs
-            List<Map<String, String>> admins = usersMap.get("admins");
-            List<Map<String, String>> profs = usersMap.get("profs");
-            List<Map<String, String>> Matieres = usersMap.get("Matieres");
-
-
-
-
-
-
-
             // Vérifier les informations d'identification de l'administrateur
-            for (Map<String, String> user : admins) {
+            for (Map<String, String> user : getAdmins(mapper)) {
                 if (username.getText().equals(user.get("username")) && password.getText().equals(user.get("password"))) {
                     wrongLogIn.setText("Bienvenue Chef!");
                     m.changeScene("admin/adminAcceuil.fxml");
@@ -58,11 +49,11 @@ public class connexion {
             }
 
             // Vérifier les informations d'identification des professeurs
-            for (Map<String, String> user : profs) {
+            for (Map<String, String> user : getProfs(mapper)) {
                 if (username.getText().equals(user.get("nomUtilisateur")) && password.getText().equals(user.get("motDePasse"))) {
                     wrongLogIn.setText("Bienvenue Professeur!");
                     // Stocker la matière du professeur
-                    for (Map<String, String> matiere : Matieres) {
+                    for (Map<String, String> matiere : getMatieres(mapper)) {
                         if (user.get("nomUtilisateur").equals(matiere.get("nomUtilisateur"))) {
                             Main.matiereProf = matiere.get("matiere");
                             break;
@@ -72,7 +63,6 @@ public class connexion {
                     return;
                 }
             }
-
 
             // Si aucune correspondance n'a été trouvée
             if (username.getText().isEmpty() && password.getText().isEmpty()) {
@@ -86,4 +76,20 @@ public class connexion {
         }
     }
 
+    private List<Map<String, String>> getAdmins(ObjectMapper mapper) throws IOException {
+        return getUsersMap(mapper).get("admins");
+    }
+
+    private List<Map<String, String>> getProfs(ObjectMapper mapper) throws IOException {
+        return getUsersMap(mapper).get("profs");
+    }
+
+    private List<Map<String, String>> getMatieres(ObjectMapper mapper) throws IOException {
+        return getUsersMap(mapper).get("Matieres");
+    }
+
+    private Map<String, List<Map<String, String>>> getUsersMap(ObjectMapper mapper) throws IOException {
+        // Lire le fichier JSON
+        return mapper.readValue(getClass().getResource("data.json"), new TypeReference<Map<String, List<Map<String, String>>>>() {});
+    }
 }

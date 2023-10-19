@@ -1,1 +1,12 @@
-{"admins":[{"username":"tizba","password":"1"}],"profs":[{"motDePasse":"1","mail":"@","numero":"8","nomUtilisateur":"slydart","nom":"garel","prenom":"sylvain"},{"motDePasse":"1","mail":"@","numero":"06","nomUtilisateur":"jean","nom":"garel","prenom":"sylvain"}],"Etudiants":[{"nomUtilisateur":"max"},{"nomUtilisateur":"luc"}],"Matieres":[{"matiere":"math","nomUtilisateur":"slydart"},{"matiere":"fr","nomUtilisateur":"jean"}],"controles":[]}
+{
+  "admins": [
+    {
+      "username": "tizba",
+      "password": "1"
+    }
+  ],
+  "profs": [],
+  "Etudiants": [],
+  "Matieres": [],
+  "controles": []
+}

@@ -31,13 +31,13 @@ public class profAcceuil {
     }
 
     @FXML
-    void usernote(ActionEvent event) throws IOException{
+    public void usernote(ActionEvent event) throws IOException{
         Main m = new Main();
         m.changeScene("prof/note/note.fxml");
     }
 
     @FXML
-    void userstat(ActionEvent event) throws IOException{
+    public void userstat(ActionEvent event) throws IOException{
         Main m = new Main();
         m.changeScene("prof/stat/stat.fxml");
     }

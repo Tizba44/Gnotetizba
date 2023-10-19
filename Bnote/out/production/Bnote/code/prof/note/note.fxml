@@ -27,7 +27,6 @@
                 <TableView fx:id="table" layoutY="172.0" prefHeight="235.0" prefWidth="600.0">
                     <columns>
                         <TableColumn fx:id="nomUtilisateur" prefWidth="96.0" text="étudiant" />
-                        <TableColumn fx:id="moyenne" prefWidth="83.20001220703125" text="moyenne" />
 
                     </columns>
                 </TableView>
