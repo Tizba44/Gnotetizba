@@ -56,9 +56,6 @@ public class modifierProf implements Initializable {
         private TableColumn<dataProf, String> nom;
 
         @FXML
-        private TableColumn<dataProf, String> nomUtilisateur;
-
-        @FXML
         private TableColumn<dataProf, String> prenom;
 
         @FXML
@@ -77,7 +74,6 @@ public class modifierProf implements Initializable {
         public void initialize(URL url, ResourceBundle resourceBundle) {
                 mail.setCellValueFactory(new PropertyValueFactory<dataProf, String>("mail"));
                 nom.setCellValueFactory(new PropertyValueFactory<dataProf,String >("nom"));
-                nomUtilisateur.setCellValueFactory(new PropertyValueFactory<dataProf,String >("nomUtilisateur"));
                 prenom.setCellValueFactory(new PropertyValueFactory<dataProf,String >("prenom"));
                 motDePasse.setCellValueFactory(new PropertyValueFactory<dataProf,String >("motDePasse"));
                 numero.setCellValueFactory(new PropertyValueFactory<dataProf,String >("numero"));
@@ -105,18 +101,6 @@ public class modifierProf implements Initializable {
                                         ((dataProf) t.getTableView().getItems().get(
                                                 t.getTablePosition().getRow())
                                         ).setNom(t.getNewValue());
-                                        enregistrer();
-                                }
-                        }
-                );
-                nomUtilisateur.setCellFactory(TextFieldTableCell.forTableColumn());
-                nomUtilisateur.setOnEditCommit(
-                        new EventHandler<CellEditEvent<dataProf, String>>() {
-                                @Override
-                                public void handle(CellEditEvent<dataProf, String> t) {
-                                        ((dataProf) t.getTableView().getItems().get(
-                                                t.getTablePosition().getRow())
-                                        ).setNomUtilisateur(t.getNewValue());
                                         enregistrer();
                                 }
                         }
@@ -168,7 +152,6 @@ public class modifierProf implements Initializable {
                                 dataProf prof = new dataProf(
                                         map.get("mail"),
                                         map.get("nom"),
-                                        map.get("nomUtilisateur"),
                                         map.get("prenom"),
                                         map.get("motDePasse"),
                                         map.get("numero")
@@ -184,9 +167,6 @@ public class modifierProf implements Initializable {
 
         @FXML
         private TextField mailInput;
-
-        @FXML
-        private TextField nUInput;
 
         @FXML
         private TextField nomInput;
@@ -216,7 +196,6 @@ public class modifierProf implements Initializable {
                                 Map<String, String> map = new HashMap<>();
                                 map.put("mail", prof.getMail());
                                 map.put("nom", prof.getNom());
-                                map.put("nomUtilisateur", prof.getNomUtilisateur());
                                 map.put("prenom", prof.getPrenom());
                                 map.put("motDePasse", prof.getMotDePasse());
                                 map.put("numero", prof.getNumero());
@@ -239,7 +218,7 @@ public class modifierProf implements Initializable {
 
         @FXML
         void entrer(ActionEvent event) {
-                if (mailInput.getText().isEmpty() || nomInput.getText().isEmpty()  || prenomInput.getText().isEmpty() || motDePasseInput.getText().isEmpty() || numeroInput.getText().isEmpty() ||  nUInput.getText().isEmpty())  {
+                if (mailInput.getText().isEmpty() || nomInput.getText().isEmpty()  || prenomInput.getText().isEmpty() || motDePasseInput.getText().isEmpty() || numeroInput.getText().isEmpty() )  {
                         erreur.setText("Veuillez remplir tous les champs.");
 
                 } else {
@@ -247,7 +226,6 @@ public class modifierProf implements Initializable {
                 dataProf dataProf = new dataProf(
                         mailInput.getText(),
                         nomInput.getText(),
-                        nUInput.getText(),
                         prenomInput.getText(),
                         motDePasseInput.getText(),
                         numeroInput.getText()
@@ -258,7 +236,7 @@ public class modifierProf implements Initializable {
                 table.setItems(dataProfs);
 
                 enregistrer();
-        }
+                }
         }
 
         @FXML

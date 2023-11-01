@@ -3,19 +3,21 @@ package code.admin.matiere;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
+
+
 public class dataMatiere {
-    private StringProperty nomUtilisateur;
+    private StringProperty mail;
     private StringProperty matiere;
 
-    public dataMatiere(String nomUtilisateur, String matiere) {
-        this.nomUtilisateur = new SimpleStringProperty(nomUtilisateur);
+    public dataMatiere(String mail, String matiere) {
+        this.mail = new SimpleStringProperty(mail);
         this.matiere = new SimpleStringProperty(matiere);
     }
-    public String getNomUtilisateur() {
-        return nomUtilisateur.get();
+    public String getMail() {
+        return mail.get();
     }
-    public void setNomUtilisateur(String nomUtilisateur) {
-        this.nomUtilisateur.set(nomUtilisateur);
+    public void setMail(String mail) {
+        this.mail.set(mail);
     }
 
     public String getMatiere() {

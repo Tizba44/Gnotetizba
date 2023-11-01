@@ -14,7 +14,6 @@
     <bottom>
         <TableView fx:id="table" prefHeight="220.0" prefWidth="600.0" BorderPane.alignment="CENTER">
             <columns>
-                <TableColumn fx:id="nomUtilisateur" prefWidth="115.9999771118164" text="nom d'utilisateur" />
                 <TableColumn fx:id="mail" prefWidth="57.59990692138672" text="mail" />
                 <TableColumn fx:id="nom" prefWidth="52.800048828125" text="nom" />
                 <TableColumn fx:id="prenom" prefWidth="75.0" text="prenom" />
@@ -28,8 +27,6 @@
             <children>
                 <AnchorPane layoutX="24.0" layoutY="7.0" prefHeight="200.0" prefWidth="178.0">
                <children>
-                              <TextField fx:id="nUInput" layoutX="-11.0" layoutY="164.0" />
-                              <Text layoutX="-11.0" layoutY="143.0" strokeType="OUTSIDE" strokeWidth="0.0" text="nom d'utilisateur" />
                   <Text layoutX="-21.0" layoutY="26.0" strokeType="OUTSIDE" strokeWidth="0.0" text="prenom" />
                   <TextField fx:id="prenomInput" layoutX="-24.0" layoutY="36.0" />
                   <Text layoutX="317.0" layoutY="33.0" strokeType="OUTSIDE" strokeWidth="0.0" text="mot de passe " wrappingWidth="133.66015625" />

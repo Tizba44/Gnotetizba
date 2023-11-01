@@ -6,7 +6,6 @@ import javafx.beans.property.StringProperty;
 public class dataProf {
     private StringProperty mail;
     private StringProperty nom;
-    private StringProperty nomUtilisateur;
     private StringProperty prenom;
     private StringProperty motDePasse;
     private StringProperty numero;
@@ -14,10 +13,9 @@ public class dataProf {
 
 
 
-    public dataProf(String mail, String nom, String nomUtilisateur, String prenom, String motDePasse , String numero ) {
+    public dataProf(String mail, String nom, String prenom, String motDePasse , String numero ) {
         this.mail = new SimpleStringProperty(mail);
         this.nom = new SimpleStringProperty(nom);
-        this.nomUtilisateur = new SimpleStringProperty(nomUtilisateur);
         this.prenom = new SimpleStringProperty(prenom);
         this .motDePasse = new SimpleStringProperty(motDePasse);
         this .numero = new SimpleStringProperty(numero);
@@ -37,13 +35,6 @@ public class dataProf {
     }
     public void setNom(String nom) {
         this.nom.set(nom);
-    }
-
-    public String getNomUtilisateur() {
-        return nomUtilisateur.get();
-    }
-    public void setNomUtilisateur(String nomUtilisateur) {
-        this.nomUtilisateur.set(nomUtilisateur);
     }
 
     public String getPrenom() {

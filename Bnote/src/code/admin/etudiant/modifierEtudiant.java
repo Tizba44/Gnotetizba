@@ -46,8 +46,7 @@ public class modifierEtudiant implements Initializable {
         @FXML
         private TableColumn<dataEtudiant, String> nom;
 
-        @FXML
-        private TableColumn<dataEtudiant, String> nomUtilisateur;
+
 
         @FXML
         private TableColumn<dataEtudiant, String> prenom;
@@ -67,7 +66,6 @@ public class modifierEtudiant implements Initializable {
         public void initialize(URL url, ResourceBundle resourceBundle) {
                 mail.setCellValueFactory(new PropertyValueFactory<dataEtudiant, String>("mail"));
                 nom.setCellValueFactory(new PropertyValueFactory<dataEtudiant,String >("nom"));
-                nomUtilisateur.setCellValueFactory(new PropertyValueFactory<dataEtudiant,String >("nomUtilisateur"));
                 prenom.setCellValueFactory(new PropertyValueFactory<dataEtudiant,String >("prenom"));
                 numero.setCellValueFactory(new PropertyValueFactory<dataEtudiant,String >("numero"));
 
@@ -93,18 +91,6 @@ public class modifierEtudiant implements Initializable {
                                         ((dataEtudiant) t.getTableView().getItems().get(
                                                 t.getTablePosition().getRow())
                                         ).setNom(t.getNewValue());
-                                        enregistrer();
-                                }
-                        }
-                );
-                nomUtilisateur.setCellFactory(TextFieldTableCell.forTableColumn());
-                nomUtilisateur.setOnEditCommit(
-                        new EventHandler<CellEditEvent<dataEtudiant, String>>() {
-                                @Override
-                                public void handle(CellEditEvent<dataEtudiant, String> t) {
-                                        ((dataEtudiant) t.getTableView().getItems().get(
-                                                t.getTablePosition().getRow())
-                                        ).setNomUtilisateur(t.getNewValue());
                                         enregistrer();
                                 }
                         }
@@ -144,7 +130,6 @@ public class modifierEtudiant implements Initializable {
                                 dataEtudiant Etudiant = new dataEtudiant(
                                         map.get("mail"),
                                         map.get("nom"),
-                                        map.get("nomUtilisateur"),
                                         map.get("prenom"),
                                         map.get("numero")
                                 );
@@ -160,8 +145,6 @@ public class modifierEtudiant implements Initializable {
         @FXML
         private TextField mailInput;
 
-        @FXML
-        private TextField nUInput;
 
         @FXML
         private TextField nomInput;
@@ -186,7 +169,6 @@ public class modifierEtudiant implements Initializable {
                                 Map<String, String> map = new HashMap<>();
                                 map.put("mail", Etudiant.getMail());
                                 map.put("nom", Etudiant.getNom());
-                                map.put("nomUtilisateur", Etudiant.getNomUtilisateur());
                                 map.put("prenom", Etudiant.getPrenom());
                                 map.put("numero", Etudiant.getNumero());
                                 newEtudiantsMap.add(map);
@@ -208,7 +190,7 @@ public class modifierEtudiant implements Initializable {
 
         @FXML
         void entrer(ActionEvent event) {
-                if (mailInput.getText().isEmpty()  || nomInput.getText().isEmpty() || prenomInput.getText().isEmpty() || nUInput.getText().isEmpty() || numeroInput.getText().isEmpty()) {
+                if (mailInput.getText().isEmpty()  || nomInput.getText().isEmpty() || prenomInput.getText().isEmpty()  || numeroInput.getText().isEmpty()) {
                         erreur.setText("Veuillez remplir tous les champs.");
 
                 } else {
@@ -216,7 +198,6 @@ public class modifierEtudiant implements Initializable {
                 dataEtudiant dataEtudiant = new dataEtudiant(
                         mailInput.getText(),
                         nomInput.getText(),
-                        nUInput.getText(),
                         prenomInput.getText(),
                         numeroInput.getText()
 

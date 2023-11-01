@@ -6,15 +6,13 @@ import javafx.beans.property.StringProperty;
 public class dataEtudiant {
     private StringProperty mail;
     private StringProperty nom;
-    private StringProperty nomUtilisateur;
     private StringProperty prenom;
     private StringProperty numero;
 
 
-    public dataEtudiant(String mail, String nom, String nomUtilisateur, String prenom, String numero) {
+    public dataEtudiant(String mail, String nom, String prenom, String numero) {
         this.mail = new SimpleStringProperty(mail);
         this.nom = new SimpleStringProperty(nom);
-        this.nomUtilisateur = new SimpleStringProperty(nomUtilisateur);
         this.prenom = new SimpleStringProperty(prenom);
         this .numero = new SimpleStringProperty(numero);
     }
@@ -32,13 +30,6 @@ public class dataEtudiant {
     }
     public void setNom(String nom) {
         this.nom.set(nom);
-    }
-
-    public String getNomUtilisateur() {
-        return nomUtilisateur.get();
-    }
-    public void setNomUtilisateur(String nomUtilisateur) {
-        this.nomUtilisateur.set(nomUtilisateur);
     }
 
     public String getPrenom() {

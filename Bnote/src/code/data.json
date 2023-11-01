@@ -1,12 +1,1 @@
-{
-  "admins": [
-    {
-      "username": "tizba",
-      "password": "1"
-    }
-  ],
-  "profs": [],
-  "Etudiants": [],
-  "Matieres": [],
-  "controles": []
-}
+{"admins":[{"username":"tizba","password":"1"}],"profs":[{"motDePasse":"b","mail":"b","numero":"b","nom":"b","prenom":"b"}],"Etudiants":[{"mail":"a","numero":"a","nom":"a","prenom":"a"}],"Matieres":[{"mail":"b","matiere":"math"}],"controles":[]}

@@ -13,7 +13,6 @@
     <bottom>
         <TableView fx:id="table" prefHeight="220.0" prefWidth="600.0" BorderPane.alignment="CENTER">
             <columns>
-                <TableColumn fx:id="nomUtilisateur" prefWidth="115.9999771118164" text="nom d'utilisateur" />
                 <TableColumn fx:id="mail" prefWidth="57.59990692138672" text="mail" />
                 <TableColumn fx:id="nom" prefWidth="52.800048828125" text="nom" />
                 <TableColumn fx:id="prenom" prefWidth="75.0" text="prenom" />
@@ -26,8 +25,6 @@
             <children>
                 <AnchorPane layoutX="14.0" layoutY="-1.0" prefHeight="200.0" prefWidth="178.0">
                <children>
-                              <TextField fx:id="nUInput" layoutX="7.0" layoutY="130.0" />
-                              <Text layoutX="14.0" layoutY="113.0" strokeType="OUTSIDE" strokeWidth="0.0" text="nom d'utilisateur" />
                   <Text layoutX="22.0" layoutY="42.0" strokeType="OUTSIDE" strokeWidth="0.0" text="prenom" />
                   <TextField fx:id="prenomInput" layoutX="14.0" layoutY="62.0" />
                   <Button layoutX="288.0" layoutY="81.0" mnemonicParsing="false" onAction="#entrer" prefHeight="26.0" prefWidth="134.0" text="entrer" />

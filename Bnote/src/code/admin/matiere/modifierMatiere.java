@@ -34,7 +34,7 @@ public class modifierMatiere implements Initializable {
 
 
         @FXML
-        private TableColumn<dataMatiere, String> nomUtilisateur;
+        private TableColumn<dataMatiere, String> mail;
 
         @FXML
         private TableColumn<dataMatiere, String> matiere;
@@ -49,26 +49,25 @@ public class modifierMatiere implements Initializable {
         @Override
         public void initialize(URL url, ResourceBundle resourceBundle) {
 
-                nomUtilisateur.setCellValueFactory(new PropertyValueFactory<dataMatiere,String >("nomUtilisateur"));
+                mail.setCellValueFactory(new PropertyValueFactory<dataMatiere,String >("mail"));
                 matiere.setCellValueFactory(new PropertyValueFactory<dataMatiere,String >("matiere"));
 
 
                 table.setEditable(true); // Ajoutez cette ligne pour rendre le TableView éditable
 
 
-                nomUtilisateur.setCellFactory(TextFieldTableCell.forTableColumn());
-                nomUtilisateur.setOnEditCommit(
+                mail.setCellFactory(TextFieldTableCell.forTableColumn());
+                mail.setOnEditCommit(
                         new EventHandler<CellEditEvent<dataMatiere, String>>() {
                                 @Override
                                 public void handle(CellEditEvent<dataMatiere, String> t) {
                                         ((dataMatiere) t.getTableView().getItems().get(
                                                 t.getTablePosition().getRow())
-                                        ).setNomUtilisateur(t.getNewValue());
+                                        ).setMail(t.getNewValue());
                                         enregistrer();
                                 }
                         }
                 );
-
 
                 matiere.setCellFactory(TextFieldTableCell.forTableColumn());
                 matiere.setOnEditCommit(
@@ -92,7 +91,7 @@ public class modifierMatiere implements Initializable {
                         ObservableList<dataMatiere> dataMatieres = FXCollections.observableArrayList();
                         for (Map<String, String> map : MatieresMap) {
                                 dataMatiere Matiere = new dataMatiere(
-                                        map.get("nomUtilisateur"),
+                                        map.get("mail"),
                                         map.get("matiere")
                                 );
                                 dataMatieres.add(Matiere);
@@ -105,7 +104,7 @@ public class modifierMatiere implements Initializable {
 
 
         @FXML
-        private TextField nUInput;
+        private TextField mailInput;
 
         @FXML
         private TextField matiereInput;
@@ -121,8 +120,8 @@ public class modifierMatiere implements Initializable {
                         List<Map<String, String>> newMatieresMap = new ArrayList<>();
                         for (dataMatiere Matiere : table.getItems()) { // Use table.getItems() instead of Matieres
                                 Map<String, String> map = new HashMap<>();
+                                map.put("mail", Matiere.getMail());
                                 map.put("matiere", Matiere.getMatiere());
-                                map.put("nomUtilisateur", Matiere.getNomUtilisateur());
                                 newMatieresMap.add(map);
                         }
 
@@ -142,14 +141,14 @@ public class modifierMatiere implements Initializable {
 
         @FXML
         void entrer(ActionEvent event) {
-                if (  matiereInput.getText().isEmpty() ||  nUInput.getText().isEmpty())  {
+                if (matiereInput.getText().isEmpty() ||  mailInput.getText().isEmpty())  {
                         erreur.setText("Veuillez remplir tous les champs.");
 
                 } else {
                 erreur.setText("");
                 dataMatiere dataMatiere = new dataMatiere(
-                        matiereInput.getText(),
-                        nUInput.getText()
+                        mailInput.getText(),
+                        matiereInput.getText()
                 );
                 ObservableList<dataMatiere> dataMatieres = table.getItems();
                 dataMatieres.add(dataMatiere);

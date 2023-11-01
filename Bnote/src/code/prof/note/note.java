@@ -54,12 +54,10 @@ public class note implements Initializable {
         private Label erreur;
 
         @FXML
-        private TableColumn<noteData, String> nomUtilisateur;
+        private TableColumn<noteData, String> mail;
 
         @FXML
         private TableColumn<ControleData, String> appreciation;
-
-
 
         @FXML
         private TableColumn<ControleData, Integer> note;
@@ -87,7 +85,7 @@ public class note implements Initializable {
 
         @FXML
         public void initialize(URL url, ResourceBundle resourceBundle) {
-                nomUtilisateur.setCellValueFactory(new PropertyValueFactory<noteData, String>("nomUtilisateur"));
+                mail.setCellValueFactory(new PropertyValueFactory<noteData, String>("mail"));
                 ObjectMapper mapper = new ObjectMapper();
                 table.setEditable(true);
                 try {
@@ -175,9 +173,9 @@ public class note implements Initializable {
                                 }
                         }
                         for (Map<String, String> etudiant : EtudiantsMap) {
-                                noteData newEtudiant = new noteData(etudiant.get("nomUtilisateur"));
+                                noteData newEtudiant = new noteData(etudiant.get("mail"));
                                 for (Map<String, String> controle : controlesMap) {
-                                        if (controle.get("nomUtilisateur").equals(etudiant.get("nomUtilisateur")) ) {
+                                        if (controle.get("mail").equals(etudiant.get("mail")) ) {
                                                 ControleData newControle = new ControleData(Integer.parseInt(controle.get("coef")), Integer.parseInt(controle.get("note")), controle.get("appreciation"));
                                                 newEtudiant.addControle(controle.get("controle"), newControle);
                                         }
@@ -193,17 +191,6 @@ public class note implements Initializable {
                         e.printStackTrace();
                 }
         }
-
-
-
-
-        public void modifiersave(){
-
-        }
-
-
-
-
 
 
         public void enregistrer() {
@@ -223,14 +210,14 @@ public class note implements Initializable {
                         for (noteData note : notes) {
                                 // Add each student to 'EtudiantsMap'
                                 Map<String, String> etudiant = new HashMap<>();
-                                etudiant.put("nomUtilisateur", note.getNomUtilisateur());
+                                etudiant.put("mail", note.getMail());
                                 EtudiantsMap.add(etudiant);
 
                                 // Add or update each control in 'controlesMap'
                                 Map<String, ControleData> controles = note.getControles();
                                 for (Map.Entry<String, ControleData> entry : controles.entrySet()) {
                                         Map<String, String> controle = new HashMap<>();
-                                        controle.put("nomUtilisateur", note.getNomUtilisateur());
+                                        controle.put("mail", note.getMail());
                                         controle.put("controle", entry.getKey());
                                         controle.put("coef", String.valueOf(entry.getValue().getCoef()));
                                         controle.put("note", String.valueOf(entry.getValue().getNote()));
@@ -238,7 +225,7 @@ public class note implements Initializable {
                                         controle.put("matiere", Main.matiereProf); // add the current subject
 
                                         // Find and remove the existing control if it exists
-                                        controlesMap.removeIf(existingControle -> existingControle.get("nomUtilisateur").equals(note.getNomUtilisateur()) && existingControle.get("controle").equals(entry.getKey()) && existingControle.get("matiere").equals(Main.matiereProf));
+                                        controlesMap.removeIf(existingControle -> existingControle.get("mail").equals(note.getMail()) && existingControle.get("controle").equals(entry.getKey()) && existingControle.get("matiere").equals(Main.matiereProf));
 
                                         // Add the updated control
                                         controlesMap.add(controle);
