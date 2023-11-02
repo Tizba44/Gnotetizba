@@ -64,7 +64,8 @@ public class note implements Initializable {
         private TextField inputsuppr;
 
 
-
+        @FXML
+        private ChoiceBox<?> matiere;
 
 
 
@@ -237,7 +238,7 @@ public class note implements Initializable {
 
                         }
 
-                        // Update 'Etudiants' and 'controles' in 'usersMap'
+                        // ' and 'controles' in 'usersMap'
 
                         usersMap.put("controles", controlesMap);
 

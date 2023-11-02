@@ -1,1 +1,57 @@
-{"admins":[{"username":"tizba","password":"1"}],"profs":[{"motDePasse":"b","mail":"b","numero":"b","nom":"b","prenom":"b"},{"motDePasse":"d","mail":"d","numero":"d","nom":"d","prenom":"d"}],"Etudiants":[{"mail":"a"}],"Matieres":[{"mail":"b","matiere":"math"}],"controles":[{"date":"2023-11-05","note":"0","coef":"1","mail":"a","appreciation":"N/A","controle":"tyu","matiere":"math"}]}
+{
+    "admins": [
+        {
+            "username": "tizba",
+            "password": "1"
+        }
+    ],
+    "profs": [
+        {
+            "motDePasse": "b",
+            "mail": "b",
+            "numero": "b",
+            "nom": "b",
+            "prenom": "b"
+        },
+        {
+            "motDePasse": "c",
+            "mail": "c",
+            "numero": "c",
+            "nom": "c",
+            "prenom": "c"
+        }
+    ],
+    "Etudiants": [
+        {
+            "mail": "a",
+            "numero": "a",
+            "nom": "a",
+            "prenom": "a"
+        }
+    ],
+    "Matieres": [
+        {
+            "mail": "b",
+            "matiere": "geo"
+        },
+        {
+            "mail": "b",
+            "matiere": "math"
+        },
+        {
+            "mail": "c",
+            "matiere": "math"
+        }
+    ],
+    "controles": [
+        {
+            "date": "2023-11-02",
+            "note": "0",
+            "coef": "1",
+            "mail": "a",
+            "appreciation": "N/A",
+            "controle": "tst",
+            "matiere": "t"
+        }
+    ]
+}

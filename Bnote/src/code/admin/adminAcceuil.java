@@ -39,7 +39,7 @@ public class adminAcceuil {
     @FXML
     public void usermmatiere(ActionEvent event) throws IOException {
         Main m = new Main();
-        m.changeScene("admin/matiere/modifierMatiere.fxml");
+        m.changeScene("admin/matiere/matiere.fxml");
     }
 
 }

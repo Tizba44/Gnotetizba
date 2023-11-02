@@ -1,4 +1,4 @@
-package code.admin.matiere;
+package code.admin.matiere2.matiere;
 
 import code.Main;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -150,7 +150,7 @@ public class modifierMatiere implements Initializable {
                         mailInput.getText(),
                         matiereInput.getText()
                 );
-                ObservableList<dataMatiere> dataMatieres = table.getItems();
+                ObservableList<code.admin.matiere2.matiere.dataMatiere> dataMatieres = table.getItems();
                 dataMatieres.add(dataMatiere);
                 table.setItems(dataMatieres);
                 enregistrer();

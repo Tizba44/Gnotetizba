@@ -14,21 +14,32 @@
             "prenom": "b"
         },
         {
-            "motDePasse": "d",
-            "mail": "d",
-            "numero": "d",
-            "nom": "d",
-            "prenom": "d"
+            "motDePasse": "c",
+            "mail": "c",
+            "numero": "c",
+            "nom": "c",
+            "prenom": "c"
         }
     ],
     "Etudiants": [
         {
-            "mail": "a"
+            "mail": "a",
+            "numero": "a",
+            "nom": "a",
+            "prenom": "a"
         }
     ],
     "Matieres": [
         {
             "mail": "b",
+            "matiere": "geo"
+        },
+        {
+            "mail": "b",
+            "matiere": "math"
+        },
+        {
+            "mail": "c",
             "matiere": "math"
         }
     ],
@@ -41,6 +52,15 @@
             "appreciation": "N/A",
             "controle": "tst",
             "matiere": "math"
+        },
+        {
+            "date": "2023-11-02",
+            "note": "0",
+            "coef": "1",
+            "mail": "a",
+            "appreciation": "N/A",
+            "controle": "tst",
+            "matiere": "geo"
         }
     ]
 }

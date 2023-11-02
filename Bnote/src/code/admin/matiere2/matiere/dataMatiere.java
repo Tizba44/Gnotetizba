@@ -1,4 +1,4 @@
-package code.admin.matiere;
+package code.admin.matiere2.matiere;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
