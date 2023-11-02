@@ -16,24 +16,22 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDate;
 import java.util.*;
 
 import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.SimpleObjectProperty;
 
-import javafx.beans.property.SimpleIntegerProperty;
+
 
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.TextFieldTableCell;
-import javafx.util.converter.IntegerStringConverter;
-import javafx.event.EventHandler;
-import javafx.scene.control.TableColumn.CellEditEvent;
+
 import javafx.scene.control.TextField;
 
-//import event
-import javafx.event.ActionEvent;
 
-
+import javafx.util.converter.LocalDateStringConverter;
 
 
 public class note implements Initializable {
@@ -55,18 +53,6 @@ public class note implements Initializable {
 
         @FXML
         private TableColumn<noteData, String> mail;
-
-        @FXML
-        private TableColumn<ControleData, String> appreciation;
-
-        @FXML
-        private TableColumn<ControleData, Integer> note;
-
-        @FXML
-        private TableColumn<ControleData, Integer> coef;
-
-        @FXML
-        private TableColumn<noteData, String> controle;
 
         @FXML
         private TextField inputCoef;
@@ -95,7 +81,6 @@ public class note implements Initializable {
                         ObservableList<noteData> notes = FXCollections.observableArrayList();
                         ArrayList<TableColumn<noteData, ?>> controleColumns = new ArrayList<>();
 
-
                         for (Map<String, String> controle : controlesMap) {
                                 if (Main.matiereProf == null || !Main.matiereProf.equals(controle.get("matiere"))) {
                                         continue;
@@ -113,8 +98,6 @@ public class note implements Initializable {
                                         }
                                 }
 
-
-
                                 if (!columnExists) {
                                         TableColumn<noteData, String> newControleColumn = new TableColumn<>(controle.get("controle"));
                                         newControleColumn.setPrefWidth(217.5999755859375);
@@ -124,6 +107,9 @@ public class note implements Initializable {
                                         noteColumn.setPrefWidth(75.0);
                                         TableColumn<noteData, String> appreciationColumn = new TableColumn<>("appréciation");
                                         appreciationColumn.setPrefWidth(75.0);
+                                        TableColumn<noteData, LocalDate> dateColumn = new TableColumn<>("date");
+                                        dateColumn.setPrefWidth(75.0);
+
                                         coefColumn.setCellValueFactory(cellData -> {
                                                 noteData note = cellData.getValue();
                                                 ControleData controleData = note.getControles().get(controle.get("controle"));
@@ -139,15 +125,20 @@ public class note implements Initializable {
                                                 ControleData controleData = note.getControles().get(controle.get("controle"));
                                                 return new SimpleStringProperty(controleData != null ? controleData.getAppreciation() : "N/A");
                                         });
+                                        dateColumn.setCellValueFactory(cellData -> {
+                                                noteData note = cellData.getValue();
+                                                ControleData controleData = note.getControles().get(controle.get("controle"));
+                                                return new SimpleObjectProperty<>(controleData != null ? controleData.getDate() : null);
+                                        });
 
                                         table.setEditable(true);
 
                                         coefColumn.setCellFactory(TextFieldTableCell.forTableColumn());
                                         noteColumn.setCellFactory(TextFieldTableCell.forTableColumn());
                                         appreciationColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+                                        dateColumn.setCellFactory(TextFieldTableCell.forTableColumn(new LocalDateStringConverter()));
 
-
-                                        noteColumn.setOnEditCommit(event -> {
+                                noteColumn.setOnEditCommit(event -> {
                                                 noteData note = event.getRowValue();
                                                 ControleData controleData = note.getControles().get(controle.get("controle"));
                                                 controleData.setNote(Integer.parseInt(event.getNewValue()));
@@ -166,8 +157,15 @@ public class note implements Initializable {
                                                 enregistrer();
                                         });
 
+                                        dateColumn.setOnEditCommit(event -> {
+                                                noteData note = event.getRowValue();
+                                                ControleData controleData = note.getControles().get(controle.get("controle"));
+                                                controleData.setDate(event.getNewValue());
+                                                enregistrer();
+                                        });
 
-                                        newControleColumn.getColumns().addAll(coefColumn, noteColumn, appreciationColumn);
+
+                                        newControleColumn.getColumns().addAll(coefColumn, noteColumn, appreciationColumn , dateColumn);
                                         table.getColumns().add(newControleColumn);
                                         controleColumns.add(newControleColumn);
                                 }
@@ -176,21 +174,26 @@ public class note implements Initializable {
                                 noteData newEtudiant = new noteData(etudiant.get("mail"));
                                 for (Map<String, String> controle : controlesMap) {
                                         if (controle.get("mail").equals(etudiant.get("mail")) ) {
-                                                ControleData newControle = new ControleData(Integer.parseInt(controle.get("coef")), Integer.parseInt(controle.get("note")), controle.get("appreciation"));
+
+                                                ControleData newControle = new ControleData(Integer.parseInt(controle.get("coef")), Integer.parseInt(controle.get("note")), controle.get("appreciation"), LocalDate.parse(controle.get("date")) );
                                                 newEtudiant.addControle(controle.get("controle"), newControle);
                                         }
                                 }
                                 notes.add(newEtudiant);
                         }
 
-
-
-
                         table.setItems(notes);
                 } catch (IOException e) {
                         e.printStackTrace();
                 }
         }
+
+
+
+
+
+
+
 
 
         public void enregistrer() {
@@ -218,6 +221,7 @@ public class note implements Initializable {
                                 for (Map.Entry<String, ControleData> entry : controles.entrySet()) {
                                         Map<String, String> controle = new HashMap<>();
                                         controle.put("mail", note.getMail());
+                                        controle.put("date", entry.getValue().getDate().toString());
                                         controle.put("controle", entry.getKey());
                                         controle.put("coef", String.valueOf(entry.getValue().getCoef()));
                                         controle.put("note", String.valueOf(entry.getValue().getNote()));
@@ -234,7 +238,7 @@ public class note implements Initializable {
                         }
 
                         // Update 'Etudiants' and 'controles' in 'usersMap'
-                        usersMap.put("Etudiants", EtudiantsMap);
+
                         usersMap.put("controles", controlesMap);
 
                         // Write all data back to the JSON file
@@ -254,9 +258,10 @@ public class note implements Initializable {
                         erreur.setText("Veuillez remplir tous les champs.");
                 } else {
                         erreur.setText(""); // Clear the error message if all fields are valid
-// Create a new control
-                        ControleData newControle = new ControleData(Integer.parseInt(inputCoef.getText())  ,0,"N/A");
-// Add the new control to the list of controls
+                        // Create a new control
+                        LocalDate date = LocalDate.now(); // get the current date
+                        ControleData newControle = new ControleData(Integer.parseInt(inputCoef.getText()), 0, "N/A", date);
+                        // Add the new control to the list of controls
                         for (noteData note : table.getItems()) {
                                 note.addControle(inputControle.getText(), newControle);
                         }
@@ -265,6 +270,8 @@ public class note implements Initializable {
                         initialize(null, null);
                 }
         }
+
+
 
         @FXML
         void supprimer(ActionEvent event) {
@@ -302,6 +309,10 @@ public class note implements Initializable {
                                         table.getColumns().remove(column);
                                 }
                         }
+
+
+                        // jouer initialize
+                        initialize(null, null);
 
                         erreur.setText(""); // Clear the error message if all fields are valid
                 } catch (IOException e) {
