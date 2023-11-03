@@ -11,7 +11,7 @@
 <?import javafx.scene.text.Text?>
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: ffffff;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="code.prof.note.note">
-   <top>
+   <center>
         <AnchorPane prefHeight="200.0" prefWidth="615.0" BorderPane.alignment="CENTER">
             <children>
                 <AnchorPane layoutX="-8.0" layoutY="-13.0" prefHeight="200.0" prefWidth="178.0">
@@ -23,7 +23,8 @@
                   <Label fx:id="erreur" layoutX="208.0" layoutY="144.0" prefHeight="18.0" prefWidth="228.0" />
                   <Text layoutX="26.0" layoutY="68.0" strokeType="OUTSIDE" strokeWidth="0.0" text="controle" wrappingWidth="85.7640380859375" />
                   <TextField fx:id="inputControle" layoutX="14.0" layoutY="74.0" />
-                  <ChoiceBox fx:id="matiere" layoutX="200.0" layoutY="149.0" prefWidth="150.0" />
+                  <ChoiceBox fx:id="choiceBoxMatiere" layoutX="200.0" layoutY="149.0" prefWidth="150.0" />
+                  <Label fx:id="labelMatiere" layoutX="164.0" layoutY="21.0" prefHeight="18.0" prefWidth="228.0" />
                </children></AnchorPane>
                 <Button fx:id="button" layoutX="515.0" layoutY="28.0" mnemonicParsing="false" onAction="#userRetour" prefWidth="63.0" style="-fx-background-color: #00b3d4;" text="retour" textFill="WHITE" />
                 <TableView fx:id="table" layoutY="172.0" prefHeight="235.0" prefWidth="600.0">
@@ -36,5 +37,5 @@
             <Text layoutX="427.0" layoutY="70.0" strokeType="OUTSIDE" strokeWidth="0.0" text="suppr " wrappingWidth="85.7640380859375" />
             </children>
         </AnchorPane>
-   </top>
+   </center>
 </BorderPane>

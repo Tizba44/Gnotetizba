@@ -188,26 +188,58 @@ public class modifierEtudiant implements Initializable {
 
 
 
+
         @FXML
-        void entrer(ActionEvent event) {
-                if (mailInput.getText().isEmpty()  || nomInput.getText().isEmpty() || prenomInput.getText().isEmpty()  || numeroInput.getText().isEmpty()) {
+        void entrer(ActionEvent event) throws IOException {
+                ObjectMapper mapper = new ObjectMapper();
+                // Regex pour valider l'email
+                String regexMail = "^[A-Za-z0-9+_.-]+@(.+)$";
+                // Regex pour valider le nom et le prénom (lettres et espaces uniquement)
+                String regexNomPrenom = "^[a-zA-Z\\s]+";
+                // Regex pour valider le numéro de téléphone
+                String regexNumero = "^[0-9]{10}$";
+
+                if (mailInput.getText().isEmpty() || nomInput.getText().isEmpty() || prenomInput.getText().isEmpty() || numeroInput.getText().isEmpty()) {
                         erreur.setText("Veuillez remplir tous les champs.");
-
+                } else if (!mailInput.getText().matches(regexMail)) {
+                        erreur.setText("Veuillez entrer un email valide.");
+                } else if (!nomInput.getText().matches(regexNomPrenom)) {
+                        erreur.setText("Veuillez entrer un nom valide.");
+                } else if (!prenomInput.getText().matches(regexNomPrenom)) {
+                        erreur.setText("Veuillez entrer un prénom valide.");
+                } else if (!numeroInput.getText().matches(regexNumero)) {
+                        erreur.setText("Veuillez entrer un numéro valide.");
                 } else {
-                erreur.setText(""); // Effacez le message d'erreur si tous les champs sont valides
-                dataEtudiant dataEtudiant = new dataEtudiant(
-                        mailInput.getText(),
-                        nomInput.getText(),
-                        prenomInput.getText(),
-                        numeroInput.getText()
+                        // Lire le fichier JSON existant
+                        Map<String, List<Map<String, String>>> usersMap = mapper.readValue(new File("src/code/data.json"), new TypeReference<Map<String, List<Map<String, String>>>>() {});
+                        List<Map<String, String>> EtudiantsMap = usersMap.get("Etudiants");
+                        boolean emailExists = false;
+                        for (Map<String, String> map : EtudiantsMap) {
+                                if (map.get("mail").equals(mailInput.getText())) {
+                                        emailExists = true;
+                                        break;
+                                }
+                        }
 
-                );
-                ObservableList<dataEtudiant> dataEtudiants = table.getItems();
-                dataEtudiants.add(dataEtudiant);
-                table.setItems(dataEtudiants);
-                enregistrer();
+                        if (emailExists) {
+                                erreur.setText("Cet email existe déjà.");
+                        } else {
+                                erreur.setText(""); // Effacez le message d'erreur si tous les champs sont valides
+                                dataEtudiant dataEtudiant = new dataEtudiant(
+                                        mailInput.getText(),
+                                        nomInput.getText(),
+                                        prenomInput.getText(),
+                                        numeroInput.getText()
+                                );
+                                ObservableList<dataEtudiant> dataEtudiants = table.getItems();
+                                dataEtudiants.add(dataEtudiant);
+                                table.setItems(dataEtudiants);
+                                enregistrer();
+                        }
                 }
         }
+
+
 
         @FXML
         void supprimer(ActionEvent event) {

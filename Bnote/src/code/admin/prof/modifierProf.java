@@ -1,6 +1,7 @@
 package code.admin.prof;
 
 import code.Main;
+import code.admin.etudiant.dataEtudiant;
 import code.admin.prof.dataProf;
 import javafx.collections.ObservableList;
 import javafx.collections.FXCollections;
@@ -28,6 +29,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
+
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.nio.charset.StandardCharsets;
+
+
 
 
 public class modifierProf implements Initializable {
@@ -216,26 +223,73 @@ public class modifierProf implements Initializable {
 
 
 
+
+
+
         @FXML
-        void entrer(ActionEvent event) {
-                if (mailInput.getText().isEmpty() || nomInput.getText().isEmpty()  || prenomInput.getText().isEmpty() || motDePasseInput.getText().isEmpty() || numeroInput.getText().isEmpty() )  {
+        void entrer(ActionEvent event) throws IOException, NoSuchAlgorithmException {
+                ObjectMapper mapper = new ObjectMapper();
+                // Regex for validating the email
+                String regexMail = "^[A-Za-z0-9+_.-]+@(.+)$";
+                // Regex for validating the name and surname (letters and spaces only)
+                String regexNomPrenom = "^[a-zA-Z\\s]+";
+                // Regex for validating the phone number
+                String regexNumero = "^[0-9]{10}$";
+                // Regex for validating the password (at least 8 characters, at least one uppercase letter, one lowercase letter, one number and one special character)
+                String regexPassword = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}$";
+                // comme par exemple : 12345678aA@
+
+                if (mailInput.getText().isEmpty() || nomInput.getText().isEmpty() || prenomInput.getText().isEmpty() || numeroInput.getText().isEmpty() || motDePasseInput.getText().isEmpty()) {
                         erreur.setText("Veuillez remplir tous les champs.");
-
+                } else if (!mailInput.getText().matches(regexMail)) {
+                        erreur.setText("Veuillez entrer un email valide.");
+                } else if (!nomInput.getText().matches(regexNomPrenom)) {
+                        erreur.setText("Veuillez entrer un nom valide.");
+                } else if (!prenomInput.getText().matches(regexNomPrenom)) {
+                        erreur.setText("Veuillez entrer un prénom valide.");
+                } else if (!numeroInput.getText().matches(regexNumero)) {
+                        erreur.setText("Veuillez entrer un numéro valide");
+                } else if (!motDePasseInput.getText().matches(regexPassword)) {
+                        erreur.setText("Veuillez entrer un mot de passe valide avec au moins 8 caractères, une lettre majuscule, une lettre minuscule, un chiffre et un caractère spécial.");
                 } else {
-                erreur.setText(""); // Effacez le message d'erreur si tous les champs sont valides
-                dataProf dataProf = new dataProf(
-                        mailInput.getText(),
-                        nomInput.getText(),
-                        prenomInput.getText(),
-                        motDePasseInput.getText(),
-                        numeroInput.getText()
+                        // Read the existing JSON file
+                        Map<String, List<Map<String, String>>> usersMap = mapper.readValue(new File("src/code/data.json"), new TypeReference<Map<String, List<Map<String, String>>>>() {});
+                        List<Map<String, String>> profsMap = usersMap.get("profs");
+                        boolean emailExists = false;
+                        for (Map<String, String> map : profsMap) {
+                                if (map.get("mail").equals(mailInput.getText())) {
+                                        emailExists = true;
+                                        break;
+                                }
+                        }
 
-                );
-                ObservableList<dataProf> dataProfs = table.getItems();
-                dataProfs.add(dataProf);
-                table.setItems(dataProfs);
+                        if (emailExists) {
+                                erreur.setText("Cet email existe déjà.");
+                        } else {
+                                erreur.setText(""); // Clear the error message if all fields are valid
+                                // Encrypt the password
+                                MessageDigest md = MessageDigest.getInstance("SHA-256");
+                                byte[] hash = md.digest(motDePasseInput.getText().getBytes(StandardCharsets.UTF_8));
+                                StringBuilder sb = new StringBuilder();
+                                for (byte b : hash) {
+                                        sb.append(String.format("%02x", b));
+                                }
+                                String encryptedPassword = sb.toString();
 
-                enregistrer();
+                                dataProf dataProf = new dataProf(
+                                        mailInput.getText(),
+                                        nomInput.getText(),
+                                        prenomInput.getText(),
+                                        encryptedPassword,
+                                        numeroInput.getText()
+                                );
+                                ObservableList<dataProf> dataProfs = table.getItems();
+                                dataProfs.add(dataProf);
+                                table.setItems(dataProfs);
+
+                                enregistrer();
+
+                        }
                 }
         }
 

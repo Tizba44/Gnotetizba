@@ -9,9 +9,10 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 public class Main extends Application {
+    public static String matiereProf;
     private static Stage stg;
 
-    public static String matiereProf;
+    public static String[] matieresProf;
     @Override
     public void start(Stage primaryStage) throws Exception{
         stg = primaryStage;

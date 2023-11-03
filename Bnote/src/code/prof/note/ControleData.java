@@ -12,14 +12,26 @@ public class ControleData {
     private SimpleStringProperty appreciation;
     private SimpleObjectProperty<LocalDate> date;
 
-    public ControleData(Integer coef, Integer note, String appreciation, LocalDate date) {
+    private SimpleStringProperty matiere;
+
+    public ControleData(Integer coef, Integer note, String appreciation, LocalDate date, String matiere ) {
         this.coef = new SimpleIntegerProperty(coef);
         this.note = new SimpleIntegerProperty(note);
         this.appreciation = new SimpleStringProperty(appreciation);
         this.date = new SimpleObjectProperty<>(date);
+        this.matiere = new SimpleStringProperty(matiere);
     }
 
     // getters and setters...
+
+    public String getMatiere() {
+        return matiere.get();
+    }
+
+    public void setMatiere(String matiere) {
+        this.matiere.set(matiere);
+    }
+
 
     public Integer getCoef() {
         return coef.get();

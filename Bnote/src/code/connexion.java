@@ -12,6 +12,9 @@ import com.fasterxml.jackson.core.type.TypeReference;
 
 import java.util.List;
 import java.util.Map;
+import java.util.ArrayList;
+
+
 
 public class connexion  {
 
@@ -45,18 +48,18 @@ public class connexion  {
             for (Map<String, String> user : getProfs(mapper)) {
                 if (username.getText().equals(user.get("mail")) && password.getText().equals(user.get("motDePasse"))) {
                     // Stocker la matière du professeur
-                    Main.matiereProf = null;
+                    List<String> matieresProf = new ArrayList<>();
                     for (Map<String, String> matiere : getMatieres(mapper)) {
                         if (user.get("mail").equals(matiere.get("mail"))) {
-                            Main.matiereProf = matiere.get("matiere");
-                            break;
+                            matieresProf.add(matiere.get("matiere"));
                         }
                     }
                     // Si aucune matière n'est associée au professeur, bloquer la connexion
-                    if (Main.matiereProf == null) {
+                    if (matieresProf.isEmpty()) {
                         wrongLogIn.setText("Aucune matière n'est associée à votre compte. Veuillez contacter l'administrateur.");
                         return;
                     }
+                    Main.matieresProf = matieresProf.toArray(new String[0]);
                     wrongLogIn.setText("Bienvenue Professeur!");
                     m.changeScene("prof/profAcceuil.fxml");
                     return;

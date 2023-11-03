@@ -32,6 +32,7 @@ import javafx.scene.control.TextField;
 
 
 import javafx.util.converter.LocalDateStringConverter;
+import javafx.scene.control.ChoiceBox;
 
 
 public class note implements Initializable {
@@ -65,13 +66,79 @@ public class note implements Initializable {
 
 
         @FXML
-        private ChoiceBox<?> matiere;
+        private ChoiceBox<String> matiere;
+
+        @FXML
+        private Label labelMatiere;
+
+
+
+
+
+
+
+        @FXML
+        private ChoiceBox<String> choiceBoxMatiere;
+
+
+
+
+
 
 
 
 
         @FXML
         public void initialize(URL url, ResourceBundle resourceBundle) {
+                // Remplir la ChoiceBox avec les matières du professeur
+                if (choiceBoxMatiere.getItems().isEmpty()) {
+                        choiceBoxMatiere.getItems().addAll(Main.matieresProf);
+                }
+
+
+                // Sélectionner la première matière par défaut si aucune matiere na deja été selectionnée
+                if (Main.matiereProf == null) {
+                        choiceBoxMatiere.getSelectionModel().selectFirst();
+                        tableaux();
+                } else {
+                        // Sélectionner la matière précédemment sélectionnée
+                        choiceBoxMatiere.getSelectionModel().select(Main.matiereProf);
+                        tableaux();
+                }
+
+                // Ajouter un écouteur pour mettre à jour la matière sélectionnée
+                choiceBoxMatiere.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+                        // newValue est la nouvelle matière sélectionnée
+                        // Vous pouvez l'utiliser pour mettre à jour votre variable
+                        Main.matiereProf = newValue;
+
+                        // vider les colonnes de controle pour mettre à jour les controles de la nouvelle matière ne pas vider la colonne mail
+                        for (TableColumn<noteData, ?> column : new ArrayList<>(table.getColumns())) {
+                                if (!column.getText().equals("mail")) {
+                                        table.getColumns().remove(column);
+                                }
+                        }
+
+
+
+
+
+
+
+
+                        tableaux();
+                        //changer le label de la matière
+                        labelMatiere.setText("Matière : " + choiceBoxMatiere.getValue());
+                });
+
+
+        }
+
+
+
+
+
+        public void tableaux() {
                 mail.setCellValueFactory(new PropertyValueFactory<noteData, String>("mail"));
                 ObjectMapper mapper = new ObjectMapper();
                 table.setEditable(true);
@@ -79,17 +146,21 @@ public class note implements Initializable {
                         Map<String, List<Map<String, String>>> usersMap = mapper.readValue(new File("src/code/data.json"), new TypeReference<Map<String, List<Map<String, String>>>>(){});
                         List<Map<String, String>> EtudiantsMap = usersMap.get("Etudiants");
                         List<Map<String, String>> controlesMap = usersMap.get("controles");
+
+
+//                        supprimer les valeurs ObservableList existantes
+                        table.getItems().clear();
+
                         ObservableList<noteData> notes = FXCollections.observableArrayList();
+
                         ArrayList<TableColumn<noteData, ?>> controleColumns = new ArrayList<>();
 
                         for (Map<String, String> controle : controlesMap) {
-                                if (Main.matiereProf == null || !Main.matiereProf.equals(controle.get("matiere"))) {
+                                if (choiceBoxMatiere.getValue() == null || !choiceBoxMatiere.getValue().equals(controle.get("matiere"))) {
                                         continue;
                                 }
-
                                 // Obtenez la liste des colonnes existantes
                                 ObservableList<TableColumn<noteData, ?>> existingColumns = table.getColumns();
-
                                 // Vérifiez si la colonne existe déjà
                                 boolean columnExists = false;
                                 for (TableColumn<noteData, ?> column : existingColumns) {
@@ -98,7 +169,6 @@ public class note implements Initializable {
                                                 break;
                                         }
                                 }
-
                                 if (!columnExists) {
                                         TableColumn<noteData, String> newControleColumn = new TableColumn<>(controle.get("controle"));
                                         newControleColumn.setPrefWidth(217.5999755859375);
@@ -139,7 +209,7 @@ public class note implements Initializable {
                                         appreciationColumn.setCellFactory(TextFieldTableCell.forTableColumn());
                                         dateColumn.setCellFactory(TextFieldTableCell.forTableColumn(new LocalDateStringConverter()));
 
-                                noteColumn.setOnEditCommit(event -> {
+                                        noteColumn.setOnEditCommit(event -> {
                                                 noteData note = event.getRowValue();
                                                 ControleData controleData = note.getControles().get(controle.get("controle"));
                                                 controleData.setNote(Integer.parseInt(event.getNewValue()));
@@ -171,12 +241,15 @@ public class note implements Initializable {
                                         controleColumns.add(newControleColumn);
                                 }
                         }
+
+
+
                         for (Map<String, String> etudiant : EtudiantsMap) {
                                 noteData newEtudiant = new noteData(etudiant.get("mail"));
                                 for (Map<String, String> controle : controlesMap) {
                                         if (controle.get("mail").equals(etudiant.get("mail")) ) {
 
-                                                ControleData newControle = new ControleData(Integer.parseInt(controle.get("coef")), Integer.parseInt(controle.get("note")), controle.get("appreciation"), LocalDate.parse(controle.get("date")) );
+                                                ControleData newControle = new ControleData(Integer.parseInt(controle.get("coef")), Integer.parseInt(controle.get("note")), controle.get("appreciation"), LocalDate.parse(controle.get("date")) , controle.get("matiere") );
                                                 newEtudiant.addControle(controle.get("controle"), newControle);
                                         }
                                 }
@@ -189,65 +262,68 @@ public class note implements Initializable {
                 }
         }
 
-
-
-
-
-
-
-
-
         public void enregistrer() {
                 ObjectMapper mapper = new ObjectMapper();
                 try {
-                        // Read the existing data from the JSON file
+                        // Lire les données existantes à partir du fichier JSON
                         Map<String, List<Map<String, String>>> usersMap = mapper.readValue(new File("src/code/data.json"), new TypeReference<Map<String, List<Map<String, String>>>>(){});
 
-                        // Get the current data from the table
+                        // Obtenir les données actuelles de la table
                         ObservableList<noteData> notes = table.getItems();
 
-                        // Prepare the lists for 'Etudiants' and 'controles'
-                        List<Map<String, String>> EtudiantsMap = new ArrayList<>();
-                        List<Map<String, String>> controlesMap = new ArrayList<>(usersMap.get("controles")); // copy existing controls
-
-                        // Iterate over the notes
+                        //print the data
                         for (noteData note : notes) {
-                                // Add each student to 'EtudiantsMap'
+                                System.out.println(note.getMail());
+                                Map<String, ControleData> controles = note.getControles();
+                                for (Map.Entry<String, ControleData> entry : controles.entrySet()) {
+                                        System.out.println(entry.getKey() + " " + entry.getValue().getCoef() + " " + entry.getValue().getNote() + " " + entry.getValue().getAppreciation() + " " + entry.getValue().getDate());
+                                }
+                        }
+
+                        // Préparer les listes pour 'Etudiants' et 'controles'
+                        List<Map<String, String>> EtudiantsMap = new ArrayList<>();
+                        List<Map<String, String>> controlesMap = new ArrayList<>(usersMap.get("controles")); // copier les contrôles existants
+
+                        for (noteData note : notes) {
+                                // Ajouter chaque étudiant à 'EtudiantsMap'
                                 Map<String, String> etudiant = new HashMap<>();
                                 etudiant.put("mail", note.getMail());
                                 EtudiantsMap.add(etudiant);
-
-                                // Add or update each control in 'controlesMap'
                                 Map<String, ControleData> controles = note.getControles();
                                 for (Map.Entry<String, ControleData> entry : controles.entrySet()) {
-                                        Map<String, String> controle = new HashMap<>();
-                                        controle.put("mail", note.getMail());
-                                        controle.put("date", entry.getValue().getDate().toString());
-                                        controle.put("controle", entry.getKey());
-                                        controle.put("coef", String.valueOf(entry.getValue().getCoef()));
-                                        controle.put("note", String.valueOf(entry.getValue().getNote()));
-                                        controle.put("appreciation", entry.getValue().getAppreciation());
-                                        controle.put("matiere", Main.matiereProf); // add the current subject
-
-                                        // Find and remove the existing control if it exists
-                                        controlesMap.removeIf(existingControle -> existingControle.get("mail").equals(note.getMail()) && existingControle.get("controle").equals(entry.getKey()) && existingControle.get("matiere").equals(Main.matiereProf));
-
-                                        // Add the updated control
-                                        controlesMap.add(controle);
+                                        // Vérifiez si la matière du contrôle correspond à la matière actuelle
+                                        if (entry.getValue().getMatiere().equals(choiceBoxMatiere.getValue())) {
+                                                Map<String, String> controle = new HashMap<>();
+                                                controle.put("mail", note.getMail());
+                                                controle.put("date", entry.getValue().getDate().toString());
+                                                controle.put("controle", entry.getKey());
+                                                controle.put("coef", String.valueOf(entry.getValue().getCoef()));
+                                                controle.put("note", String.valueOf(entry.getValue().getNote()));
+                                                controle.put("appreciation", entry.getValue().getAppreciation());
+                                                controle.put("matiere", choiceBoxMatiere.getValue()); // ajoute la matière actuelle
+                                                // Supprimez le contrôle existant pour l'étudiant
+                                                controlesMap.removeIf(existingControle -> existingControle.get("mail").equals(note.getMail()) && existingControle.get("controle").equals(entry.getKey()) && existingControle.get("matiere").equals(choiceBoxMatiere.getValue()));
+                                                // Ajoutez le nouveau contrôle
+                                                controlesMap.add(controle);
+                                        }
                                 }
-
                         }
 
-                        // ' and 'controles' in 'usersMap'
-
+                        // Mettre à jour 'Etudiants' et 'controles' dans 'usersMap'
                         usersMap.put("controles", controlesMap);
 
-                        // Write all data back to the JSON file
+                        // Écrire toutes les données dans le fichier JSON
                         mapper.writeValue(new File("src/code/data.json"), usersMap);
+
+
+
+
                 } catch (IOException e) {
                         e.printStackTrace();
                 }
         }
+
+
 
 
 
@@ -261,14 +337,17 @@ public class note implements Initializable {
                         erreur.setText(""); // Clear the error message if all fields are valid
                         // Create a new control
                         LocalDate date = LocalDate.now(); // get the current date
-                        ControleData newControle = new ControleData(Integer.parseInt(inputCoef.getText()), 0, "N/A", date);
+
+                        ControleData newControle = new ControleData(Integer.parseInt(inputCoef.getText()), 0, "N/A", date, choiceBoxMatiere.getValue());
+
                         // Add the new control to the list of controls
                         for (noteData note : table.getItems()) {
                                 note.addControle(inputControle.getText(), newControle);
                         }
+
                         enregistrer();
-                        // jouer initialize
-                        initialize(null, null);
+
+                        tableaux();
                 }
         }
 
@@ -288,15 +367,15 @@ public class note implements Initializable {
                         List<Map<String, String>> controlesMap = usersMap.get("controles");
 
                         // Check if the control exists
-                        boolean controlExists = controlesMap.stream().anyMatch(controle -> controle.get("controle").equals(controleToDelete) && controle.get("matiere").equals(Main.matiereProf));
+                        boolean controlExists = controlesMap.stream().anyMatch(controle -> controle.get("controle").equals(controleToDelete) && controle.get("matiere").equals(choiceBoxMatiere.getValue()));
 
                         if (!controlExists) {
                                 erreur.setText("Il n'y a pas de contrôle avec ce nom à supprimer.");
                                 return;
                         }
 
-                        // Remove the controls that match 'controleToDelete' and 'Main.matiereProf'
-                        controlesMap.removeIf(controle -> controle.get("controle").equals(controleToDelete) && controle.get("matiere").equals(Main.matiereProf));
+                        // Remove the controls that match 'controleToDelete' and 'choiceBoxMatiere.getValue()'
+                        controlesMap.removeIf(controle -> controle.get("controle").equals(controleToDelete) && controle.get("matiere").equals(choiceBoxMatiere.getValue()));
 
                         // Update 'controles' in 'usersMap'
                         usersMap.put("controles", controlesMap);
@@ -313,7 +392,7 @@ public class note implements Initializable {
 
 
                         // jouer initialize
-                        initialize(null, null);
+                        tableaux();
 
                         erreur.setText(""); // Clear the error message if all fields are valid
                 } catch (IOException e) {
