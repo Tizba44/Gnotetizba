@@ -81,7 +81,11 @@ public class matiere implements Initializable {
                                 newMatiereColumn.setOnEditCommit(event -> {
                                         ProfData note = event.getRowValue();
                                         Map<String, MatiereData> Matieres = note.getmatieres();
-                                        Matieres.put(matiere, new MatiereData(event.getNewValue()));
+                                        if ("oui".equals(event.getNewValue())) {
+                                                Matieres.put(matiere, new MatiereData(matiere));
+                                        } else {
+                                                Matieres.put(matiere, null);
+                                        }
                                         enregistrer();
                                 });
                                 table.getColumns().add(newMatiereColumn);
@@ -141,7 +145,10 @@ public class matiere implements Initializable {
                                 }
                         }
 
-                        // Mettre à jour 'Matieres' dans 'usersMap'
+                        // Supprimer les données existantes de 'Matieres' dans le json
+                        usersMap.remove("Matieres");
+
+                        // ajouer les nouvelles données à 'Matieres' dans le json
                         usersMap.put("Matieres", MatieresMap);
 
                         // Écrire toutes les données dans le fichier JSON
@@ -156,59 +163,49 @@ public class matiere implements Initializable {
 
 
 
+
+
+
+
+
         @FXML
         void entrer(ActionEvent event) {
                 if (inputMatiere.getText().isEmpty())  {
                         erreur.setText("Veuillez remplir tous les champs.");
                 } else {
                         erreur.setText(""); // Effacer le message d'erreur si tous les champs sont valides
-                        try {
-                                ObjectMapper mapper = new ObjectMapper();
-                                Map<String, List<Map<String, String>>> usersMap = mapper.readValue(new File("src/code/data.json"), new TypeReference<Map<String, List<Map<String, String>>>>(){});
-
-                                // Obtenir les données actuelles du tableau
-                                ObservableList<ProfData> profs = table.getItems();
-                                // Vérifier si la matière existe déjà
-                                if (usersMap.containsKey(inputMatiere.getText())) {
-                                        erreur.setText("La matière existe déjà.");
-                                        return;
-                                }
-
-                                // Créer une nouvelle matière
-                                MatiereData newMatiere = new MatiereData(inputMatiere.getText());
-
-                                // Ajouter la nouvelle matière aux professeurs sélectionnés
-                                for (ProfData prof : table.getSelectionModel().getSelectedItems()) {
-                                        prof.addControle(inputMatiere.getText(), newMatiere);
-                                }
-
-                                // Créer une nouvelle colonne pour la matière
-                                TableColumn<ProfData, String> newMatiereColumn = new TableColumn<>(inputMatiere.getText());
-                                newMatiereColumn.setPrefWidth(217.5999755859375);
-                                newMatiereColumn.setCellValueFactory(cellData -> {
-                                        ProfData note = cellData.getValue();
-                                        Map<String, MatiereData> Matieres = note.getmatieres();
-                                        MatiereData MatiereData = Matieres.get(inputMatiere.getText());
-                                        return new SimpleObjectProperty<>(MatiereData != null ? "Oui" : "Non");
-                                });
-                                newMatiereColumn.setCellFactory(TextFieldTableCell.forTableColumn());
-                                newMatiereColumn.setOnEditCommit(event1 -> {
-                                        ProfData note = event1.getRowValue();
-                                        Map<String, MatiereData> Matieres = note.getmatieres();
-                                        Matieres.put(inputMatiere.getText(), new MatiereData(event1.getNewValue()));
-                                        enregistrer();
-                                });
-                                table.getColumns().add(newMatiereColumn);
-                                enregistrer();
-                        } catch (IOException e) {
-                                e.printStackTrace();
-                                // Handle the exceptions appropriately here
+                        // Créer une nouvelle matière
+                        MatiereData newMatiere = new MatiereData(inputMatiere.getText());
+                        // Ajouter la nouvelle matière aux professeurs sélectionnés
+                        for (ProfData prof : table.getSelectionModel().getSelectedItems()) {
+                                prof.addControle(inputMatiere.getText(), newMatiere);
                         }
+                        // Créer une nouvelle colonne pour la matière
+                        TableColumn<ProfData, String> newMatiereColumn = new TableColumn<>(inputMatiere.getText());
+                        newMatiereColumn.setPrefWidth(217.5999755859375);
+                        newMatiereColumn.setCellValueFactory(cellData -> {
+                                ProfData note = cellData.getValue();
+                                Map<String, MatiereData> Matieres = note.getmatieres();
+                                MatiereData MatiereData = Matieres.get(inputMatiere.getText());
+                                return new SimpleObjectProperty<>(MatiereData != null ? "oui" : "non");
+                        });
+
+                        newMatiereColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+                        newMatiereColumn.setOnEditCommit(event1 -> {
+                                ProfData note = event1.getRowValue();
+                                Map<String, MatiereData> Matieres = note.getmatieres();
+                                Matieres.put(inputMatiere.getText(), new MatiereData(event1.getNewValue()));
+                                enregistrer();
+                        });
+                        table.getColumns().add(newMatiereColumn);
+
+
+
+
+                        enregistrer();
+
                 }
         }
-
-
-
 
 
 

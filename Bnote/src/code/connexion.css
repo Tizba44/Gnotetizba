@@ -1,0 +1,8 @@
+.vbox_background_center{
+    -fx-background-image: url("loginGauche.jpg");
+
+}
+
+.vbox_background_right{
+    -fx-background-image: url("loginDroite.jpg");
+}

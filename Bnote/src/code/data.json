@@ -1,1 +1,62 @@
-{"admins":[{"username":"tizba","password":"1"}],"profs":[{"motDePasse":"4bd5c5777a38ac5022c65c3863e32edb3c5bf609734515c462d03f177f82132a","mail":"bapt@gmail.com","numero":"0629621014","nom":"zer","prenom":"qhgzdh"},{"motDePasse":"5e57f7ce4d71c53a11d265972eb92119651c12ad24e4ce2fd757d8f576cd5418","mail":"bapt@gmail.com","numero":"0629621014","nom":"audeon","prenom":"zerz"},{"motDePasse":"5e57f7ce4d71c53a11d265972eb92119651c12ad24e4ce2fd757d8f576cd5418","mail":"tst@gmail.com","numero":"0629621014","nom":"audeon","prenom":"maxime"}],"Etudiants":[{"mail":"bapt@gmail.com","numero":"0629621014","nom":"araezr","prenom":"jqkdqz"}],"Matieres":[{"mail":"bapt@gmail.com","matiere":"geo"}],"controles":[{"date":"2023-11-03","note":"0","coef":"1","mail":"a","appreciation":"N/A","controle":"tst","matiere":"math"},{"date":"2023-11-03","note":"0","coef":"1","mail":"a","appreciation":"N/A","controle":"b","matiere":"geo"},{"date":"2023-11-03","note":"0","coef":"1","mail":"a","appreciation":"N/A","controle":"tst","matiere":"geo"},{"date":"2023-11-03","note":"12","coef":"1","mail":"a","appreciation":"bine","controle":"c","matiere":"math"}]}
+{
+    "admins": [
+        {
+            "username": "tizba",
+            "password": "1"
+        }
+    ],
+    "profs": [
+        {
+            "motDePasse": "b",
+            "mail": "b",
+            "numero": "0629621014",
+            "nom": "b",
+            "prenom": "qhgzdh"
+        },
+        {
+            "motDePasse": "5e57f7ce4d71c53a11d265972eb92119651c12ad24e4ce2fd757d8f576cd5418",
+            "mail": "tst@gmail.com",
+            "numero": "0629621014",
+            "nom": "audeon",
+            "prenom": "maxime"
+        }
+    ],
+    "Etudiants": [
+        {
+            "mail": "bapt@gmail.com",
+            "numero": "0629621014",
+            "nom": "araezr",
+            "prenom": "jqkdqz"
+        }
+    ],
+    "controles": [
+        {
+            "date": "2023-11-06",
+            "note": "15",
+            "coef": "1",
+            "mail": "bapt@gmail.com",
+            "appreciation": "N/A",
+            "controle": "zero",
+            "matiere": "geo"
+        },
+        {
+            "date": "2023-11-06",
+            "note": "0",
+            "coef": "1",
+            "mail": "bapt@gmail.com",
+            "appreciation": "N/A",
+            "controle": "contr",
+            "matiere": "geo"
+        }
+    ],
+    "Matieres": [
+        {
+            "mail": "b",
+            "matiere": "geo"
+        },
+        {
+            "mail": "tst@gmail.com",
+            "matiere": "math"
+        }
+    ]
+}
