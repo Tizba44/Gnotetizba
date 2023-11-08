@@ -7,38 +7,76 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: ffffff;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="code.admin.etudiant.modifierEtudiant">
-    <bottom>
-        <TableView fx:id="table" prefHeight="220.0" prefWidth="600.0" BorderPane.alignment="CENTER">
-            <columns>
-                <TableColumn fx:id="mail" prefWidth="57.59990692138672" text="mail" />
-                <TableColumn fx:id="nom" prefWidth="52.800048828125" text="nom" />
-                <TableColumn fx:id="prenom" prefWidth="75.0" text="prenom" />
-            <TableColumn fx:id="numero" prefWidth="130.39990234375" text="numero de telephone" />
-            </columns>
-        </TableView>
-    </bottom>
-   <top>
-        <AnchorPane prefHeight="200.0" prefWidth="615.0" BorderPane.alignment="CENTER">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="540.0" prefWidth="960.0" style="-fx-background-color: e8e034;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="code.admin.etudiant.modifierEtudiant">
+    <top>
+        <AnchorPane prefHeight="170.0" prefWidth="960.0" BorderPane.alignment="CENTER">
             <children>
-                <AnchorPane layoutX="14.0" layoutY="-1.0" prefHeight="200.0" prefWidth="178.0">
-               <children>
-                  <Text layoutX="22.0" layoutY="42.0" strokeType="OUTSIDE" strokeWidth="0.0" text="prenom" />
-                  <TextField fx:id="prenomInput" layoutX="14.0" layoutY="62.0" />
-                  <Button layoutX="288.0" layoutY="81.0" mnemonicParsing="false" onAction="#entrer" prefHeight="26.0" prefWidth="134.0" text="entrer" />
-                  <Text layoutX="181.0" layoutY="34.0" strokeType="OUTSIDE" strokeWidth="0.0" text="numero de telephone" />
-                  <TextField fx:id="numeroInput" layoutX="173.0" layoutY="49.0" />
-                  <Button layoutX="441.0" layoutY="81.0" mnemonicParsing="false" onAction="#supprimer" prefHeight="26.0" prefWidth="134.0" text="supprimer" />
-                  <Label fx:id="erreur" layoutX="186.0" layoutY="168.0" prefHeight="18.0" prefWidth="228.0" />
-               </children></AnchorPane>
-                <Button fx:id="button" layoutX="515.0" layoutY="28.0" mnemonicParsing="false" onAction="#userRetour" prefWidth="63.0" style="-fx-background-color: #00b3d4;" text="retour" textFill="WHITE" />
-            <TextField fx:id="mailInput" layoutX="178.0" layoutY="129.0" />
-            <Text layoutX="185.0" layoutY="113.0" strokeType="OUTSIDE" strokeWidth="0.0" text="mail" />
-            <TextField fx:id="nomInput" layoutX="340.0" layoutY="129.0" />
-            <Text layoutX="340.0" layoutY="120.0" strokeType="OUTSIDE" strokeWidth="0.0" text="nom" />
+                <AnchorPane layoutX="24.0" layoutY="7.0" prefHeight="138.0" prefWidth="560.0">
+                    <children>
+                        <Text fill="#f42b71" layoutX="162.0" layoutY="99.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Prénom">
+                            <font>
+                                <Font name="System Bold" size="12.0" />
+                            </font></Text>
+                        <TextField fx:id="prenomInput" layoutX="158.0" layoutY="106.0" />
+                        <TextField fx:id="mailInput" layoutX="-12.0" layoutY="53.0" />
+                        <Text fill="#f42b71" layoutX="164.0" layoutY="47.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nom">
+                            <font>
+                                <Font name="System Bold" size="12.0" />
+                            </font></Text>
+                        <TextField fx:id="nomInput" layoutX="157.0" layoutY="53.0" />
+                        <TextField fx:id="numeroInput" layoutX="-14.0" layoutY="106.0" />
+                        <Text fill="#f42b71" layoutX="-11.0" layoutY="99.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Numero de téléphone">
+                            <font>
+                                <Font name="System Bold" size="12.0" />
+                            </font>
+                        </Text>
+                        <Label fx:id="erreur" layoutX="319.0" layoutY="52.0" prefHeight="28.0" prefWidth="198.0" />
+                        <Text fill="#f42b71" layoutX="329.0" layoutY="21.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Ajouter des étudiants">
+                            <font>
+                                <Font name="System Bold" size="20.0" />
+                            </font>
+                        </Text>
+                        <Button layoutX="538.0" layoutY="92.0" mnemonicParsing="false" onAction="#entrer" prefHeight="50.0" prefWidth="90.0" style="-fx-background-color: #69E803;" text="Entrer" textFill="WHITE">
+                            <font>
+                                <Font name="System Bold" size="14.0" />
+                            </font>
+                        </Button>
+                    </children></AnchorPane>
+                <Button fx:id="button" layoutX="873.0" layoutY="18.0" mnemonicParsing="false" onAction="#userRetour" prefWidth="63.0" style="-fx-background-color: #00b3d4;" text="retour" textFill="WHITE" />
+                <Button layoutX="680.0" layoutY="100.0" mnemonicParsing="false" onAction="#supprimer" prefHeight="50.0" prefWidth="90.0" style="-fx-background-color: f42b71;" text="Supprimer" textFill="WHITE">
+                    <font>
+                        <Font name="System Bold" size="14.0" />
+                    </font>
+                </Button>
+                <Text fill="#f42b71" layoutX="16.0" layoutY="54.0" smooth="false" strokeType="OUTSIDE" strokeWidth="0.0" text="Mail">
+                    <font>
+                        <Font name="System Bold" size="12.0" />
+                    </font>
+                </Text>
+                <Text fill="#f42b71" layoutX="793.0" layoutY="114.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Séléctionner une ligne dans le tableaux avant d'appuyer sur suprimer." wrappingWidth="152.79248046875">
+                    <font>
+                        <Font name="System Bold" size="12.0" />
+                    </font>
+                </Text>
+                <Text fill="WHITE" layoutX="564.0" layoutY="66.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Double cliquer sur une cellule du tableaux pour modifier les données." wrappingWidth="215.192626953125">
+                    <font>
+                        <Font name="System Bold" size="12.0" />
+                    </font>
+                </Text>
             </children>
         </AnchorPane>
-   </top>
+    </top>
+    <center>
+        <TableView fx:id="table" maxHeight="1.7976931348623157E308" prefHeight="373.0" prefWidth="960.0" BorderPane.alignment="CENTER">
+            <columns>
+                <TableColumn fx:id="mail" prefWidth="150.0" text="mail" />
+                <TableColumn fx:id="numero" prefWidth="150.0" text="téléphone" />
+                <TableColumn fx:id="nom" prefWidth="150.0" text="nom" />
+                <TableColumn fx:id="prenom" minWidth="0.0" prefWidth="150.0" text="prénom" />
+            </columns>
+        </TableView>
+    </center>
 </BorderPane>

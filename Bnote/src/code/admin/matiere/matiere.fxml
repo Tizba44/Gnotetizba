@@ -7,30 +7,57 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: ffffff;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="code.admin.matiere.matiere">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="540.0" prefWidth="960.0" style="-fx-background-color: e8e034;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="code.admin.matiere.matiere">
     <top>
-        <AnchorPane prefHeight="200.0" prefWidth="615.0" BorderPane.alignment="CENTER">
+        <AnchorPane prefHeight="170.0" prefWidth="960.0" BorderPane.alignment="CENTER">
             <children>
-                <AnchorPane layoutX="-8.0" layoutY="-13.0" prefHeight="200.0" prefWidth="178.0">
+                <AnchorPane layoutX="24.0" layoutY="7.0" prefHeight="138.0" prefWidth="560.0">
                     <children>
-                        <Button layoutX="208.0" layoutY="139.0" mnemonicParsing="false" onAction="#entrer" prefHeight="26.0" prefWidth="134.0" text="entrer" />
-                        <Button layoutX="208.0" layoutY="86.0" mnemonicParsing="false" onAction="#supprimer" prefHeight="26.0" prefWidth="134.0" text="supprimer" />
-                        <Label fx:id="erreur" layoutX="285.0" layoutY="143.0" prefHeight="18.0" prefWidth="228.0" />
-                        <Text layoutX="26.0" layoutY="54.0" strokeType="OUTSIDE" strokeWidth="0.0" text="matiere" wrappingWidth="85.7640380859375" />
-                        <TextField fx:id="inputMatiere" layoutX="14.0" layoutY="74.0" />
-                        <Text layoutX="374.0" layoutY="78.0" strokeType="OUTSIDE" strokeWidth="0.0" text="suppr " wrappingWidth="85.7640380859375" />
+                        <TextField fx:id="mailInput" layoutX="-14.0" layoutY="111.0" />
+                        <Text fill="#f42b71" layoutX="284.0" layoutY="108.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Suppr">
+                            <font>
+                                <Font name="System Bold" size="12.0" />
+                            </font></Text>
+                        <TextField fx:id="nomInput" layoutX="280.0" layoutY="111.0" />
+                        <Text fill="#f42b71" layoutX="399.0" layoutY="36.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Ajouter des matieres">
+                            <font>
+                                <Font name="System Bold" size="20.0" />
+                            </font>
+                        </Text>
+                        <Button layoutX="159.0" layoutY="79.0" mnemonicParsing="false" onAction="#inputMatiere" prefHeight="50.0" prefWidth="90.0" style="-fx-background-color: #69E803;" text="Entrer" textFill="WHITE">
+                            <font>
+                                <Font name="System Bold" size="14.0" />
+                            </font>
+                        </Button>
+                      <Button layoutX="451.0" layoutY="79.0" mnemonicParsing="false" onAction="#inputsuppr" prefHeight="50.0" prefWidth="90.0" style="-fx-background-color: f42b71;" text="Supprimer" textFill="WHITE">
+                          <font>
+                              <Font name="System Bold" size="14.0" />
+                          </font>
+                      </Button>
+                        <Label fx:id="erreur" layoutX="-7.0" layoutY="41.0" prefHeight="28.0" prefWidth="198.0" />
                     </children></AnchorPane>
-                <Button fx:id="button" layoutX="515.0" layoutY="28.0" mnemonicParsing="false" onAction="#userRetour" prefWidth="63.0" style="-fx-background-color: #00b3d4;" text="retour" textFill="WHITE" />
-                <TableView fx:id="table" layoutY="172.0" prefHeight="235.0" prefWidth="600.0">
-                    <columns>
-                        <TableColumn fx:id="mail" prefWidth="96.0" text="prof" />
-
-                    </columns>
-                </TableView>
-                <TextField fx:id="inputsuppr" layoutX="406.0" layoutY="87.0" />
+                <Button fx:id="button" layoutX="873.0" layoutY="18.0" mnemonicParsing="false" onAction="#userRetour" prefWidth="63.0" style="-fx-background-color: #00b3d4;" text="retour" textFill="WHITE" />
+                <Text fill="#f42b71" layoutX="13.0" layoutY="114.0" smooth="false" strokeType="OUTSIDE" strokeWidth="0.0" text="Matiere">
+                    <font>
+                        <Font name="System Bold" size="12.0" />
+                    </font>
+                </Text>
+                <Text fill="WHITE" layoutX="657.0" layoutY="126.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Double cliquer sur une cellule du tableaux pour modifier les données." wrappingWidth="215.192626953125">
+                    <font>
+                        <Font name="System Bold" size="12.0" />
+                    </font>
+                </Text>
             </children>
         </AnchorPane>
     </top>
+    <center>
+        <TableView fx:id="table" maxHeight="1.7976931348623157E308" prefHeight="373.0" prefWidth="960.0" BorderPane.alignment="CENTER">
+            <columns>
+                <TableColumn fx:id="mail" prefWidth="150.0" text="mail" />
+            </columns>
+        </TableView>
+    </center>
 </BorderPane>
