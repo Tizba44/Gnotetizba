@@ -43,9 +43,6 @@ public class matiere implements Initializable {
         private TableColumn<ProfData, String> mail;
 
         @FXML
-        private TextField inputCoef;
-
-        @FXML
         private TextField inputMatiere;
 
         @FXML
@@ -157,13 +154,6 @@ public class matiere implements Initializable {
                         e.printStackTrace();
                 }
         }
-
-
-
-
-
-
-
 
 
 

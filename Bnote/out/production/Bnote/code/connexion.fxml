@@ -40,8 +40,8 @@
                   <Font name="System Bold" size="20.0" />
                </font>
             </Label>
-            <TextField fx:id="username" layoutX="137.0" layoutY="300.0" promptText="Nom d'utilisateur" />
-            <PasswordField fx:id="password" layoutX="138.0" layoutY="383.0" promptText="Mot de passe" />
+            <TextField fx:id="username" layoutX="138.0" layoutY="300.0" promptText="Nom d'utilisateur" />
+            <PasswordField fx:id="password" layoutX="138.0" layoutY="383.0" onAction="#userLogIn" promptText="Mot de passe" />
             <Button fx:id="button" layoutX="176.0" layoutY="439.0" mnemonicParsing="false" onAction="#userLogIn" style="-fx-background-color: #00b3d4;" text="Connexion" textFill="WHITE" />
             <Label fx:id="wrongLogIn" alignment="TOP_CENTER" layoutX="77.0" layoutY="223.0" prefHeight="20.0" prefWidth="272.0" textFill="#00b3d4">
                <font>

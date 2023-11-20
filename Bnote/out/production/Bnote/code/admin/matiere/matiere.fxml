@@ -16,23 +16,23 @@
             <children>
                 <AnchorPane layoutX="24.0" layoutY="7.0" prefHeight="138.0" prefWidth="560.0">
                     <children>
-                        <TextField fx:id="mailInput" layoutX="-14.0" layoutY="111.0" />
+                        <TextField fx:id="inputMatiere" layoutX="-14.0" layoutY="111.0" />
                         <Text fill="#f42b71" layoutX="284.0" layoutY="108.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Suppr">
                             <font>
                                 <Font name="System Bold" size="12.0" />
                             </font></Text>
-                        <TextField fx:id="nomInput" layoutX="280.0" layoutY="111.0" />
+                        <TextField fx:id="inputsuppr" layoutX="280.0" layoutY="111.0" />
                         <Text fill="#f42b71" layoutX="399.0" layoutY="36.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Ajouter des matieres">
                             <font>
                                 <Font name="System Bold" size="20.0" />
                             </font>
                         </Text>
-                        <Button layoutX="159.0" layoutY="79.0" mnemonicParsing="false" onAction="#inputMatiere" prefHeight="50.0" prefWidth="90.0" style="-fx-background-color: #69E803;" text="Entrer" textFill="WHITE">
+                        <Button layoutX="159.0" layoutY="79.0" mnemonicParsing="false" onAction="#entrer" prefHeight="50.0" prefWidth="90.0" style="-fx-background-color: #69E803;" text="Entrer" textFill="WHITE">
                             <font>
                                 <Font name="System Bold" size="14.0" />
                             </font>
                         </Button>
-                      <Button layoutX="451.0" layoutY="79.0" mnemonicParsing="false" onAction="#inputsuppr" prefHeight="50.0" prefWidth="90.0" style="-fx-background-color: f42b71;" text="Supprimer" textFill="WHITE">
+                      <Button layoutX="451.0" layoutY="79.0" mnemonicParsing="false" onAction="#supprimer" prefHeight="50.0" prefWidth="90.0" style="-fx-background-color: f42b71;" text="Supprimer" textFill="WHITE">
                           <font>
                               <Font name="System Bold" size="14.0" />
                           </font>
