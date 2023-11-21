@@ -127,11 +127,11 @@ public class note implements Initializable {
 
 
                         tableaux();
-                        //changer le label de la matière
-                        labelMatiere.setText("Matière : " + choiceBoxMatiere.getValue());
+
                 });
 
-
+                //changer le label de la matière
+                labelMatiere.setText("Matière : " + choiceBoxMatiere.getValue());
         }
 
 
@@ -171,26 +171,28 @@ public class note implements Initializable {
                                 }
                                 if (!columnExists) {
                                         TableColumn<noteData, String> newControleColumn = new TableColumn<>(controle.get("controle"));
-                                        newControleColumn.setPrefWidth(217.5999755859375);
-                                        TableColumn<noteData, String> coefColumn = new TableColumn<>("coef");
-                                        coefColumn.setPrefWidth(150.4000244140625);
+                                        newControleColumn.setPrefWidth(375);
                                         TableColumn<noteData, String> noteColumn = new TableColumn<>("note");
                                         noteColumn.setPrefWidth(75.0);
+                                        TableColumn<noteData, String> coefColumn = new TableColumn<>("coef");
+                                        coefColumn.setPrefWidth(75);
                                         TableColumn<noteData, String> appreciationColumn = new TableColumn<>("appréciation");
-                                        appreciationColumn.setPrefWidth(75.0);
+                                        appreciationColumn.setPrefWidth(150.0);
                                         TableColumn<noteData, LocalDate> dateColumn = new TableColumn<>("date");
                                         dateColumn.setPrefWidth(75.0);
+
+                                        noteColumn.setCellValueFactory(cellData -> {
+                                                noteData note = cellData.getValue();
+                                                ControleData controleData = note.getControles().get(controle.get("controle"));
+                                                return new SimpleStringProperty (controleData != null ? String.valueOf(controleData.getNote()) : "N/A");
+                                        });
 
                                         coefColumn.setCellValueFactory(cellData -> {
                                                 noteData note = cellData.getValue();
                                                 ControleData controleData = note.getControles().get(controle.get("controle"));
                                                 return new SimpleStringProperty(controleData != null ? String.valueOf(controleData.getCoef()) : "N/A");
                                         });
-                                        noteColumn.setCellValueFactory(cellData -> {
-                                                noteData note = cellData.getValue();
-                                                ControleData controleData = note.getControles().get(controle.get("controle"));
-                                                return new SimpleStringProperty (controleData != null ? String.valueOf(controleData.getNote()) : "N/A");
-                                        });
+
                                         appreciationColumn.setCellValueFactory(cellData -> {
                                                 noteData note = cellData.getValue();
                                                 ControleData controleData = note.getControles().get(controle.get("controle"));
@@ -204,39 +206,77 @@ public class note implements Initializable {
 
                                         table.setEditable(true);
 
-                                        coefColumn.setCellFactory(TextFieldTableCell.forTableColumn());
                                         noteColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+                                        coefColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+
                                         appreciationColumn.setCellFactory(TextFieldTableCell.forTableColumn());
                                         dateColumn.setCellFactory(TextFieldTableCell.forTableColumn(new LocalDateStringConverter()));
+
+                                        // Regex pour valider la note entre 0 et 20
+                                        String regexNote = "([0-9]|1[0-9]|20)";
+
+                                        // Regex pour valider le coefficient
+                                        String regexCoef = "[1-9]|10";
+                                        //      Regex pour valider la date
+                                        String regexDate = "([0-9]{4})-([0-9]{2})-([0-9]{2})";
+                                        // Regex pour valider l'appréciation
+                                        String regexAppreciation = "[A-Za-z0-9 ]*";
+
+
+
+
 
                                         noteColumn.setOnEditCommit(event -> {
                                                 noteData note = event.getRowValue();
                                                 ControleData controleData = note.getControles().get(controle.get("controle"));
-                                                controleData.setNote(Integer.parseInt(event.getNewValue()));
-                                                enregistrer();
+
+
+                                          if (event.getNewValue().matches(regexNote)) {
+                                                  controleData.setNote(Integer.parseInt(event.getNewValue()));
+                                                  enregistrer();
+                                          } else {
+                                                  erreur.setText("La note doit être un entier entre 0 et 20.");
+                                                  initialize(null, null);
+                                          }
                                         });
+
                                         coefColumn.setOnEditCommit(event -> {
                                                 noteData note = event.getRowValue();
                                                 ControleData controleData = note.getControles().get(controle.get("controle"));
-                                                controleData.setCoef(Integer.parseInt(event.getNewValue()));
-                                                enregistrer();
+                                                if (event.getNewValue().matches(regexCoef)) {
+                                                        controleData.setCoef(Integer.parseInt(event.getNewValue()));
+                                                        enregistrer();
+                                                } else {
+                                                        erreur.setText("Le coefficient doit être un entier entre 1 et 10.");
+                                                        initialize(null, null);
+                                                }
                                         });
+
                                         appreciationColumn.setOnEditCommit(event -> {
                                                 noteData note = event.getRowValue();
                                                 ControleData controleData = note.getControles().get(controle.get("controle"));
-                                                controleData.setAppreciation(event.getNewValue());
-                                                enregistrer();
+                                                if (event.getNewValue().matches(regexAppreciation)) {
+                                                        controleData.setAppreciation(event.getNewValue());
+                                                        enregistrer();
+                                                } else {
+                                                        erreur.setText("L'appréciation ne doit contenir que des lettres, des chiffres et des espaces.");
+                                                        initialize(null, null);
+                                                }
                                         });
 
                                         dateColumn.setOnEditCommit(event -> {
                                                 noteData note = event.getRowValue();
                                                 ControleData controleData = note.getControles().get(controle.get("controle"));
-                                                controleData.setDate(event.getNewValue());
-                                                enregistrer();
+                                                if (event.getNewValue().toString().matches(regexDate)) {
+                                                        controleData.setDate(event.getNewValue());
+                                                        enregistrer();
+                                                } else {
+                                                        erreur.setText("La date doit être au format AAAA-MM-JJ.");
+                                                        initialize(null, null);
+                                                }
                                         });
 
-
-                                        newControleColumn.getColumns().addAll(coefColumn, noteColumn, appreciationColumn , dateColumn);
+                                        newControleColumn.getColumns().addAll(noteColumn, coefColumn,  appreciationColumn , dateColumn);
                                         table.getColumns().add(newControleColumn);
                                         controleColumns.add(newControleColumn);
                                 }
@@ -249,7 +289,7 @@ public class note implements Initializable {
                                 for (Map<String, String> controle : controlesMap) {
                                         if (controle.get("mail").equals(etudiant.get("mail")) ) {
 
-                                                ControleData newControle = new ControleData(Integer.parseInt(controle.get("coef")), Integer.parseInt(controle.get("note")), controle.get("appreciation"), LocalDate.parse(controle.get("date")) , controle.get("matiere") );
+                                                ControleData newControle = new ControleData(Integer.parseInt(controle.get("note")), Integer.parseInt(controle.get("coef")), controle.get("appreciation"), LocalDate.parse(controle.get("date")) , controle.get("matiere") );
                                                 newEtudiant.addControle(controle.get("controle"), newControle);
                                         }
                                 }
@@ -271,14 +311,14 @@ public class note implements Initializable {
                         // Obtenir les données actuelles de la table
                         ObservableList<noteData> notes = table.getItems();
 
-                        //print the data
-                        for (noteData note : notes) {
-                                System.out.println(note.getMail());
-                                Map<String, ControleData> controles = note.getControles();
-                                for (Map.Entry<String, ControleData> entry : controles.entrySet()) {
-                                        System.out.println(entry.getKey() + " " + entry.getValue().getCoef() + " " + entry.getValue().getNote() + " " + entry.getValue().getAppreciation() + " " + entry.getValue().getDate());
-                                }
-                        }
+//                        //print the data
+//                        for (noteData note : notes) {
+//                                System.out.println(note.getMail());
+//                                Map<String, ControleData> controles = note.getControles();
+//                                for (Map.Entry<String, ControleData> entry : controles.entrySet()) {
+//                                        System.out.println(entry.getKey() + " " + entry.getValue().getCoef() + " " + entry.getValue().getNote() + " " + entry.getValue().getAppreciation() + " " + entry.getValue().getDate());
+//                                }
+//                        }
 
                         // Préparer les listes pour 'Etudiants' et 'controles'
                         List<Map<String, String>> EtudiantsMap = new ArrayList<>();
@@ -333,12 +373,18 @@ public class note implements Initializable {
         void entrer(ActionEvent event) {
                 if (inputControle.getText().isEmpty() || inputCoef.getText().isEmpty())  {
                         erreur.setText("Veuillez remplir tous les champs.");
+                } else if  (!inputControle.getText().matches("[A-Za-z0-9 ]*")) {
+                        erreur.setText("Le nom du contrôle ne doit contenir que des lettres, des chiffres et des espaces.");
+                } else if (!inputCoef.getText().matches("[0-9]+") || Integer.parseInt(inputCoef.getText()) < 1 || Integer.parseInt(inputCoef.getText()) > 10) {
+                        erreur.setText("Le coefficient doit être un entier entre 1 et 10.");
+                } else if (table.getColumns().stream().anyMatch(column -> column.getText().equals(inputControle.getText()))) {
+                        erreur.setText("Il y a déjà un contrôle avec ce nom.");
                 } else {
                         erreur.setText(""); // Clear the error message if all fields are valid
                         // Create a new control
                         LocalDate date = LocalDate.now(); // get the current date
 
-                        ControleData newControle = new ControleData(Integer.parseInt(inputCoef.getText()), 0, "N/A", date, choiceBoxMatiere.getValue());
+                        ControleData newControle = new ControleData(0, Integer.parseInt(inputCoef.getText()), "N/A", date, choiceBoxMatiere.getValue());
 
                         // Add the new control to the list of controls
                         for (noteData note : table.getItems()) {

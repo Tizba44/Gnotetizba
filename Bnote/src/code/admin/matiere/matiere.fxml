@@ -16,38 +16,50 @@
             <children>
                 <AnchorPane layoutX="24.0" layoutY="7.0" prefHeight="138.0" prefWidth="560.0">
                     <children>
-                        <TextField fx:id="inputMatiere" layoutX="-14.0" layoutY="111.0" />
-                        <Text fill="#f42b71" layoutX="284.0" layoutY="108.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Suppr">
+                        <TextField fx:id="inputMatiere" layoutX="-14.0" layoutY="111.0" promptText="Matiere">
+                     <font>
+                        <Font name="Gill Sans Ultra Bold Condensed" size="12.0" />
+                     </font></TextField>
+                        <Text fill="#f42b71" layoutX="284.0" layoutY="105.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Supprimer">
                             <font>
-                                <Font name="System Bold" size="12.0" />
+                                <Font name="Gill Sans Ultra Bold Condensed" size="12.0" />
                             </font></Text>
-                        <TextField fx:id="inputsuppr" layoutX="280.0" layoutY="111.0" />
+                        <TextField fx:id="inputsuppr" layoutX="280.0" layoutY="111.0" promptText="Matiere">
+                     <font>
+                        <Font name="Gill Sans Ultra Bold Condensed" size="12.0" />
+                     </font></TextField>
                         <Text fill="#f42b71" layoutX="399.0" layoutY="36.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Ajouter des matieres">
                             <font>
-                                <Font name="System Bold" size="20.0" />
+                                <Font name="Gill Sans Ultra Bold Condensed" size="22.0" />
                             </font>
                         </Text>
                         <Button layoutX="159.0" layoutY="79.0" mnemonicParsing="false" onAction="#entrer" prefHeight="50.0" prefWidth="90.0" style="-fx-background-color: #69E803;" text="Entrer" textFill="WHITE">
                             <font>
-                                <Font name="System Bold" size="14.0" />
+                                <Font name="Gill Sans Ultra Bold Condensed" size="14.0" />
                             </font>
                         </Button>
                       <Button layoutX="451.0" layoutY="79.0" mnemonicParsing="false" onAction="#supprimer" prefHeight="50.0" prefWidth="90.0" style="-fx-background-color: f42b71;" text="Supprimer" textFill="WHITE">
                           <font>
-                              <Font name="System Bold" size="14.0" />
+                              <Font name="Gill Sans Ultra Bold Condensed" size="14.0" />
                           </font>
                       </Button>
-                        <Label fx:id="erreur" layoutX="-7.0" layoutY="41.0" prefHeight="28.0" prefWidth="198.0" />
+                        <Label fx:id="erreur" layoutX="57.0" layoutY="19.0" prefHeight="44.0" prefWidth="293.0" textFill="#00b3d4">
+                     <font>
+                        <Font name="Gill Sans Ultra Bold Condensed" size="12.0" />
+                     </font></Label>
                     </children></AnchorPane>
-                <Button fx:id="button" layoutX="873.0" layoutY="18.0" mnemonicParsing="false" onAction="#userRetour" prefWidth="63.0" style="-fx-background-color: #00b3d4;" text="retour" textFill="WHITE" />
-                <Text fill="#f42b71" layoutX="13.0" layoutY="114.0" smooth="false" strokeType="OUTSIDE" strokeWidth="0.0" text="Matiere">
+                <Button fx:id="button" layoutX="873.0" layoutY="18.0" mnemonicParsing="false" onAction="#userRetour" prefWidth="63.0" style="-fx-background-color: #00b3d4;" text="retour" textFill="WHITE">
+               <font>
+                  <Font name="Gill Sans Ultra Bold Condensed" size="12.0" />
+               </font></Button>
+                <Text fill="#f42b71" layoutX="14.0" layoutY="111.0" smooth="false" strokeType="OUTSIDE" strokeWidth="0.0" text="Matiere">
                     <font>
-                        <Font name="System Bold" size="12.0" />
+                        <Font name="Gill Sans Ultra Bold Condensed" size="12.0" />
                     </font>
                 </Text>
                 <Text fill="WHITE" layoutX="657.0" layoutY="126.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Double cliquer sur une cellule du tableaux pour modifier les données." wrappingWidth="215.192626953125">
                     <font>
-                        <Font name="System Bold" size="12.0" />
+                        <Font name="Gill Sans Ultra Bold Condensed" size="12.0" />
                     </font>
                 </Text>
             </children>

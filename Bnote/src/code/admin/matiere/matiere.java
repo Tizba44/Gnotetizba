@@ -85,6 +85,31 @@ public class matiere implements Initializable {
                                         }
                                         enregistrer();
                                 });
+
+                                newMatiereColumn.setOnEditCommit(event -> {
+                                        ProfData note = event.getRowValue();
+                                        Map<String, MatiereData> Matieres = note.getmatieres();
+
+                                        String newValue = event.getNewValue();
+
+
+                                        // Vérifier si la nouvelle valeur est "oui" ou "non"
+                                        if ("oui".equals(newValue) || "non".equals(newValue)) {
+                                                if ("oui".equals(newValue)) {
+                                                        Matieres.put(matiere, new MatiereData(matiere));
+                                                } else {
+                                                        Matieres.put(matiere, null);
+                                                }
+                                                enregistrer();
+                                        } else {
+                                                // Afficher un message d'erreur si la nouvelle valeur n'est ni "oui" ni "non"
+                                                erreur.setText("Veuillez entrer oui ou non.");
+                                                initialize(null, null);
+                                        }
+                                });
+
+
+
                                 table.getColumns().add(newMatiereColumn);
                         }
 
@@ -156,12 +181,17 @@ public class matiere implements Initializable {
         }
 
 
-
-
         @FXML
         void entrer(ActionEvent event) {
                 if (inputMatiere.getText().isEmpty())  {
                         erreur.setText("Veuillez remplir tous les champs.");
+                   // regex nom matière
+                } else if (!inputMatiere.getText().matches("^[a-zA-Z0-9]*$")) {
+                        erreur.setText("Veuillez entrer un nom de matière valide.");
+                } else if (table.getSelectionModel().getSelectedItems().isEmpty()) {
+                        erreur.setText("Veuillez sélectionner au moins un professeur.");
+                } else if (table.getColumns().stream().anyMatch(column -> column.getText().equals(inputMatiere.getText()))) {
+                        erreur.setText("Il y a déjà une matière avec ce nom.");
                 } else {
                         erreur.setText(""); // Effacer le message d'erreur si tous les champs sont valides
                         // Créer une nouvelle matière
@@ -184,22 +214,29 @@ public class matiere implements Initializable {
                         newMatiereColumn.setOnEditCommit(event1 -> {
                                 ProfData note = event1.getRowValue();
                                 Map<String, MatiereData> Matieres = note.getmatieres();
-                                Matieres.put(inputMatiere.getText(), new MatiereData(event1.getNewValue()));
-                                enregistrer();
+
+                                String inputMatiereText = inputMatiere.getText();
+                                String newValue = event1.getNewValue();
+
+                                // Vérifier si la nouvelle valeur est "oui" ou "non"
+                                if ("oui".equals(newValue) || "non".equals(newValue)) {
+                                        if ("oui".equals(newValue)) {
+                                                Matieres.put(inputMatiereText, new MatiereData(inputMatiereText));
+                                        } else {
+                                                Matieres.put(inputMatiereText, null);
+                                        }
+                                        enregistrer();
+                                } else {
+                                        // Afficher un message d'erreur si la nouvelle valeur n'est ni "oui" ni "non"
+                                        erreur.setText("Veuillez entrer oui ou non.");
+                                        initialize(null, null);
+                                }
                         });
+
                         table.getColumns().add(newMatiereColumn);
-
-
-
-
                         enregistrer();
-
                 }
         }
-
-
-
-
 
         @FXML
         void supprimer(ActionEvent event) {

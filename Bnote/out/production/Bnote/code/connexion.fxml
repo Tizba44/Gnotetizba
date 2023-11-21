@@ -16,7 +16,7 @@
          <children>
             <ImageView fitHeight="540.0" fitWidth="582.0" layoutY="1.0">
                <image>
-                  <Image url="@../img/loginGauche.jpg" />
+                  <Image url="@../img/loginGauche.png" />
                </image>
             </ImageView>
          </children>
@@ -25,27 +25,36 @@
    <right>
       <AnchorPane prefHeight="400.0" prefWidth="358.0" BorderPane.alignment="CENTER">
          <children>
-            <ImageView fitHeight="540.0" fitWidth="386.0" layoutX="16.0">
+            <ImageView fitHeight="540.0" fitWidth="392.0" layoutX="16.0">
                <image>
                   <Image url="@../img/loginDroite.jpg" />
                </image>
             </ImageView>
-            <Label layoutX="126.0" layoutY="263.0" text="Nom d'utilisateur:" textFill="#b83658">
+            <Label layoutX="131.0" layoutY="270.0" text="Nom d'utilisateur" textFill="#b83658">
                <font>
-                  <Font name="System Bold" size="20.0" />
+                  <Font name="Gill Sans Ultra Bold Condensed" size="20.0" />
                </font>
             </Label>
-            <Label layoutX="145.0" layoutY="346.0" text="Mot de passe: " textFill="#b83658">
+            <Label layoutX="145.0" layoutY="356.0" text="Mot de passe " textFill="#b83658">
                <font>
-                  <Font name="System Bold" size="20.0" />
+                  <Font name="Gill Sans Ultra Bold Condensed" size="20.0" />
                </font>
             </Label>
-            <TextField fx:id="username" layoutX="138.0" layoutY="300.0" promptText="Nom d'utilisateur" />
-            <PasswordField fx:id="password" layoutX="138.0" layoutY="383.0" onAction="#userLogIn" promptText="Mot de passe" />
-            <Button fx:id="button" layoutX="176.0" layoutY="439.0" mnemonicParsing="false" onAction="#userLogIn" style="-fx-background-color: #00b3d4;" text="Connexion" textFill="WHITE" />
+            <TextField fx:id="username" layoutX="138.0" layoutY="302.0" promptText="Nom d'utilisateur">
+               <font>
+                  <Font name="Gill Sans Ultra Bold Condensed" size="12.0" />
+               </font></TextField>
+            <PasswordField fx:id="password" layoutX="138.0" layoutY="386.0" onAction="#userLogIn" promptText="Mot de passe">
+               <font>
+                  <Font name="Gill Sans Ultra Bold Condensed" size="12.0" />
+               </font></PasswordField>
+            <Button fx:id="button" layoutX="176.0" layoutY="439.0" mnemonicParsing="false" onAction="#userLogIn" style="-fx-background-color: #00b3d4;" text="Connexion" textFill="WHITE">
+               <font>
+                  <Font name="Gill Sans Ultra Bold Condensed" size="12.0" />
+               </font></Button>
             <Label fx:id="wrongLogIn" alignment="TOP_CENTER" layoutX="77.0" layoutY="223.0" prefHeight="20.0" prefWidth="272.0" textFill="#00b3d4">
                <font>
-                  <Font size="14.0" />
+                  <Font name="Gill Sans Ultra Bold Condensed" size="14.0" />
                </font>
             </Label>
          </children>

@@ -91,63 +91,106 @@ public class modifierProf implements Initializable {
 
                 table.setEditable(true); // Ajoutez cette ligne pour rendre le TableView éditable
 
+                // Regex pour valider l'email
+                String regexMail = "^[A-Za-z0-9+_.-]+@(.+)$";
+                // Regex pour valider le nom et le prénom (lettres et espaces uniquement)
+                String regexNomPrenom = "^[a-zA-Z\\s]+";
+                // Regex pour valider le numéro de téléphone
+                String regexNumero = "^[0-9]{10}$";
+                // Regex pour valider le mot de passe
+                String regexPassword = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}$";
+
                 mail.setCellFactory(TextFieldTableCell.forTableColumn());
                 mail.setOnEditCommit(
                         new EventHandler<CellEditEvent<dataProf, String>>() {
                                 @Override
                                 public void handle(CellEditEvent<dataProf, String> t) {
-                                        ((dataProf) t.getTableView().getItems().get(
-                                                t.getTablePosition().getRow())
-                                        ).setMail(t.getNewValue());
-                                        enregistrer();
+                                        String newValue = t.getNewValue();
+                                        if (!newValue.matches(regexMail)) {
+                                                erreur.setText("Veuillez entrer un email valide.");
+                                                initialize(null, null);
+                                        } else {
+                                                ((dataProf) t.getTableView().getItems().get(
+                                                        t.getTablePosition().getRow())
+                                                ).setMail(newValue);
+                                                enregistrer();
+                                        }
                                 }
                         }
                 );
+
                 nom.setCellFactory(TextFieldTableCell.forTableColumn());
                 nom.setOnEditCommit(
                         new EventHandler<CellEditEvent<dataProf, String>>() {
                                 @Override
                                 public void handle(CellEditEvent<dataProf, String> t) {
-                                        ((dataProf) t.getTableView().getItems().get(
-                                                t.getTablePosition().getRow())
-                                        ).setNom(t.getNewValue());
-                                        enregistrer();
+                                        String newValue = t.getNewValue();
+                                        if (!newValue.matches(regexNomPrenom)) {
+                                                erreur.setText("Veuillez entrer un nom valide.");
+                                                initialize(null, null);
+                                        } else {
+                                                ((dataProf) t.getTableView().getItems().get(
+                                                        t.getTablePosition().getRow())
+                                                ).setNom(newValue);
+                                                enregistrer();
+                                        }
                                 }
                         }
                 );
+
                 prenom.setCellFactory(TextFieldTableCell.forTableColumn());
                 prenom.setOnEditCommit(
                         new EventHandler<CellEditEvent<dataProf, String>>() {
                                 @Override
                                 public void handle(CellEditEvent<dataProf, String> t) {
-                                        ((dataProf) t.getTableView().getItems().get(
-                                                t.getTablePosition().getRow())
-                                        ).setPrenom(t.getNewValue());
-                                        enregistrer();
+                                        String newValue = t.getNewValue();
+                                        if (!newValue.matches(regexNomPrenom)) {
+                                                erreur.setText("Veuillez entrer un prénom valide.");
+                                                initialize(null, null);
+                                        } else {
+                                                ((dataProf) t.getTableView().getItems().get(
+                                                        t.getTablePosition().getRow())
+                                                ).setPrenom(newValue);
+                                                enregistrer();
+                                        }
                                 }
                         }
                 );
+
                 motDePasse.setCellFactory(TextFieldTableCell.forTableColumn());
                 motDePasse.setOnEditCommit(
                         new EventHandler<CellEditEvent<dataProf, String>>() {
                                 @Override
                                 public void handle(CellEditEvent<dataProf, String> t) {
-                                        ((dataProf) t.getTableView().getItems().get(
-                                                t.getTablePosition().getRow())
-                                        ).setMotDePasse(t.getNewValue());
-                                        enregistrer();
+                                        String newValue = t.getNewValue();
+                                        if (!newValue.matches(regexPassword)) {
+                                                erreur.setText("Veuillez entrer un mot de passe valide.");
+                                                initialize(null, null);
+                                        } else {
+                                                ((dataProf) t.getTableView().getItems().get(
+                                                        t.getTablePosition().getRow())
+                                                ).setMotDePasse(newValue);
+                                                enregistrer();
+                                        }
                                 }
                         }
                 );
+
                 numero.setCellFactory(TextFieldTableCell.forTableColumn());
                 numero.setOnEditCommit(
                         new EventHandler<CellEditEvent<dataProf, String>>() {
                                 @Override
                                 public void handle(CellEditEvent<dataProf, String> t) {
-                                        ((dataProf) t.getTableView().getItems().get(
-                                                t.getTablePosition().getRow())
-                                        ).setNumero(t.getNewValue());
-                                        enregistrer();
+                                        String newValue = t.getNewValue();
+                                        if (!newValue.matches(regexNumero)) {
+                                                erreur.setText("Veuillez entrer un numéro valide.");
+                                                initialize(null, null);
+                                        } else {
+                                                ((dataProf) t.getTableView().getItems().get(
+                                                        t.getTablePosition().getRow())
+                                                ).setNumero(newValue);
+                                                enregistrer();
+                                        }
                                 }
                         }
                 );

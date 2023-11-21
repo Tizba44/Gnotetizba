@@ -7,16 +7,17 @@ import javafx.beans.property.SimpleObjectProperty;
 import java.time.LocalDate;
 
 public class ControleData {
-    private SimpleIntegerProperty coef;
     private SimpleIntegerProperty note;
+    private SimpleIntegerProperty coef;
+
     private SimpleStringProperty appreciation;
     private SimpleObjectProperty<LocalDate> date;
 
     private SimpleStringProperty matiere;
 
-    public ControleData(Integer coef, Integer note, String appreciation, LocalDate date, String matiere ) {
-        this.coef = new SimpleIntegerProperty(coef);
+    public ControleData(Integer note, Integer coef, String appreciation, LocalDate date, String matiere ) {
         this.note = new SimpleIntegerProperty(note);
+        this.coef = new SimpleIntegerProperty(coef);
         this.appreciation = new SimpleStringProperty(appreciation);
         this.date = new SimpleObjectProperty<>(date);
         this.matiere = new SimpleStringProperty(matiere);
@@ -41,9 +42,6 @@ public class ControleData {
         this.coef.set(coef);
     }
 
-    public IntegerProperty coefProperty() {
-        return coef;
-    }
 
     public Integer getNote() {
         return note.get();
@@ -53,9 +51,6 @@ public class ControleData {
         this.note.set(note);
     }
 
-    public IntegerProperty noteProperty() {
-        return note;
-    }
 
     public String getAppreciation() {
         return appreciation.get();

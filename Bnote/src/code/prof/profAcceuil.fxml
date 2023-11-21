@@ -21,14 +21,14 @@
                   <Font size="27.0" />
                </font>
             </Button>
-            <Button fx:id="note" layoutX="184.0" layoutY="60.0" mnemonicParsing="false" onAction="#usernote" prefHeight="86.0" prefWidth="246.0" style="-fx-background-color: none;" text="Rentrer les notes" textFill="WHITE">
+            <Button fx:id="note" layoutX="184.0" layoutY="60.0" mnemonicParsing="false" onAction="#usernote" prefHeight="86.0" prefWidth="246.0" style="-fx-background-color: none;" text="Rentrer des notes" textFill="WHITE">
                <font>
-                  <Font size="22.0" />
+                  <Font name="Gill Sans Ultra Bold Condensed" size="21.0" />
                </font>
             </Button>
-            <Button fx:id="stat" layoutX="184.0" layoutY="320.0" mnemonicParsing="false" onAction="#userstat" prefHeight="86.0" prefWidth="246.0" style="-fx-background-color: none;" text="Statistque de la classe" textFill="WHITE">
+            <Button fx:id="stat" layoutX="184.0" layoutY="320.0" mnemonicParsing="false" onAction="#userstat" prefHeight="86.0" prefWidth="246.0" style="-fx-background-color: none;" text="Statistique de la classe" textFill="WHITE">
                <font>
-                  <Font size="22.0" />
+                  <Font name="Gill Sans Ultra Bold Condensed" size="21.0" />
                </font>
             </Button>
          </children>

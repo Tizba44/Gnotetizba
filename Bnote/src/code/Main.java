@@ -19,7 +19,8 @@ public class Main extends Application {
         primaryStage.setResizable(false);
         Parent root = FXMLLoader.load(getClass().getResource("connexion.fxml"));
         primaryStage.setTitle("Bnote");
-        primaryStage.setScene(new Scene(root, 960, 540));
+        Scene scene = new Scene(root, 960, 540);
+        primaryStage.setScene(scene);
         primaryStage.show();
     }
     public void changeScene(String fxml) throws IOException {
