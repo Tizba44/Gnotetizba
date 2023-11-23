@@ -33,7 +33,7 @@ public class profAcceuil {
     @FXML
     public void usernote(ActionEvent event) throws IOException{
         Main m = new Main();
-        m.changeScene("prof/note/note.fxml");
+        m.changeScene("prof/controle/controle.fxml");
     }
 
     @FXML

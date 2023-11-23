@@ -1,1 +1,46 @@
-{"admins":[{"username":"tizba","password":"1"}],"profs":[{"motDePasse":"b","mail":"b","numero":"0729621014","nom":"jure","prenom":"de"},{"motDePasse":"a","mail":"a","numero":"0729621014","nom":"jure","prenom":"de"}],"Etudiants":[{"mail":"max@gmail.com","numero":"0628724455","nom":"maxime","prenom":"aude"},{"mail":"evan@gmail.com","numero":"0628631115","nom":"audeoo","prenom":"qdsfqdf"}],"controles":[{"date":"2023-11-20","note":"0","coef":"1","mail":"max@gmail.com","appreciation":"N/A","controle":"tst2","matiere":"info2"},{"date":"2023-11-21","note":"0","coef":"1","mail":"max@gmail.com","appreciation":"N/A","controle":"tst","matiere":"maitre"},{"date":"2023-11-21","note":"0","coef":"1","mail":"evan@gmail.com","appreciation":"N/A","controle":"tst","matiere":"maitre"}],"Matieres":[{"mail":"b","matiere":"geo"},{"mail":"b","matiere":"maitre"},{"mail":"a","matiere":"maitre"}]}
+{
+  "admins": [
+    {
+      "adminMailID": "tizba",
+      "adminPassword": "1"
+    }
+  ],
+  "profs": [
+    {
+      "mailID": "b",
+      "motDePasse": "b",
+      "telephone": "0628631115",
+      "nom": "patrick",
+      "prenom": "sebastien"
+    }
+  ],
+  "etudiants": [
+    {
+      "mailID": "max@gmail.com",
+      "telephone": "0620151454",
+      "nom": "max",
+      "prenom": "ime"
+    }
+  ],
+  "controles": [
+    {
+      "date": "2023-11-23",
+      "note": "10",
+      "coef": "2",
+      "appreciation": "bien",
+      "intitule": "tst",
+      "matiere": "tst",
+      "mailEtudiants": "max@gmail.com"
+    }
+  ],
+  "matieres": [
+    {
+      "nomMatiereID": "tst",
+      "mailProfs": "b"
+    },
+    {
+      "nomMatiereID": "ezrzr",
+      "mailProfs": "choiral@gmail.com"
+    }
+  ]
+}

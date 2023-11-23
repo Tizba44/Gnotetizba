@@ -10,7 +10,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="540.0" prefWidth="960.0" style="-fx-background-color: e8e034;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="code.admin.etudiant.modifierEtudiant">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="540.0" prefWidth="960.0" style="-fx-background-color: e8e034;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="code.admin.etudiant.controlerEtudiant">
     <top>
         <AnchorPane prefHeight="170.0" prefWidth="960.0" BorderPane.alignment="CENTER">
             <children>
@@ -36,7 +36,7 @@
                      <font>
                         <Font name="Gill Sans Ultra Bold Condensed" size="12.0" />
                      </font></TextField>
-                        <TextField fx:id="numeroInput" layoutX="-14.0" layoutY="106.0" promptText="Téléphone">
+                        <TextField fx:id="telephoneInput" layoutX="-14.0" layoutY="106.0" promptText="Téléphone">
                      <font>
                         <Font name="Gill Sans Ultra Bold Condensed" size="12.0" />
                      </font></TextField>
@@ -91,7 +91,7 @@
         <TableView fx:id="table" maxHeight="1.7976931348623157E308" prefHeight="373.0" prefWidth="960.0" BorderPane.alignment="CENTER">
             <columns>
                 <TableColumn fx:id="mail" prefWidth="150.0" text="mail" />
-                <TableColumn fx:id="numero" prefWidth="150.0" text="téléphone" />
+                <TableColumn fx:id="telephone" prefWidth="150.0" text="téléphone" />
                 <TableColumn fx:id="nom" prefWidth="150.0" text="nom" />
                 <TableColumn fx:id="prenom" minWidth="0.0" prefWidth="150.0" text="prénom" />
             </columns>

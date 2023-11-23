@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="540.0" prefWidth="960.0" style="-fx-background-color: ffffff;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="code.connexion">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="540.0" prefWidth="960.0" style="-fx-background-color: ffffff;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="code.controlerConnexion">
    <left>
       <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
@@ -30,29 +30,29 @@
                   <Image url="@../img/loginDroite.jpg" />
                </image>
             </ImageView>
-            <Label layoutX="131.0" layoutY="270.0" text="Nom d'utilisateur" textFill="#b83658">
+            <Label layoutX="200.0" layoutY="270.0" text="Mail" textFill="#b83658">
                <font>
                   <Font name="Gill Sans Ultra Bold Condensed" size="20.0" />
                </font>
             </Label>
-            <Label layoutX="145.0" layoutY="356.0" text="Mot de passe " textFill="#b83658">
+            <Label layoutX="159.0" layoutY="356.0" text="Mot de passe " textFill="#b83658">
                <font>
                   <Font name="Gill Sans Ultra Bold Condensed" size="20.0" />
                </font>
             </Label>
-            <TextField fx:id="username" layoutX="138.0" layoutY="302.0" promptText="Nom d'utilisateur">
+            <TextField fx:id="mail" layoutX="152.0" layoutY="302.0" promptText="Mail">
                <font>
                   <Font name="Gill Sans Ultra Bold Condensed" size="12.0" />
                </font></TextField>
-            <PasswordField fx:id="password" layoutX="138.0" layoutY="386.0" onAction="#userLogIn" promptText="Mot de passe">
+            <PasswordField fx:id="password" layoutX="152.0" layoutY="386.0" onAction="#userLogIn" promptText="Mot de passe">
                <font>
                   <Font name="Gill Sans Ultra Bold Condensed" size="12.0" />
                </font></PasswordField>
-            <Button fx:id="button" layoutX="176.0" layoutY="439.0" mnemonicParsing="false" onAction="#userLogIn" style="-fx-background-color: #00b3d4;" text="Connexion" textFill="WHITE">
+            <Button fx:id="button" layoutX="190.0" layoutY="439.0" mnemonicParsing="false" onAction="#userLogIn" style="-fx-background-color: #00b3d4;" text="Connexion" textFill="WHITE">
                <font>
                   <Font name="Gill Sans Ultra Bold Condensed" size="12.0" />
                </font></Button>
-            <Label fx:id="wrongLogIn" alignment="TOP_CENTER" layoutX="77.0" layoutY="223.0" prefHeight="20.0" prefWidth="272.0" textFill="#00b3d4">
+            <Label fx:id="wrongLogIn" alignment="TOP_CENTER" layoutX="89.0" layoutY="234.0" prefHeight="20.0" prefWidth="272.0" textFill="#00b3d4">
                <font>
                   <Font name="Gill Sans Ultra Bold Condensed" size="14.0" />
                </font>

@@ -4,30 +4,25 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
 public class dataProf {
-    private StringProperty mail;
+    private StringProperty mailID;
     private StringProperty nom;
     private StringProperty prenom;
     private StringProperty motDePasse;
-    private StringProperty numero;
+    private StringProperty telephone;
 
-
-
-
-    public dataProf(String mail, String nom, String prenom, String motDePasse , String numero ) {
-        this.mail = new SimpleStringProperty(mail);
+    public dataProf(String mailID, String nom, String prenom, String motDePasse, String telephone) {
+        this.mailID = new SimpleStringProperty(mailID);
         this.nom = new SimpleStringProperty(nom);
         this.prenom = new SimpleStringProperty(prenom);
-        this .motDePasse = new SimpleStringProperty(motDePasse);
-        this .numero = new SimpleStringProperty(numero);
-
-
+        this.motDePasse = new SimpleStringProperty(motDePasse);
+        this.telephone = new SimpleStringProperty(telephone);
     }
 
-    public String getMail() {
-        return mail.get();
+    public String getMailID() {
+        return mailID.get();
     }
-    public void setMail(String mail) {
-        this.mail.set(mail);
+    public void setMailID(String mail) {
+        this.mailID.set(mail);
     }
 
     public String getNom() {
@@ -51,11 +46,11 @@ public class dataProf {
         this.motDePasse.set(motDePasse);
     }
 
-    public String getNumero() {
-        return numero.get();
+    public String getTelephone() {
+        return telephone.get();
     }
-    public void setNumero(String numero) {
-        this.numero.set(numero);
+    public void setTelephone(String telephone) {
+        this.telephone.set(telephone);
     }
 
 

@@ -4,25 +4,25 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
 public class dataEtudiant {
-    private StringProperty mail;
+    private StringProperty mailID;
     private StringProperty nom;
     private StringProperty prenom;
-    private StringProperty numero;
+    private StringProperty telephone;
 
 
-    public dataEtudiant(String mail, String nom, String prenom, String numero) {
-        this.mail = new SimpleStringProperty(mail);
+    public dataEtudiant(String mailID, String nom, String prenom, String telephone) {
+        this.mailID = new SimpleStringProperty(mailID);
         this.nom = new SimpleStringProperty(nom);
         this.prenom = new SimpleStringProperty(prenom);
-        this .numero = new SimpleStringProperty(numero);
+        this.telephone = new SimpleStringProperty(telephone);
     }
 
 
-    public String getMail() {
-        return mail.get();
+    public String getMailID() {
+        return mailID.get();
     }
-    public void setMail(String mail) {
-        this.mail.set(mail);
+    public void setMailID(String mailID) {
+        this.mailID.set(mailID);
     }
 
     public String getNom() {
@@ -39,11 +39,11 @@ public class dataEtudiant {
         this.prenom.set(prenom);
     }
 
-    public String getNumero() {
-        return numero.get();
+    public String getTelephone() {
+        return telephone.get();
     }
-    public void setNumero(String numero) {
-        this.numero.set(numero);
+    public void setTelephone(String telephone) {
+        this.telephone.set(telephone);
     }
 
 }
