@@ -8,7 +8,7 @@
   "profs": [
     {
       "motDePasse": "b",
-      "mailID": "b",
+      "mailID": "tst@gmail.com",
       "telephone": "0628631115",
       "nom": "patrick",
       "prenom": "sebastien"
@@ -35,24 +35,19 @@
       "note": "10",
       "coef": "2",
       "appreciation": "bien",
-      "intituleID": "tst",
-      "matiereID": "tst",
-      "mailEtudiants": "max@gmail.com"
-    },
-    {
-      "date": "2023-11-26",
-      "note": "18",
-      "coef": "1",
-      "matiereID": "ezrzr",
-      "appreciation": "bine ",
-      "intituleID": "tst",
+      "intitule": "tst",
+      "matiere": "tst",
       "mailEtudiants": "max@gmail.com"
     }
   ],
   "matieres": [
     {
+      "nomMatiereID": "tst1",
+      "mailProfsID": "tst@gmail.com"
+    },
+    {
       "nomMatiereID": "ezrzr",
-      "mailProfsID": "b"
+      "mailProfsID": "tst@gmail.com"
     },
     {
       "nomMatiereID": "tst1",

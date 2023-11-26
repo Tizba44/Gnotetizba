@@ -8,8 +8,6 @@ import lombok.Data;
 @Data
 public class AdminEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
     @Column
     private String adminMailID;
     @Column

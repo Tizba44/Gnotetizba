@@ -7,11 +7,18 @@
   ],
   "profs": [
     {
-      "mailID": "b",
       "motDePasse": "b",
+      "mailID": "b",
       "telephone": "0628631115",
       "nom": "patrick",
       "prenom": "sebastien"
+    },
+    {
+      "motDePasse": "0a0620b40e696be919e03c7afd23cea16ad5b674fa0d769aebc602785bc58706",
+      "mailID": "tst2@gmail.com",
+      "telephone": "0625446689",
+      "nom": "cristhophe",
+      "prenom": "maeaaa"
     }
   ],
   "etudiants": [
@@ -28,19 +35,23 @@
       "note": "10",
       "coef": "2",
       "appreciation": "bien",
-      "intitule": "tst",
-      "matiere": "tst",
+      "intituleID": "tst",
+      "matiereID": "tst",
       "mailEtudiants": "max@gmail.com"
     }
   ],
   "matieres": [
     {
-      "nomMatiereID": "tst",
-      "mailProfs": "b"
+      "nomMatiereID": "ezrzr",
+      "mailProfsID": "b"
+    },
+    {
+      "nomMatiereID": "tst1",
+      "mailProfsID": "tst2@gmail.com"
     },
     {
       "nomMatiereID": "ezrzr",
-      "mailProfs": "choiral@gmail.com"
+      "mailProfsID": "tst2@gmail.com"
     }
   ]
 }

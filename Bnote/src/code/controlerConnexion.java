@@ -50,7 +50,7 @@ public class controlerConnexion {
                     // Stocker la matière du professeur
                     List<String> matieresProf = new ArrayList<>();
                     for (Map<String, String> matiere : getMatieres(mapper)) {
-                        if (user.get("mailID").equals(matiere.get("mailProfs"))) {
+                        if (user.get("mailID").equals(matiere.get("mailProfsID"))) {
                             matieresProf.add(matiere.get("nomMatiereID"));
                         }
                     }

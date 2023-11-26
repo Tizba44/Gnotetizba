@@ -48,7 +48,7 @@ public class controlerMatiere implements Initializable {
 
 
         public void initialize(URL url, ResourceBundle resourceBundle) {
-                mail.setCellValueFactory(new PropertyValueFactory<liaisonProfMailObjetMatiere, String>("mailProfs"));
+                mail.setCellValueFactory(new PropertyValueFactory<liaisonProfMailObjetMatiere, String>("mailProfsID"));
                 ObjectMapper mapper = new ObjectMapper();
                 table.setEditable(true);
                 try {
@@ -116,7 +116,7 @@ public class controlerMatiere implements Initializable {
                                 for (String matiere : allMatieres) {
                                         Map<String, String> matiereDetails = MatieresMap.stream()
                                                 // Trouver la matière qui correspond au professeur et à la matière actuelle
-                                                .filter(m -> m.get("mailProfs").equals(prof.get("mailID")) && m.get("nomMatiereID").equals(matiere))
+                                                .filter(m -> m.get("mailProfsID").equals(prof.get("mailID")) && m.get("nomMatiereID").equals(matiere))
                                                 .findFirst().orElse(null);
                                         if (matiereDetails != null) {
                                                 newprof.addMatiere(matiere, new MatiereData(matiereDetails.get("nomMatiereID")));
@@ -164,7 +164,7 @@ public class controlerMatiere implements Initializable {
                                 for (Map.Entry<String, MatiereData> entry : Matieres.entrySet()) {
                                         if (entry.getValue() != null) { // Vérifier si le prof enseigne la matière
                                                 Map<String, String> Matiere = new HashMap<>();
-                                                Matiere.put("mailProfs", prof.getMailProfs());
+                                                Matiere.put("mailProfsID", prof.getMailProfsID());
                                                 Matiere.put("nomMatiereID", entry.getKey());
                                                 MatieresMap.add(Matiere);
                                         }

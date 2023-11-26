@@ -16,8 +16,6 @@ import jakarta.persistence.GenerationType;
 @Data
 public class ProfEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
     @Column
     private String mailID;
     @Column

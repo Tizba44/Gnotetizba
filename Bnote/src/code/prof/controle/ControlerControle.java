@@ -94,7 +94,6 @@ public class ControlerControle implements Initializable {
                 if (choiceBoxMatiere.getItems().isEmpty()) {
                         choiceBoxMatiere.getItems().addAll(Main.matieresProf);
                 }
-
                 // Sélectionner la première matière par défaut si aucune matiere na deja été selectionnée
                 if (Main.matiereProf == null) {
                         choiceBoxMatiere.getSelectionModel().selectFirst();
@@ -117,14 +116,6 @@ public class ControlerControle implements Initializable {
                                         table.getColumns().remove(column);
                                 }
                         }
-
-
-
-
-
-
-
-
                         tableaux();
 
                 });
@@ -155,7 +146,7 @@ public class ControlerControle implements Initializable {
                         ArrayList<TableColumn<liaisonMailEtudiantObjetControle, ?>> controleColumns = new ArrayList<>();
 
                         for (Map<String, String> controle : controlesMap) {
-                                if (choiceBoxMatiere.getValue() == null || !choiceBoxMatiere.getValue().equals(controle.get("matiere"))) {
+                                if (choiceBoxMatiere.getValue() == null || !choiceBoxMatiere.getValue().equals(controle.get("matiereID"))) {
                                         continue;
                                 }
                                 // Obtenez la liste des colonnes existantes
@@ -163,13 +154,13 @@ public class ControlerControle implements Initializable {
                                 // Vérifiez si la colonne existe déjà
                                 boolean columnExists = false;
                                 for (TableColumn<liaisonMailEtudiantObjetControle, ?> column : existingColumns) {
-                                        if (column.getText().equals(controle.get("intitule"))) {
+                                        if (column.getText().equals(controle.get("intituleID"))) {
                                                 columnExists = true;
                                                 break;
                                         }
                                 }
                                 if (!columnExists) {
-                                        TableColumn<liaisonMailEtudiantObjetControle, String> newControleColumn = new TableColumn<>(controle.get("intitule"));
+                                        TableColumn<liaisonMailEtudiantObjetControle, String> newControleColumn = new TableColumn<>(controle.get("intituleID"));
                                         newControleColumn.setPrefWidth(375);
                                         TableColumn<liaisonMailEtudiantObjetControle, String> noteColumn = new TableColumn<>("note");
                                         noteColumn.setPrefWidth(75.0);
@@ -182,24 +173,24 @@ public class ControlerControle implements Initializable {
 
                                         noteColumn.setCellValueFactory(cellData -> {
                                                 liaisonMailEtudiantObjetControle note = cellData.getValue();
-                                                ControleData controleData = note.getControles().get(controle.get("intitule"));
+                                                ControleData controleData = note.getControles().get(controle.get("intituleID"));
                                                 return new SimpleStringProperty (controleData != null ? String.valueOf(controleData.getNote()) : "N/A");
                                         });
 
                                         coefColumn.setCellValueFactory(cellData -> {
                                                 liaisonMailEtudiantObjetControle note = cellData.getValue();
-                                                ControleData controleData = note.getControles().get(controle.get("intitule"));
+                                                ControleData controleData = note.getControles().get(controle.get("intituleID"));
                                                 return new SimpleStringProperty(controleData != null ? String.valueOf(controleData.getCoef()) : "N/A");
                                         });
 
                                         appreciationColumn.setCellValueFactory(cellData -> {
                                                 liaisonMailEtudiantObjetControle note = cellData.getValue();
-                                                ControleData controleData = note.getControles().get(controle.get("intitule"));
+                                                ControleData controleData = note.getControles().get(controle.get("intituleID"));
                                                 return new SimpleStringProperty(controleData != null ? controleData.getAppreciation() : "N/A");
                                         });
                                         dateColumn.setCellValueFactory(cellData -> {
                                                 liaisonMailEtudiantObjetControle note = cellData.getValue();
-                                                ControleData controleData = note.getControles().get(controle.get("intitule"));
+                                                ControleData controleData = note.getControles().get(controle.get("intituleID"));
                                                 return new SimpleObjectProperty<>(controleData != null ? controleData.getDate() : null);
                                         });
 
@@ -222,12 +213,9 @@ public class ControlerControle implements Initializable {
                                         String regexAppreciation = "[A-Za-z0-9 ]*";
 
 
-
-
-
                                         noteColumn.setOnEditCommit(event -> {
                                                 liaisonMailEtudiantObjetControle note = event.getRowValue();
-                                                ControleData controleData = note.getControles().get(controle.get("intitule"));
+                                                ControleData controleData = note.getControles().get(controle.get("intituleID"));
 
 
                                           if (event.getNewValue().matches(regexNote)) {
@@ -241,7 +229,7 @@ public class ControlerControle implements Initializable {
 
                                         coefColumn.setOnEditCommit(event -> {
                                                 liaisonMailEtudiantObjetControle note = event.getRowValue();
-                                                ControleData controleData = note.getControles().get(controle.get("intitule"));
+                                                ControleData controleData = note.getControles().get(controle.get("intituleID"));
                                                 if (event.getNewValue().matches(regexCoef)) {
                                                         controleData.setCoef(Integer.parseInt(event.getNewValue()));
                                                         enregistrer();
@@ -253,7 +241,7 @@ public class ControlerControle implements Initializable {
 
                                         appreciationColumn.setOnEditCommit(event -> {
                                                 liaisonMailEtudiantObjetControle note = event.getRowValue();
-                                                ControleData controleData = note.getControles().get(controle.get("intitule"));
+                                                ControleData controleData = note.getControles().get(controle.get("intituleID"));
                                                 if (event.getNewValue().matches(regexAppreciation)) {
                                                         controleData.setAppreciation(event.getNewValue());
                                                         enregistrer();
@@ -265,7 +253,7 @@ public class ControlerControle implements Initializable {
 
                                         dateColumn.setOnEditCommit(event -> {
                                                 liaisonMailEtudiantObjetControle note = event.getRowValue();
-                                                ControleData controleData = note.getControles().get(controle.get("intitule"));
+                                                ControleData controleData = note.getControles().get(controle.get("intituleID"));
                                                 if (event.getNewValue().toString().matches(regexDate)) {
                                                         controleData.setDate(event.getNewValue());
                                                         enregistrer();
@@ -288,8 +276,8 @@ public class ControlerControle implements Initializable {
                                 for (Map<String, String> controle : controlesMap) {
                                         if (controle.get("mailEtudiants").equals(etudiant.get("mailID")) ) {
 
-                                                ControleData newControle = new ControleData(Integer.parseInt(controle.get("note")), Integer.parseInt(controle.get("coef")), controle.get("appreciation"), LocalDate.parse(controle.get("date")) , controle.get("matiere") );
-                                                newEtudiant.addControle(controle.get("intitule"), newControle);
+                                                ControleData newControle = new ControleData(Integer.parseInt(controle.get("note")), Integer.parseInt(controle.get("coef")), controle.get("appreciation"), LocalDate.parse(controle.get("date")) , controle.get("matiereID") );
+                                                newEtudiant.addControle(controle.get("intituleID"), newControle);
                                         }
                                 }
                                 notes.add(newEtudiant);
@@ -335,13 +323,13 @@ public class ControlerControle implements Initializable {
                                                 Map<String, String> controle = new HashMap<>();
                                                 controle.put("mailEtudiants", note.getMailEtudiants());
                                                 controle.put("date", entry.getValue().getDate().toString());
-                                                controle.put("intitule", entry.getKey());
+                                                controle.put("intituleID", entry.getKey());
                                                 controle.put("coef", String.valueOf(entry.getValue().getCoef()));
                                                 controle.put("note", String.valueOf(entry.getValue().getNote()));
                                                 controle.put("appreciation", entry.getValue().getAppreciation());
-                                                controle.put("matiere", choiceBoxMatiere.getValue()); // ajoute la matière actuelle
+                                                controle.put("matiereID", choiceBoxMatiere.getValue()); // ajoute la matière actuelle
                                                 // Supprimez le contrôle existant pour l'étudiant
-                                                controlesMap.removeIf(existingControle -> existingControle.get("mailEtudiants").equals(note.getMailEtudiants()) && existingControle.get("intitule").equals(entry.getKey()) && existingControle.get("matiere").equals(choiceBoxMatiere.getValue()));
+                                                controlesMap.removeIf(existingControle -> existingControle.get("mailEtudiants").equals(note.getMailEtudiants()) && existingControle.get("intituleID").equals(entry.getKey()) && existingControle.get("matiereID").equals(choiceBoxMatiere.getValue()));
                                                 // Ajoutez le nouveau contrôle
                                                 controlesMap.add(controle);
                                         }
@@ -412,7 +400,7 @@ public class ControlerControle implements Initializable {
                         List<Map<String, String>> controlesMap = usersMap.get("controles");
 
                         // Check if the control exists
-                        boolean controlExists = controlesMap.stream().anyMatch(controle -> controle.get("intitule").equals(controleToDelete) && controle.get("matiere").equals(choiceBoxMatiere.getValue()));
+                        boolean controlExists = controlesMap.stream().anyMatch(controle -> controle.get("intituleID").equals(controleToDelete) && controle.get("matiereID").equals(choiceBoxMatiere.getValue()));
 
                         if (!controlExists) {
                                 erreur.setText("Il n'y a pas de contrôle avec ce nom à supprimer.");
@@ -420,7 +408,7 @@ public class ControlerControle implements Initializable {
                         }
 
                         // Remove the controls that match 'controleToDelete' and 'choiceBoxMatiere.getValue()'
-                        controlesMap.removeIf(controle -> controle.get("intitule").equals(controleToDelete) && controle.get("matiere").equals(choiceBoxMatiere.getValue()));
+                        controlesMap.removeIf(controle -> controle.get("intituleID").equals(controleToDelete) && controle.get("matiereID").equals(choiceBoxMatiere.getValue()));
 
                         // Update 'controles' in 'usersMap'
                         usersMap.put("controles", controlesMap);

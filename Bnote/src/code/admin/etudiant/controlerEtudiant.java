@@ -45,8 +45,6 @@ public class controlerEtudiant implements Initializable {
         @FXML
         private TableColumn<dataEtudiant, String> nom;
 
-
-
         @FXML
         private TableColumn<dataEtudiant, String> prenom;
 
@@ -72,9 +70,9 @@ public class controlerEtudiant implements Initializable {
 
                 // Regex pour valider l'email
                         String regexMail = "^[A-Za-z0-9+_.-]+@(.+)$";
-// Regex pour valider le nom et le prénom (lettres et espaces uniquement)
+                // Regex pour valider le nom et le prénom (lettres et espaces uniquement)
                 String regexNomPrenom = "^[a-zA-Z\\s]+";
-// Regex pour valider le numéro de téléphone
+                // Regex pour valider le numéro de téléphone
                 String regextelephone = "^[0-9]{10}$";
 
                 mail.setCellFactory(TextFieldTableCell.forTableColumn());
@@ -178,7 +176,6 @@ public class controlerEtudiant implements Initializable {
 
         @FXML
         private TextField mailInput;
-
 
         @FXML
         private TextField nomInput;

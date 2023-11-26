@@ -19,6 +19,9 @@ public class adminAcceuil {
     @FXML
     private Button  modifierMatiere;
 
+    // jouer la class public RequeteAPIrest
+
+
     @FXML
     public void userLogOut(ActionEvent event) throws IOException {
         Main m = new Main();

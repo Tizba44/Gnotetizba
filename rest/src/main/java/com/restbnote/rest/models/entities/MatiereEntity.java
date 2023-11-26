@@ -1,17 +1,22 @@
 package com.restbnote.rest.models.entities;
 
+import com.restbnote.rest.models.Id.MatiereId;
 import jakarta.persistence.*;
 import lombok.Data;
 
 @Entity
+@IdClass(MatiereId.class)
 @Table(name = "matieres")
 @Data
 public class MatiereEntity {
+
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
     @Column
     private String nomMatiereID;
+
+    @Id
     @Column
-    private String mailProfs;
+    private String mailProfsID;
 }
+
+

@@ -10,6 +10,8 @@ public class ControleEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+
     @Column
     private String date;
     @Column
