@@ -1,10 +1,9 @@
 package com.restbnote.rest.services;
 
+
 import com.restbnote.rest.models.dto.ControleDto;
-
-import com.restbnote.rest.models.entities.ControleEntity;
-
 import java.util.List;
+
 
 
 public interface ControleService {
@@ -13,4 +12,5 @@ public interface ControleService {
     ControleDto updateControle(final String id, final ControleDto  controleDto);
     String deleteControle(String id);
 }
+
 

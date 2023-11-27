@@ -1,20 +1,19 @@
 package com.restbnote.rest.models.entities;
 
-import com.restbnote.rest.models.Id.MatiereId;
+
 import jakarta.persistence.*;
 import lombok.Data;
-
-@Entity
-@IdClass(MatiereId.class)
-@Table(name = "matieres")
+import org.hibernate.annotations.GenericGenerator;
 @Data
+@Entity
+@Table(name = "matieres")
 public class MatiereEntity {
-
     @Id
+    @GeneratedValue( generator = "uuid")
+    @GenericGenerator(name = "uuid", strategy = "uuid2")
+    private String id;
     @Column
     private String nomMatiereID;
-
-    @Id
     @Column
     private String mailProfsID;
 }

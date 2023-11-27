@@ -7,6 +7,7 @@
     @Data
     @Builder
     public class ProfDto {
+        private String id;
         private String mailID;
         private String nom;
         private String prenom;

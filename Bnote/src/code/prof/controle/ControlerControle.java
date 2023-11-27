@@ -112,7 +112,7 @@ public class ControlerControle implements Initializable {
 
                         // vider les colonnes de controle pour mettre à jour les controles de la nouvelle matière ne pas vider la colonne mail
                         for (TableColumn<liaisonMailEtudiantObjetControle, ?> column : new ArrayList<>(table.getColumns())) {
-                                if (!column.getText().equals("mailEtudiants")) {
+                                if (!column.getText().equals("mailEtudiantsID")) {
                                         table.getColumns().remove(column);
                                 }
                         }
@@ -129,7 +129,7 @@ public class ControlerControle implements Initializable {
 
 
         public void tableaux() {
-                mail.setCellValueFactory(new PropertyValueFactory<liaisonMailEtudiantObjetControle, String>("mailEtudiants"));
+                mail.setCellValueFactory(new PropertyValueFactory<liaisonMailEtudiantObjetControle, String>("mailEtudiantsID"));
                 ObjectMapper mapper = new ObjectMapper();
                 table.setEditable(true);
                 try {
@@ -274,7 +274,7 @@ public class ControlerControle implements Initializable {
                         for (Map<String, String> etudiant : EtudiantsMap) {
                                 liaisonMailEtudiantObjetControle newEtudiant = new liaisonMailEtudiantObjetControle(etudiant.get("mailID"));
                                 for (Map<String, String> controle : controlesMap) {
-                                        if (controle.get("mailEtudiants").equals(etudiant.get("mailID")) ) {
+                                        if (controle.get("mailEtudiantsID").equals(etudiant.get("mailID")) ) {
 
                                                 ControleData newControle = new ControleData(Integer.parseInt(controle.get("note")), Integer.parseInt(controle.get("coef")), controle.get("appreciation"), LocalDate.parse(controle.get("date")) , controle.get("matiereID") );
                                                 newEtudiant.addControle(controle.get("intituleID"), newControle);
@@ -298,15 +298,6 @@ public class ControlerControle implements Initializable {
                         // Obtenir les données actuelles de la table
                         ObservableList<liaisonMailEtudiantObjetControle> notes = table.getItems();
 
-//                        //print the data
-//                        for (noteData note : notes) {
-//                                System.out.println(note.getMail());
-//                                Map<String, ControleData> controles = note.getControles();
-//                                for (Map.Entry<String, ControleData> entry : controles.entrySet()) {
-//                                        System.out.println(entry.getKey() + " " + entry.getValue().getCoef() + " " + entry.getValue().getNote() + " " + entry.getValue().getAppreciation() + " " + entry.getValue().getDate());
-//                                }
-//                        }
-
                         // Préparer les listes pour 'Etudiants' et 'controles'
                         List<Map<String, String>> EtudiantsMap = new ArrayList<>();
                         List<Map<String, String>> controlesMap = new ArrayList<>(usersMap.get("controles")); // copier les contrôles existants
@@ -314,14 +305,14 @@ public class ControlerControle implements Initializable {
                         for (liaisonMailEtudiantObjetControle note : notes) {
                                 // Ajouter chaque étudiant à 'EtudiantsMap'
                                 Map<String, String> etudiant = new HashMap<>();
-                                etudiant.put("mailEtudiants", note.getMailEtudiants());
+                                etudiant.put("mailEtudiantsID", note.getMailEtudiantsID());
                                 EtudiantsMap.add(etudiant);
                                 Map<String, ControleData> controles = note.getControles();
                                 for (Map.Entry<String, ControleData> entry : controles.entrySet()) {
                                         // Vérifiez si la matière du contrôle correspond à la matière actuelle
                                         if (entry.getValue().getMatiere().equals(choiceBoxMatiere.getValue())) {
                                                 Map<String, String> controle = new HashMap<>();
-                                                controle.put("mailEtudiants", note.getMailEtudiants());
+                                                controle.put("mailEtudiantsID", note.getMailEtudiantsID());
                                                 controle.put("date", entry.getValue().getDate().toString());
                                                 controle.put("intituleID", entry.getKey());
                                                 controle.put("coef", String.valueOf(entry.getValue().getCoef()));
@@ -329,7 +320,7 @@ public class ControlerControle implements Initializable {
                                                 controle.put("appreciation", entry.getValue().getAppreciation());
                                                 controle.put("matiereID", choiceBoxMatiere.getValue()); // ajoute la matière actuelle
                                                 // Supprimez le contrôle existant pour l'étudiant
-                                                controlesMap.removeIf(existingControle -> existingControle.get("mailEtudiants").equals(note.getMailEtudiants()) && existingControle.get("intituleID").equals(entry.getKey()) && existingControle.get("matiereID").equals(choiceBoxMatiere.getValue()));
+                                                controlesMap.removeIf(existingControle -> existingControle.get("mailEtudiantsID").equals(note.getMailEtudiantsID()) && existingControle.get("intituleID").equals(entry.getKey()) && existingControle.get("matiereID").equals(choiceBoxMatiere.getValue()));
                                                 // Ajoutez le nouveau contrôle
                                                 controlesMap.add(controle);
                                         }

@@ -1,29 +1,33 @@
 package com.restbnote.rest.models.entities;
 
+import org.hibernate.annotations.GenericGenerator;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.time.LocalDate;
+
+
+@Data
 @Entity
 @Table(name = "controles")
-@Data
 public class ControleEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @GeneratedValue( generator = "uuid")
+    @GenericGenerator(name = "uuid", strategy = "uuid2")
 
-
+    private String id;
     @Column
-    private String date;
+    private LocalDate date;
     @Column
     private Integer note;
     @Column
     private Integer coef;
     @Column
-    private String mailID;
-    @Column
     private String appreciation;
     @Column
-    private String intitule;
+    private String intituleID;
     @Column
-    private String nomMatiereID;
+    private String matiereID;
+    @Column
+    private String mailEtudiantsID;
 }

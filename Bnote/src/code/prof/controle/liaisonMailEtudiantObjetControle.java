@@ -5,19 +5,19 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class liaisonMailEtudiantObjetControle {
-    private SimpleStringProperty mailEtudiants;
+    private SimpleStringProperty mailEtudiantsID;
     private Map<String, ControleData> controles;
 
-    public liaisonMailEtudiantObjetControle(String mailEtudiants) {
-        this.mailEtudiants = new SimpleStringProperty(mailEtudiants);
+    public liaisonMailEtudiantObjetControle(String mailEtudiantsID) {
+        this.mailEtudiantsID = new SimpleStringProperty(mailEtudiantsID);
         this.controles = new HashMap<>();
     }
     public void addControle(String controleName, ControleData controleData) {
         this.controles.put(controleName, controleData);
     }
 
-    public String getMailEtudiants() {
-        return mailEtudiants.get();
+    public String getMailEtudiantsID() {
+        return mailEtudiantsID.get();
     }
 
     public Map<String, ControleData> getControles() {

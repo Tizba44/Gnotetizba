@@ -1,9 +1,11 @@
+
 package com.restbnote.rest.controllers;
 
 import com.restbnote.rest.models.dto.AdminDto;
 import com.restbnote.rest.services.AdminService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+
 
 import java.util.List;
 
@@ -14,7 +16,20 @@ public class AdminController {
 
     private AdminService adminService;
 
-
+    @PostMapping("/create")
+    public AdminDto createAdmin(@RequestBody AdminDto adminDto) {
+        return adminService.createAdmin(adminDto);
+    }
+    @GetMapping("/read")
+    public List<AdminDto> readAdmin() {
+        return adminService.readAdmin();
+    }
+    @PutMapping("/update/{id}")
+    public AdminDto updateAdmin(@PathVariable String id, @RequestBody AdminDto adminDto) {
+        return adminService.updateAdmin(id, adminDto);
+    }
+    @DeleteMapping("/delete/{id}")
+    public void deleteAdmin(@PathVariable String id) {
+        adminService.deleteAdmin(id);
+    }
 }
-
-

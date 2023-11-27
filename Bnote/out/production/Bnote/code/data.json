@@ -37,7 +37,16 @@
       "appreciation": "bien",
       "intituleID": "tst",
       "matiereID": "tst",
-      "mailEtudiants": "max@gmail.com"
+      "mailEtudiantsID": "max@gmail.com"
+    },
+    {
+      "date": "2023-11-26",
+      "note": "18",
+      "coef": "1",
+      "appreciation": "bine",
+      "matiereID": "ezrzr",
+      "intituleID": "tst",
+      "mailEtudiantsID": "max@gmail.com"
     }
   ],
   "matieres": [

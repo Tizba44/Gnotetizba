@@ -1,17 +1,24 @@
 package com.restbnote.rest.models.dto;
 
+
 import lombok.Builder;
 import lombok.Data;
+import java.time.LocalDate;
 
 @Data
 @Builder
 public class ControleDto {
-    private Long id;
-    private String date;
+    private String id;
+    private LocalDate date;
     private Integer note;
     private Integer coef;
-    private String mailID;
     private String appreciation;
-    private String intitule;
-    private String nomMatiereID;
+    private String intituleID;
+    private String matiereID;
+    private String mailEtudiantsID;
 }
+
+
+
+
+
