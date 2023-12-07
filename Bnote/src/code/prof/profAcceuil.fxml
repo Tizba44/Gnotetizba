@@ -13,7 +13,7 @@
          <children>
             <ImageView fitHeight="540.0" fitWidth="960.0">
                <image>
-                  <Image url="@../../img/backgroundprof.png" />
+                  <Image url="@../../img/backgroundAdmin.png" />
                </image>
             </ImageView>
             <Button fx:id="logout" layoutX="694.0" layoutY="48.0" mnemonicParsing="false" onAction="#userLogOut" prefHeight="116.0" prefWidth="124.0" style="-fx-background-color: none;">
@@ -26,7 +26,12 @@
                   <Font name="Gill Sans Ultra Bold Condensed" size="21.0" />
                </font>
             </Button>
-            <Button fx:id="stat" layoutX="184.0" layoutY="320.0" mnemonicParsing="false" onAction="#userstat" prefHeight="86.0" prefWidth="246.0" style="-fx-background-color: none;" text="Statistique de la classe" textFill="WHITE">
+            <Button fx:id="stat" layoutX="598.0" layoutY="320.0" mnemonicParsing="false" onAction="#userstat" prefHeight="86.0" prefWidth="246.0" style="-fx-background-color: none;" text="Statistique de la classe" textFill="WHITE">
+               <font>
+                  <Font name="Gill Sans Ultra Bold Condensed" size="21.0" />
+               </font>
+            </Button>
+            <Button fx:id="voir" layoutX="182.0" layoutY="320.0" mnemonicParsing="false" onAction="#uservoir" prefHeight="86.0" prefWidth="246.0" style="-fx-background-color: none;" text="Voir Les notes" textFill="WHITE">
                <font>
                   <Font name="Gill Sans Ultra Bold Condensed" size="21.0" />
                </font>

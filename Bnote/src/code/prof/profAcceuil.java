@@ -25,6 +25,9 @@ public class profAcceuil {
     private Button stat;
 
     @FXML
+    private Button voir;
+
+    @FXML
     public void userLogOut(ActionEvent event) throws IOException {
         Main m = new Main();
         m.changeScene("connexion.fxml");
@@ -41,6 +44,13 @@ public class profAcceuil {
         Main m = new Main();
         m.changeScene("prof/stat/stat.fxml");
     }
+
+    @FXML
+    public void uservoir(ActionEvent event) throws IOException{
+        Main m = new Main();
+        m.changeScene("prof/voir/voir.fxml");
+    }
+
 
 
 }

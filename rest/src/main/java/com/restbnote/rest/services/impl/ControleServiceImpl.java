@@ -5,10 +5,20 @@ import com.restbnote.rest.models.dto.ControleDto;
 import com.restbnote.rest.models.entities.ControleEntity;
 import com.restbnote.rest.repositories.ControleRepository;
 import com.restbnote.rest.services.ControleService;
+import jakarta.annotation.PostConstruct;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
+import org.springframework.scheduling.annotation.Scheduled;
+import java.util.Map;
+import java.util.HashMap;
+import java.io.File;
+import java.io.IOException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+
+
 
 @Service
 @AllArgsConstructor
@@ -84,5 +94,56 @@ public class ControleServiceImpl implements ControleService {
             controleRepository.delete(p);
             return "controle supprimé";
         }
+
+
+
+
+
+    @Scheduled(fixedRate = 15000)
+    public void printStudentAverages() {
+        try {
+
+            List<Map<String, String>> studentAverages = new ArrayList<>();
+            List<Object[]> averages = controleRepository.findWeightedAverageNoteByStudent();
+            for (Object[] average : averages) {
+                String mailEtudiantsID = (String) average[0];
+                Number avgNoteNumber = (Number) average[1];
+                Integer avgNote = avgNoteNumber.intValue();
+                Map<String, String> studentAverage = new HashMap<>();
+                studentAverage.put("note", avgNote.toString());
+                studentAverage.put("mailEtudiantsID", mailEtudiantsID);
+                studentAverages.add(studentAverage);
+            }
+
+            List<Map<String, String>> studentSubjectAverages = new ArrayList<>();
+            averages = controleRepository.findWeightedAverageNoteByStudentAndSubject();
+            for (Object[] average : averages) {
+                String mailEtudiantsID = (String) average[0];
+                String subject = (String) average[1];
+                Number avgNoteNumber = (Number) average[2];
+                Integer avgNote = avgNoteNumber.intValue();
+                Map<String, String> studentSubjectAverage = new HashMap<>();
+                studentSubjectAverage.put("note", avgNote.toString());
+                studentSubjectAverage.put("mailEtudiantsID", mailEtudiantsID);
+                studentSubjectAverage.put("matiere", subject);
+                studentSubjectAverages.add(studentSubjectAverage);
+            }
+
+
+            Map<String, Object> studentData = new HashMap<>();
+            studentData.put("moyenneGenerale", studentAverages);
+            studentData.put("moyenneParMatiere", studentSubjectAverages);
+
+            ObjectMapper mapper = new ObjectMapper();
+            mapper.writeValue(new File("src/main/resources/moyenne.json"), studentData);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+
+
+
 }
 

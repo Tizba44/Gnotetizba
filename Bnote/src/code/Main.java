@@ -10,6 +10,7 @@ import java.io.IOException;
 
 public class Main extends Application {
     public static String matiereProf;
+
     private static Stage stg;
 
     public static String[] matieresProf;

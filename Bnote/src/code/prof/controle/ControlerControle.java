@@ -11,29 +11,25 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 
-import javafx.scene.control.cell.PropertyValueFactory;
-
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
 import java.util.*;
 
+
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.SimpleObjectProperty;
 
-
-
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 
 import javafx.scene.control.TextField;
 
-
 import javafx.util.converter.LocalDateStringConverter;
 import javafx.scene.control.ChoiceBox;
-
 
 public class ControlerControle implements Initializable {
 
@@ -63,65 +59,21 @@ public class ControlerControle implements Initializable {
 
         @FXML
         private TextField inputsuppr;
-
-
         @FXML
         private ChoiceBox<String> matiere;
 
         @FXML
         private Label labelMatiere;
 
-
-
-
-
-
-
         @FXML
         private ChoiceBox<String> choiceBoxMatiere;
 
 
 
-
-
-
-
-
-
         @FXML
         public void initialize(URL url, ResourceBundle resourceBundle) {
-                // Remplir la ChoiceBox avec les matières du professeur
-                if (choiceBoxMatiere.getItems().isEmpty()) {
-                        choiceBoxMatiere.getItems().addAll(Main.matieresProf);
-                }
-                // Sélectionner la première matière par défaut si aucune matiere na deja été selectionnée
-                if (Main.matiereProf == null) {
-                        choiceBoxMatiere.getSelectionModel().selectFirst();
-                        tableaux();
-                } else {
-                        // Sélectionner la matière précédemment sélectionnée
-                        choiceBoxMatiere.getSelectionModel().select(Main.matiereProf);
-                        tableaux();
-                }
 
-                // Ajouter un écouteur pour mettre à jour la matière sélectionnée
-                choiceBoxMatiere.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-                        // newValue est la nouvelle matière sélectionnée
-                        // Vous pouvez l'utiliser pour mettre à jour votre variable
-                        Main.matiereProf = newValue;
-
-                        // vider les colonnes de controle pour mettre à jour les controles de la nouvelle matière ne pas vider la colonne mail
-                        for (TableColumn<liaisonMailEtudiantObjetControle, ?> column : new ArrayList<>(table.getColumns())) {
-                                if (!column.getText().equals("mailEtudiantsID")) {
-                                        table.getColumns().remove(column);
-                                }
-                        }
-                        tableaux();
-
-                });
-
-                //changer le label de la matière
-                labelMatiere.setText("Matière : " + choiceBoxMatiere.getValue());
+                tableaux();
         }
 
 
@@ -275,7 +227,6 @@ public class ControlerControle implements Initializable {
                                 liaisonMailEtudiantObjetControle newEtudiant = new liaisonMailEtudiantObjetControle(etudiant.get("mailID"));
                                 for (Map<String, String> controle : controlesMap) {
                                         if (controle.get("mailEtudiantsID").equals(etudiant.get("mailID")) ) {
-
                                                 ControleData newControle = new ControleData(Integer.parseInt(controle.get("note")), Integer.parseInt(controle.get("coef")), controle.get("appreciation"), LocalDate.parse(controle.get("date")) , controle.get("matiereID") );
                                                 newEtudiant.addControle(controle.get("intituleID"), newControle);
                                         }

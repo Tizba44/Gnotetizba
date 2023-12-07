@@ -14,6 +14,7 @@ import java.io.IOException;
 
 
 
+
 import java.nio.file.Paths;
 
 
@@ -42,10 +43,9 @@ public class DatabaseInitializer {
 
     @PostConstruct
     public void initData() throws IOException {
-        File file = Paths.get("src", "main", "resources", "data.json").toFile();
-        if (!file.exists()) {
-            throw new IOException("File not found: " + file.getAbsolutePath());
-        }
+
+
+        File file = Paths.get("C:/Users/bapto/OneDrive/Bureau/Gnotetizba/Bnote/src/code/data.json").toFile();
 
         // Read the entire JSON file into a JsonNode
         JsonNode rootNode = objectMapper.readTree(file);

@@ -1,0 +1,68 @@
+{
+  "moyenneParMatiere": [
+    {
+      "note": "7",
+      "mailEtudiantsID": "basile@gmail.com",
+      "matiere": "géo"
+    },
+    {
+      "note": "12",
+      "mailEtudiantsID": "basile@gmail.com",
+      "matiere": "math"
+    },
+    {
+      "note": "11",
+      "mailEtudiantsID": "basile@gmail.com",
+      "matiere": "physique"
+    },
+    {
+      "note": "12",
+      "mailEtudiantsID": "max@gmail.com",
+      "matiere": "géo"
+    },
+    {
+      "note": "17",
+      "mailEtudiantsID": "max@gmail.com",
+      "matiere": "math"
+    },
+    {
+      "note": "20",
+      "mailEtudiantsID": "max@gmail.com",
+      "matiere": "physique"
+    },
+    {
+      "note": "10",
+      "mailEtudiantsID": "max@gmail.com",
+      "matiere": "tst"
+    },
+    {
+      "note": "8",
+      "mailEtudiantsID": "robin@gmail/com",
+      "matiere": "géo"
+    },
+    {
+      "note": "9",
+      "mailEtudiantsID": "robin@gmail/com",
+      "matiere": "math"
+    },
+    {
+      "note": "10",
+      "mailEtudiantsID": "robin@gmail/com",
+      "matiere": "physique"
+    }
+  ],
+  "moyenneGenerale": [
+    {
+      "note": "10",
+      "mailEtudiantsID": "basile@gmail.com"
+    },
+    {
+      "note": "16",
+      "mailEtudiantsID": "max@gmail.com"
+    },
+    {
+      "note": "9",
+      "mailEtudiantsID": "robin@gmail/com"
+    }
+  ]
+}
