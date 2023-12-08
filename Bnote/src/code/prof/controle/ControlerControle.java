@@ -72,8 +72,42 @@ public class ControlerControle implements Initializable {
 
         @FXML
         public void initialize(URL url, ResourceBundle resourceBundle) {
+                //clear choiceBoxMatiere pour eviter les doublons
+                choiceBoxMatiere.getItems().clear();
 
-                tableaux();
+
+
+                // Remplir la ChoiceBox avec les matières du professeur
+                if (choiceBoxMatiere.getItems().isEmpty()) {
+                        choiceBoxMatiere.getItems().addAll(Main.matieresProf);
+                }
+                // Sélectionner la première matière par défaut si aucune matiere na deja été selectionnée
+                if (Main.matiereProf == null) {
+                        choiceBoxMatiere.getSelectionModel().selectFirst();
+                        tableaux();
+                } else {
+                        // Sélectionner la matière précédemment sélectionnée
+                        choiceBoxMatiere.getSelectionModel().select(Main.matiereProf);
+                        tableaux();
+                }
+
+                // Ajouter un écouteur pour mettre à jour la matière sélectionnée
+                choiceBoxMatiere.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+                        // newValue est la nouvelle matière sélectionnée
+                        // Vous pouvez l'utiliser pour mettre à jour votre variable
+                        Main.matiereProf = newValue;
+//                        // vider les colonnes de controle pour mettre à jour les controles de la nouvelle matière ne pas vider la colonne mail
+                        for (TableColumn<liaisonMailEtudiantObjetControle, ?> column : new ArrayList<>(table.getColumns())) {
+                                if (!column.getText().equals("mail")) {
+                                        table.getColumns().remove(column);
+                                }
+                        }
+                        tableaux();
+                        //changer le label de la matière
+                        labelMatiere.setText("Matière : " + choiceBoxMatiere.getValue());
+
+                });
+                labelMatiere.setText("Matière : " + choiceBoxMatiere.getValue());
         }
 
 

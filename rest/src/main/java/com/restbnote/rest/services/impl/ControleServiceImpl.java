@@ -125,7 +125,7 @@ public class ControleServiceImpl implements ControleService {
                 Map<String, String> studentSubjectAverage = new HashMap<>();
                 studentSubjectAverage.put("note", avgNote.toString());
                 studentSubjectAverage.put("mailEtudiantsID", mailEtudiantsID);
-                studentSubjectAverage.put("matiere", subject);
+                studentSubjectAverage.put("matiereID", subject);
                 studentSubjectAverages.add(studentSubjectAverage);
             }
 
