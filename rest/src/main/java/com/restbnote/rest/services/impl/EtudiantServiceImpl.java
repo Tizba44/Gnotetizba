@@ -50,19 +50,72 @@ public class EtudiantServiceImpl implements EtudiantService {
         return etudiantDtos;
     }
 
+
+
+
+    @Override
+    public EtudiantDto readOneEtudiant(String id) {
+        EtudiantEntity etudiant = etudiantRepository.findById(id)
+                .orElseThrow(() -> new MyException(
+                        MyExceptionPayLoad.builder()
+                                .httpCode(404)
+                                .message("etudiant non trouvé")
+                                .build()
+                ));
+        return EtudiantDto.builder()
+                .id(etudiant.getId())
+                .mailID(etudiant.getMailID())
+                .nom(etudiant.getNom())
+                .prenom(etudiant.getPrenom())
+                .telephone(etudiant.getTelephone())
+                .build();
+    }
+
+
+
+
+
     @Override
     public EtudiantDto updateEtudiant(String id, EtudiantDto etudiantDto) {
         return etudiantRepository.findById(id)
-                .map(p-> {
-                    p.setMailID(etudiantDto.getMailID());
-                    p.setNom(etudiantDto.getNom());
-                    p.setPrenom(etudiantDto.getPrenom());
-                    p.setTelephone(etudiantDto.getTelephone());
-                    etudiantRepository.save(p);
-                    etudiantDto.setId(p.getId());
+                .map(existingEtudiant -> {
+                    if (etudiantDto.getMailID() != null && !etudiantDto.getMailID().isEmpty()) {
+                        existingEtudiant.setMailID(etudiantDto.getMailID());
+                    }
+                    if (etudiantDto.getNom() != null && !etudiantDto.getNom().isEmpty()) {
+                        existingEtudiant.setNom(etudiantDto.getNom());
+                    }
+                    if (etudiantDto.getPrenom() != null && !etudiantDto.getPrenom().isEmpty()) {
+                        existingEtudiant.setPrenom(etudiantDto.getPrenom());
+                    }
+                    if (etudiantDto.getTelephone() != null && !etudiantDto.getTelephone().isEmpty()) {
+                        existingEtudiant.setTelephone(etudiantDto.getTelephone());
+                    }
+
+
+                    etudiantRepository.save(existingEtudiant);
+                    etudiantDto.setId(existingEtudiant.getId());
                     return etudiantDto;
-                }).orElse(null);
+                })
+                .orElseGet(() -> {
+                    // If the etudiant doesn't exist, create a new one
+                    EtudiantEntity newEtudiant = new EtudiantEntity();
+                    newEtudiant.setMailID(etudiantDto.getMailID());
+                    newEtudiant.setNom(etudiantDto.getNom());
+                    newEtudiant.setPrenom(etudiantDto.getPrenom());
+                    newEtudiant.setTelephone(etudiantDto.getTelephone());
+                    newEtudiant = etudiantRepository.save(newEtudiant);
+                    return EtudiantDto.builder()
+                            .id(newEtudiant.getId())
+                            .mailID(newEtudiant.getMailID())
+                            .nom(newEtudiant.getNom())
+                            .prenom(newEtudiant.getPrenom())
+                            .telephone(newEtudiant.getTelephone())
+                            .build();
+                });
     }
+
+
 
     @Override
     public String deleteEtudiant(String id) {

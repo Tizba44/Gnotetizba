@@ -7,6 +7,7 @@ import com.restbnote.rest.models.dto.AdminDto;
 import com.restbnote.rest.models.entities.AdminEntity;
 import com.restbnote.rest.repositories.AdminRepository;
 import com.restbnote.rest.services.AdminService;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -45,17 +46,61 @@ public class AdminServiceImpl implements AdminService {
         return adminDtos;
     }
 
+
+
+
+
+    @Override
+    public AdminDto readOneAdmin(String id) {
+        AdminEntity admin = adminRepository.findById(id)
+                .orElseThrow(() -> new MyException(
+                        MyExceptionPayLoad.builder()
+                                .httpCode(404)
+                                .message("admin non trouvé")
+                                .build()
+                ));
+        return AdminDto.builder()
+                .id(admin.getId())
+                .adminMailID(admin.getAdminMailID())
+                .adminPassword(admin.getAdminPassword())
+                .build();
+    }
+
+
+
+
+
+
+
     @Override
     public AdminDto updateAdmin(String id, AdminDto adminDto) {
         return adminRepository.findById(id)
-                .map(p-> {
-                    p.setAdminMailID(adminDto.getAdminMailID());
-                    p.setAdminPassword(adminDto.getAdminPassword());
-                    adminRepository.save(p);
-                    adminDto.setId(p.getId());
+                .map(existingAdmin -> {
+                    if (adminDto.getAdminMailID() != null && !adminDto.getAdminMailID().isEmpty()) {
+                        existingAdmin.setAdminMailID(adminDto.getAdminMailID());
+                    }
+                    if (adminDto.getAdminPassword() != null && !adminDto.getAdminPassword().isEmpty()) {
+                        existingAdmin.setAdminPassword(adminDto.getAdminPassword());
+                    }
+
+                    adminRepository.save(existingAdmin);
+                    adminDto.setId(existingAdmin.getId());
                     return adminDto;
-                }).orElse(null);
+                })
+                .orElseGet(() -> {
+                    // Si l'admin n'existe pas, créez un nouvel admin
+                    AdminEntity newAdmin = new AdminEntity();
+                    newAdmin.setAdminMailID(adminDto.getAdminMailID());
+                    newAdmin.setAdminPassword(adminDto.getAdminPassword());
+                    newAdmin = adminRepository.save(newAdmin);
+                    return AdminDto.builder()
+                            .id(newAdmin.getId())
+                            .adminMailID(newAdmin.getAdminMailID())
+                            .adminPassword(newAdmin.getAdminPassword())
+                            .build();
+                });
     }
+
 
     @Override
     public String deleteAdmin(String id) {

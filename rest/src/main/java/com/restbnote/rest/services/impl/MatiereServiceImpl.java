@@ -42,17 +42,59 @@ public class MatiereServiceImpl implements MatiereService {
         return matiereDtos;
     }
 
+
+
+    @Override
+    public MatiereDto readOneMatiere(String id) {
+        MatiereEntity matiere = matiereRepository.findById(id)
+                .orElseThrow(() -> new MyException(
+                        MyExceptionPayLoad.builder()
+                                .httpCode(404)
+                                .message("matiere non trouvé")
+                                .build()
+                ));
+        return MatiereDto.builder()
+                .id(matiere.getId())
+                .nomMatiereID(matiere.getNomMatiereID())
+                .mailProfsID(matiere.getMailProfsID())
+                .build();
+    }
+
+
+
+
+
     @Override
     public MatiereDto updateMatiere(String id, MatiereDto matiereDto) {
         return matiereRepository.findById(id)
-                .map(p-> {
-                    p.setNomMatiereID(matiereDto.getNomMatiereID());
-                    p.setMailProfsID(matiereDto.getMailProfsID());
-                    matiereRepository.save(p);
-                    matiereDto.setId(p.getId());
+                .map(existingMatiere -> {
+                    if (matiereDto.getNomMatiereID() != null && !matiereDto.getNomMatiereID().isEmpty()) {
+                        existingMatiere.setNomMatiereID(matiereDto.getNomMatiereID());
+                    }
+                    if (matiereDto.getMailProfsID() != null && !matiereDto.getMailProfsID().isEmpty()) {
+                        existingMatiere.setMailProfsID(matiereDto.getMailProfsID());
+                    }
+
+
+                    matiereRepository.save(existingMatiere);
+                    matiereDto.setId(existingMatiere.getId());
                     return matiereDto;
-                }).orElse(null);
+                })
+                .orElseGet(() -> {
+                    // If the matiere doesn't exist, create a new one
+                    MatiereEntity newMatiere = new MatiereEntity();
+                    newMatiere.setNomMatiereID(matiereDto.getNomMatiereID());
+                    newMatiere.setMailProfsID(matiereDto.getMailProfsID());
+                    newMatiere = matiereRepository.save(newMatiere);
+                    return MatiereDto.builder()
+                            .id(newMatiere.getId())
+                            .nomMatiereID(newMatiere.getNomMatiereID())
+                            .mailProfsID(newMatiere.getMailProfsID())
+                            .build();
+                });
     }
+
+
 
     @Override
     public String deleteMatiere(String id) {

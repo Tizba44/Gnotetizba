@@ -7,27 +7,32 @@ import com.restbnote.rest.models.dto.MatiereDto;
 import java.util.List;
 
 
-
 @RestController
 @AllArgsConstructor
-@RequestMapping("/matiere")
+@RequestMapping("/matieres")
 public class MatiereController {
 
     private MatiereService matiereService;
 
-    @PostMapping("/create")
+    @PostMapping("")
     public MatiereDto createMatiere(@RequestBody MatiereDto matiereDto) {
         return matiereService.createMatiere(matiereDto);
     }
-    @GetMapping("/read")
+    @GetMapping("")
     public List<MatiereDto> readMatiere() {
         return matiereService.readMatiere();
     }
-    @PutMapping("/update/{id}")
+
+    @GetMapping("{id}")
+    public MatiereDto readOneMatiere(@PathVariable String id) {
+        return matiereService.readOneMatiere(id);
+    }
+
+    @PutMapping("{id}")
     public MatiereDto updateMatiere(@PathVariable String id, @RequestBody MatiereDto matiereDto) {
         return matiereService.updateMatiere(id, matiereDto);
     }
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("{id}")
     public void deleteMatiere(@PathVariable String id) {
         matiereService.deleteMatiere(id);
     }

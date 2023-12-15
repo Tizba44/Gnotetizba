@@ -11,6 +11,9 @@ public interface MatiereService {
 
     MatiereDto createMatiere(final MatiereDto matiereDto);
     List<MatiereDto> readMatiere();
+
+    MatiereDto readOneMatiere(final String id);
+
     MatiereDto updateMatiere(final String id, final MatiereDto  matiereDto);
     String deleteMatiere(String id);
 

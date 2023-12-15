@@ -1,7 +1,9 @@
 package com.restbnote.rest.services.impl;
 import com.restbnote.rest.configs.exceptions.MyException;
 import com.restbnote.rest.configs.exceptions.MyExceptionPayLoad;
+import com.restbnote.rest.models.dto.AdminDto;
 import com.restbnote.rest.models.dto.ControleDto;
+import com.restbnote.rest.models.entities.AdminEntity;
 import com.restbnote.rest.models.entities.ControleEntity;
 import com.restbnote.rest.repositories.ControleRepository;
 import com.restbnote.rest.services.ControleService;
@@ -65,22 +67,96 @@ public class ControleServiceImpl implements ControleService {
             return controleDtos;
         }
 
-        @Override
-        public ControleDto updateControle(String id, ControleDto controleDto) {
-            return controleRepository.findById(id)
-                    .map(p-> {
-                        p.setDate(controleDto.getDate());
-                        p.setNote(controleDto.getNote());
-                        p.setCoef(controleDto.getCoef());
-                        p.setMatiereID(controleDto.getMatiereID());
-                        p.setAppreciation(controleDto.getAppreciation());
-                        p.setIntituleID(controleDto.getIntituleID());
-                        p.setMailEtudiantsID(controleDto.getMailEtudiantsID());
-                        controleRepository.save(p);
-                        controleDto.setId(p.getId());
-                        return controleDto;
-                    }).orElse(null);
+
+
+
+
+
+    @Override
+        public ControleDto readOneControle(String id) {
+            ControleEntity controle = controleRepository.findById(id)
+                    .orElseThrow(() -> new MyException(
+                            MyExceptionPayLoad.builder()
+                                    .httpCode(404)
+                                    .message("controle non trouvé")
+                                    .build()
+                    ));
+            return ControleDto.builder()
+                    .id(controle.getId())
+                    .date(controle.getDate())
+                    .note(controle.getNote())
+                    .coef(controle.getCoef())
+                    .matiereID(controle.getMatiereID())
+                    .appreciation(controle.getAppreciation())
+                    .intituleID(controle.getIntituleID())
+                    .mailEtudiantsID(controle.getMailEtudiantsID())
+                    .build();
         }
+
+
+
+
+
+
+
+
+
+    @Override
+    public ControleDto updateControle(String id, ControleDto controleDto) {
+        return controleRepository.findById(id)
+                .map(existingControle -> {
+                    if (controleDto.getDate() != null) {
+                        existingControle.setDate(controleDto.getDate());
+                    }
+                    if (controleDto.getNote() != null) {
+                        existingControle.setNote(controleDto.getNote());
+                    }
+                    if (controleDto.getCoef() != null) {
+                        existingControle.setCoef(controleDto.getCoef());
+                    }
+                    if (controleDto.getMatiereID() != null) {
+                        existingControle.setMatiereID(controleDto.getMatiereID());
+                    }
+                    if (controleDto.getAppreciation() != null) {
+                        existingControle.setAppreciation(controleDto.getAppreciation());
+                    }
+                    if (controleDto.getIntituleID() != null) {
+                        existingControle.setIntituleID(controleDto.getIntituleID());
+                    }
+                    if (controleDto.getMailEtudiantsID() != null) {
+                        existingControle.setMailEtudiantsID(controleDto.getMailEtudiantsID());
+                    }
+
+                    controleRepository.save(existingControle);
+                    controleDto.setId(existingControle.getId());
+                    return controleDto;
+                })
+                .orElseGet(() -> {
+                    // If the controle doesn't exist, create a new one
+                    ControleEntity newControle = new ControleEntity();
+                    newControle.setDate(controleDto.getDate());
+                    newControle.setNote(controleDto.getNote());
+                    newControle.setCoef(controleDto.getCoef());
+                    newControle.setMatiereID(controleDto.getMatiereID());
+                    newControle.setAppreciation(controleDto.getAppreciation());
+                    newControle.setIntituleID(controleDto.getIntituleID());
+                    newControle.setMailEtudiantsID(controleDto.getMailEtudiantsID());
+
+                    newControle = controleRepository.save(newControle);
+                    return ControleDto.builder()
+                            .id(newControle.getId())
+                            .date(newControle.getDate())
+                            .note(newControle.getNote())
+                            .coef(newControle.getCoef())
+                            .matiereID(newControle.getMatiereID())
+                            .appreciation(newControle.getAppreciation())
+                            .intituleID(newControle.getIntituleID())
+                            .mailEtudiantsID(newControle.getMailEtudiantsID())
+
+                            .build();
+                });
+    }
+
 
         @Override
         public String deleteControle(String id) {

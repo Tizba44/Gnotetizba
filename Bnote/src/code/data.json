@@ -107,10 +107,37 @@
     },
     {
       "date": "2023-12-05",
+      "note": "20",
+      "coef": "5",
+      "matiereID": "physique",
+      "appreciation": "N/A",
+      "intituleID": "physique",
+      "mailEtudiantsID": "max@gmail.com"
+    },
+    {
+      "date": "2023-12-05",
+      "note": "11",
+      "coef": "5",
+      "matiereID": "physique",
+      "appreciation": "N/A",
+      "intituleID": "physique",
+      "mailEtudiantsID": "basile@gmail.com"
+    },
+    {
+      "date": "2023-12-05",
+      "note": "10",
+      "coef": "5",
+      "matiereID": "physique",
+      "appreciation": "N/A",
+      "intituleID": "physique",
+      "mailEtudiantsID": "robin@gmail/com"
+    },
+    {
+      "date": "2023-12-05",
       "note": "6",
       "coef": "1",
       "matiereID": "géo",
-      "appreciation": "N/A",
+      "appreciation": "kgj",
       "intituleID": "geo",
       "mailEtudiantsID": "max@gmail.com"
     },
@@ -158,33 +185,6 @@
       "appreciation": "N/A",
       "intituleID": "geo2",
       "mailEtudiantsID": "robin@gmail/com"
-    },
-    {
-      "date": "2023-12-05",
-      "note": "20",
-      "coef": "5",
-      "matiereID": "physique",
-      "appreciation": "N/A",
-      "intituleID": "physique",
-      "mailEtudiantsID": "max@gmail.com"
-    },
-    {
-      "date": "2023-12-05",
-      "note": "11",
-      "coef": "5",
-      "matiereID": "physique",
-      "appreciation": "N/A",
-      "intituleID": "physique",
-      "mailEtudiantsID": "basile@gmail.com"
-    },
-    {
-      "date": "2023-12-05",
-      "note": "10",
-      "coef": "5",
-      "matiereID": "physique",
-      "appreciation": "N/A",
-      "intituleID": "physique",
-      "mailEtudiantsID": "robin@gmail/com"
     }
   ],
   "matieres": [
@@ -197,7 +197,15 @@
       "mailProfsID": "b"
     },
     {
+      "nomMatiereID": "shimie",
+      "mailProfsID": "b"
+    },
+    {
       "nomMatiereID": "physique",
+      "mailProfsID": "a"
+    },
+    {
+      "nomMatiereID": "shimie",
       "mailProfsID": "a"
     }
   ]

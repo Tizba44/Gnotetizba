@@ -36,6 +36,10 @@ public class ProfServiceImpl implements ProfService {
                 .build();
     }
 
+
+
+
+
     @Override
     public List<ProfDto> readProf() {
         List<ProfEntity> profs = profRepository.findAll();
@@ -52,20 +56,73 @@ public class ProfServiceImpl implements ProfService {
         return profDtos;
     }
 
+
+
+
+    @Override
+    public ProfDto readOneProf(String id) {
+        ProfEntity prof = profRepository.findById(id)
+                .orElseThrow(() -> new MyException(
+                        MyExceptionPayLoad.builder()
+                                .httpCode(404)
+                                .message("prof non trouvé")
+                                .build()
+                ));
+        return ProfDto.builder()
+                .id(prof.getId())
+                .mailID(prof.getMailID())
+                .nom(prof.getNom())
+                .prenom(prof.getPrenom())
+                .telephone(prof.getTelephone())
+                .motDePasse(prof.getMotDePasse())
+                .build();
+    }
+
     @Override
     public ProfDto updateProf(String id, ProfDto profDto) {
         return profRepository.findById(id)
-                .map(p-> {
-                    p.setMailID(profDto.getMailID());
-                    p.setNom(profDto.getNom());
-                    p.setPrenom(profDto.getPrenom());
-                    p.setTelephone(profDto.getTelephone());
-                    p.setMotDePasse(profDto.getMotDePasse());
-                    profRepository.save(p);
-                    profDto.setId(p.getId());
+                .map(existingProf -> {
+                    if (profDto.getMailID() != null && !profDto.getMailID().isEmpty()) {
+                        existingProf.setMailID(profDto.getMailID());
+                    }
+                    if (profDto.getNom() != null && !profDto.getNom().isEmpty()) {
+                        existingProf.setNom(profDto.getNom());
+                    }
+                    if (profDto.getPrenom() != null && !profDto.getPrenom().isEmpty()) {
+                        existingProf.setPrenom(profDto.getPrenom());
+                    }
+                    if (profDto.getTelephone() != null && !profDto.getTelephone().isEmpty()) {
+                        existingProf.setTelephone(profDto.getTelephone());
+                    }
+                    if (profDto.getMotDePasse() != null && !profDto.getMotDePasse().isEmpty()) {
+                        existingProf.setMotDePasse(profDto.getMotDePasse());
+                    }
+                    // ... update other fields similarly
+
+                    profRepository.save(existingProf);
+                    profDto.setId(existingProf.getId());
                     return profDto;
-                }).orElse(null);
+                })
+                .orElseGet(() -> {
+                    // If the prof doesn't exist, create a new one
+                    ProfEntity newProf = new ProfEntity();
+                    newProf.setMailID(profDto.getMailID());
+                    newProf.setNom(profDto.getNom());
+                    newProf.setPrenom(profDto.getPrenom());
+                    newProf.setTelephone(profDto.getTelephone());
+                    newProf.setMotDePasse(profDto.getMotDePasse());
+                    newProf = profRepository.save(newProf);
+                    return ProfDto.builder()
+                            .id(newProf.getId())
+                            .mailID(newProf.getMailID())
+                            .nom(newProf.getNom())
+                            .prenom(newProf.getPrenom())
+                            .telephone(newProf.getTelephone())
+                            .motDePasse(newProf.getMotDePasse())
+                            .build();
+                });
     }
+
 
     @Override
     public String deleteProf(String id) {
