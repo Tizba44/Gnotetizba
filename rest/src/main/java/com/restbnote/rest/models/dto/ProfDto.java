@@ -2,11 +2,12 @@
 
     import lombok.Builder;
     import lombok.Data;
+    import org.springframework.hateoas.RepresentationModel;
 
 
     @Data
     @Builder
-    public class ProfDto {
+    public class ProfDto extends RepresentationModel<ProfDto> {
         private String id;
         private String mailID;
         private String nom;
