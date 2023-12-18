@@ -3,6 +3,8 @@ package com.restbnote.rest.services;
 import com.restbnote.rest.models.dto.EtudiantDto;
 
 import java.util.List;
+import java.util.Map;
+
 
 
 
@@ -14,5 +16,10 @@ public interface EtudiantService {
     EtudiantDto readOneEtudiant(final String id);
     EtudiantDto updateEtudiant(final String id, final EtudiantDto  etudiantDto);
     String deleteEtudiant(String id);
+
+    double readMoyenneOfEtudiant(String mailEtudiantsID);
+    Map<String, Double> readMoyenneOfAllEtudiants();
+
+
 
 }

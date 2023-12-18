@@ -22,9 +22,7 @@ public class MatiereController  {
     public EntityModel<MatiereDto> createMatiere(@RequestBody MatiereDto matiereDto) {
         MatiereDto createdMatiere = matiereService.createMatiere(matiereDto);
         return EntityModel.of(createdMatiere,
-                WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(MatiereController.class).readOneMatiere(createdMatiere.getId())).withSelfRel(),
-                WebMvcLinkBuilder.linkTo(MatiereController.class).slash(createdMatiere.getId()).withRel("update"),
-                WebMvcLinkBuilder.linkTo(MatiereController.class).slash(createdMatiere.getId()).withRel("delete"));
+                WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(MatiereController.class).readOneMatiere(createdMatiere.getId())).withSelfRel());
     }
 
     @GetMapping("")
@@ -40,19 +38,19 @@ public class MatiereController  {
     @GetMapping("{id}")
     public EntityModel<MatiereDto> readOneMatiere(@PathVariable String id) {
         MatiereDto matiereDto = matiereService.readOneMatiere(id);
-        return EntityModel.of(matiereDto,
-                WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(MatiereController.class).readOneMatiere(id)).withSelfRel(),
-                WebMvcLinkBuilder.linkTo(MatiereController.class).slash(id).withRel("update"),
-                WebMvcLinkBuilder.linkTo(MatiereController.class).slash(id).withRel("delete"));
+        Link selfLink = WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(MatiereController.class).readOneMatiere(id)).withSelfRel();
+        Link allMatieresLink = WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(MatiereController.class).readMatiere()).withRel("allMatieres");
+        matiereDto.add(selfLink, allMatieresLink);
+        return EntityModel.of(matiereDto);
     }
 
     @PutMapping("{id}")
     public EntityModel<MatiereDto> updateMatiere(@PathVariable String id, @RequestBody MatiereDto matiereDto) {
         MatiereDto updatedMatiere = matiereService.updateMatiere(id, matiereDto);
         return EntityModel.of(updatedMatiere,
-                WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(MatiereController.class).readOneMatiere(id)).withSelfRel(),
-                WebMvcLinkBuilder.linkTo(MatiereController.class).slash(id).withRel("update"),
-                WebMvcLinkBuilder.linkTo(MatiereController.class).slash(id).withRel("delete"));
+                WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(MatiereController.class).readOneMatiere(id)).withSelfRel()
+
+        );
     }
 
     @DeleteMapping("{id}")
@@ -60,3 +58,4 @@ public class MatiereController  {
         matiereService.deleteMatiere(id);
     }
 }
+

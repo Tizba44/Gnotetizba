@@ -75,8 +75,6 @@ public class ControlerControle implements Initializable {
                 //clear choiceBoxMatiere pour eviter les doublons
                 choiceBoxMatiere.getItems().clear();
 
-
-
                 // Remplir la ChoiceBox avec les matières du professeur
                 if (choiceBoxMatiere.getItems().isEmpty()) {
                         choiceBoxMatiere.getItems().addAll(Main.matieresProf);

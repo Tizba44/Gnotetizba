@@ -22,6 +22,7 @@ public interface ControleService {
 
 
 
+    List<ControleDto> readAllControlesOfEtudiant(String mailEtudiantsID);
 }
 
 

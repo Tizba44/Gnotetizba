@@ -14,6 +14,9 @@ public interface ControleRepository extends JpaRepository<ControleEntity, String
     @Query("SELECT mailEtudiantsID, SUM(note * coef) / SUM(coef) FROM ControleEntity GROUP BY mailEtudiantsID")
     List<Object[]> findWeightedAverageNoteByStudent();
 
+
+    List<ControleEntity> findAllByMailEtudiantsID(String mailEtudiantsID);
+
 }
 
 

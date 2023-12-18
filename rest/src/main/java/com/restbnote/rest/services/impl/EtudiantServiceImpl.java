@@ -1,4 +1,5 @@
 package com.restbnote.rest.services.impl;
+
 import com.restbnote.rest.configs.exceptions.MyException;
 import com.restbnote.rest.configs.exceptions.MyExceptionPayLoad;
 import com.restbnote.rest.models.dto.EtudiantDto;
@@ -7,15 +8,46 @@ import com.restbnote.rest.repositories.EtudiantRepository;
 import com.restbnote.rest.services.EtudiantService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.HashMap;
 
+import com.restbnote.rest.models.entities.ControleEntity;
+import com.restbnote.rest.repositories.ControleRepository;
 
 @Service
 @AllArgsConstructor
 public class EtudiantServiceImpl implements EtudiantService {
 
     private final EtudiantRepository etudiantRepository;
+    private final ControleRepository controleRepository;
+
+
+    @Override
+    public double readMoyenneOfEtudiant(String mailEtudiantsID) {
+        List<ControleEntity> controles = controleRepository.findAllByMailEtudiantsID(mailEtudiantsID);
+        double total = 0;
+        double totalCoef = 0;
+        for (ControleEntity controle : controles) {
+            total += controle.getNote() * controle.getCoef();
+            totalCoef += controle.getCoef();
+        }
+        return total / totalCoef;
+    }
+
+    @Override
+    public Map<String, Double> readMoyenneOfAllEtudiants() {
+        List<EtudiantEntity> etudiants = etudiantRepository.findAll();
+        Map<String, Double> moyennes = new HashMap<>();
+        for (EtudiantEntity etudiant : etudiants) {
+            double moyenne = readMoyenneOfEtudiant(etudiant.getMailID());
+            moyennes.put(etudiant.getMailID(), moyenne);
+        }
+        return moyennes;
+    }
+
 
     @Override
     public EtudiantDto createEtudiant(EtudiantDto etudiantDto) {
@@ -51,8 +83,6 @@ public class EtudiantServiceImpl implements EtudiantService {
     }
 
 
-
-
     @Override
     public EtudiantDto readOneEtudiant(String id) {
         EtudiantEntity etudiant = etudiantRepository.findById(id)
@@ -70,9 +100,6 @@ public class EtudiantServiceImpl implements EtudiantService {
                 .telephone(etudiant.getTelephone())
                 .build();
     }
-
-
-
 
 
     @Override
@@ -114,7 +141,6 @@ public class EtudiantServiceImpl implements EtudiantService {
                             .build();
                 });
     }
-
 
 
     @Override

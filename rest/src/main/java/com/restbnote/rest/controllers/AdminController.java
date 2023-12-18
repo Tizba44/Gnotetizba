@@ -14,7 +14,6 @@ import java.util.List;
 
 
 
-import java.util.List;
 
 
 
@@ -31,9 +30,7 @@ public class AdminController {
     public EntityModel<AdminDto> createAdmin(@RequestBody AdminDto adminDto) {
         AdminDto createdAdmin = adminService.createAdmin(adminDto);
         return EntityModel.of(createdAdmin,
-                WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(AdminController.class).readOneAdmin(createdAdmin.getId())).withSelfRel(),
-                WebMvcLinkBuilder.linkTo(AdminController.class).slash(createdAdmin.getId()).withRel("update"),
-                WebMvcLinkBuilder.linkTo(AdminController.class).slash(createdAdmin.getId()).withRel("delete"));
+                WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(AdminController.class).readOneAdmin(createdAdmin.getId())).withSelfRel());
     }
 
     @GetMapping("")
@@ -49,19 +46,19 @@ public class AdminController {
     @GetMapping("{id}")
     public EntityModel<AdminDto> readOneAdmin(@PathVariable String id) {
         AdminDto adminDto = adminService.readOneAdmin(id);
-        return EntityModel.of(adminDto,
-                WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(AdminController.class).readOneAdmin(id)).withSelfRel(),
-                WebMvcLinkBuilder.linkTo(AdminController.class).slash(id).withRel("update"),
-                WebMvcLinkBuilder.linkTo(AdminController.class).slash(id).withRel("delete"));
+        Link selfLink = WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(AdminController.class).readOneAdmin(id)).withSelfRel();
+        Link allAdminsLink = WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(AdminController.class).readAdmin()).withRel("allAdmins");
+        adminDto.add(selfLink, allAdminsLink);
+        return EntityModel.of(adminDto);
     }
 
     @PutMapping("{id}")
     public EntityModel<AdminDto> updateAdmin(@PathVariable String id, @RequestBody AdminDto adminDto) {
         AdminDto updatedAdmin = adminService.updateAdmin(id, adminDto);
         return EntityModel.of(updatedAdmin,
-                WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(AdminController.class).readOneAdmin(id)).withSelfRel(),
-                WebMvcLinkBuilder.linkTo(AdminController.class).slash(id).withRel("update"),
-                WebMvcLinkBuilder.linkTo(AdminController.class).slash(id).withRel("delete"));
+                WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(AdminController.class).readOneAdmin(id)).withSelfRel()
+
+        );
     }
 
     @DeleteMapping("{id}")

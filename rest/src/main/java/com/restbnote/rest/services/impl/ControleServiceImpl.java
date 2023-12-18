@@ -18,6 +18,7 @@ import java.util.HashMap;
 import java.io.File;
 import java.io.IOException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.restbnote.rest.repositories.EtudiantRepository;
 
 
 
@@ -26,6 +27,31 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 @AllArgsConstructor
 public class ControleServiceImpl implements ControleService {
         private final ControleRepository controleRepository;
+        private final EtudiantRepository etudiantRepository;
+
+
+
+        @Override
+        public List<ControleDto> readAllControlesOfEtudiant(String mailEtudiantsID) {
+            List<ControleEntity> controles = controleRepository.findAllByMailEtudiantsID(mailEtudiantsID);
+            List<ControleDto> controleDtos = new ArrayList<>();
+            controles.stream()
+                    .map(p -> ControleDto.builder()
+                            .id(p.getId())
+                            .date(p.getDate())
+                            .note(p.getNote())
+                            .coef(p.getCoef())
+                            .appreciation(p.getAppreciation())
+                            .intituleID(p.getIntituleID())
+                            .matiereID(p.getMatiereID())
+                            .mailEtudiantsID(p.getMailEtudiantsID())
+                            .build()).forEach(controleDtos::add);
+            return controleDtos;
+        }
+
+
+
+
         @Override
         public ControleDto createControle(ControleDto controleDto) {
             ControleEntity controle = new ControleEntity();
