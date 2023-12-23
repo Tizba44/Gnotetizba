@@ -17,12 +17,33 @@ import java.util.HashMap;
 import com.restbnote.rest.models.entities.ControleEntity;
 import com.restbnote.rest.repositories.ControleRepository;
 
+
+
 @Service
 @AllArgsConstructor
 public class EtudiantServiceImpl implements EtudiantService {
 
     private final EtudiantRepository etudiantRepository;
     private final ControleRepository controleRepository;
+
+
+
+
+    @Override
+    public Map<String, Double> findBestAndWorstAverageOfAllEtudiants() {
+        Double bestAverage = controleRepository.findBestClassAverage();
+        Double worstAverage = controleRepository.findWorstClassAverage();
+
+        Map<String, Double> result = new HashMap<>();
+
+        // Insert the best and worst averages into the result map
+        result.put("bestClassAverage", bestAverage != null ? bestAverage : 0.0);
+        result.put("worstClassAverage", worstAverage != null ? worstAverage : 0.0);
+
+        return result;
+    }
+
+
 
 
     @Override

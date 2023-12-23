@@ -38,7 +38,8 @@ public class AdminController {
         List<AdminDto> admins = adminService.readAdmin();
         for (AdminDto admin : admins) {
             Link selfLink = WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(AdminController.class).readOneAdmin(admin.getId())).withSelfRel();
-            admin.add(selfLink);
+            Link allAdminsLink = WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(AdminController.class).readAdmin()).withRel("allAdmins");
+            admin.add(selfLink, allAdminsLink);
         }
         return admins;
     }

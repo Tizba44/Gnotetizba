@@ -13,6 +13,8 @@ import org.springframework.hateoas.CollectionModel;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.HashMap;
+
 
 
 @RestController
@@ -29,14 +31,12 @@ public class EtudiantController {
         return EntityModel.of(createdEtudiant,
                 WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(EtudiantController.class).readOneEtudiant(createdEtudiant.getId())).withSelfRel());
     }
-
     @PutMapping("{id}")
     public EntityModel<EtudiantDto> updateEtudiant(@PathVariable String id, @RequestBody EtudiantDto etudiantDto) {
         EtudiantDto updatedEtudiant = etudiantService.updateEtudiant(id, etudiantDto);
         return EntityModel.of(updatedEtudiant,
                 WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(EtudiantController.class).readOneEtudiant(id)).withSelfRel());
     }
-
     @DeleteMapping("{id}")
     public void deleteEtudiant(@PathVariable String id) {
         etudiantService.deleteEtudiant(id);
@@ -52,15 +52,23 @@ public class EtudiantController {
 
 
 
-
-
     @GetMapping("")
     public List<EtudiantDto> readEtudiant() {
         List<EtudiantDto> etudiants = etudiantService.readEtudiant();
+
+
+
+
         for (EtudiantDto etudiant : etudiants) {
             Link selfLink = WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(EtudiantController.class).readOneEtudiant(etudiant.getId())).withSelfRel();
-            etudiant.add(selfLink);
+            Link ControlesLink = WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(EtudiantController.class).readAllControlesOfEtudiant(etudiant.getId())).withRel("Controles de l'étudiant");
+            Link MoyennesLink = WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(EtudiantController.class).readMoyenneOfEtudiant(etudiant.getId())).withRel("Moyennes de l'étudiant");
+            etudiant.add(selfLink, ControlesLink, MoyennesLink);
+
         }
+        Link allEtudiantsLink = WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(EtudiantController.class).readEtudiant()).withRel("Tous les étudiants");
+        Link allMoyennesLink = WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(EtudiantController.class).readMoyenneOfAllEtudiants()).withRel("Moyennes de tous les étudiants");
+        etudiants.forEach(etudiant -> etudiant.add(allEtudiantsLink, allMoyennesLink));
         return etudiants;
     }
 
@@ -68,36 +76,68 @@ public class EtudiantController {
     public EntityModel<EtudiantDto> readOneEtudiant(@PathVariable String id) {
         EtudiantDto etudiantDto = etudiantService.readOneEtudiant(id);
         Link selfLink = WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(EtudiantController.class).readOneEtudiant(id)).withSelfRel();
-        Link allEtudiantsLink = WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(EtudiantController.class).readEtudiant()).withRel("allEtudiants");
-        Link allControlesLink = WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(EtudiantController.class).readAllControlesOfEtudiant(id)).withRel("allControles");
-        etudiantDto.add(selfLink, allEtudiantsLink, allControlesLink);
+        Link allEtudiantsLink = WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(EtudiantController.class).readEtudiant()).withRel("Tous les étudiants");
+        Link allMoyennesLink = WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(EtudiantController.class).readMoyenneOfAllEtudiants()).withRel("Moyennes de tous les étudiants");
+        Link ControlesLink = WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(EtudiantController.class).readAllControlesOfEtudiant(id)).withRel("Controles de l'étudiant");
+        Link MoyennesLink = WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(EtudiantController.class).readMoyenneOfEtudiant(id)).withRel("Moyennes de l'étudiant");
+
+        etudiantDto.add(selfLink, allEtudiantsLink, ControlesLink, MoyennesLink, allMoyennesLink);
         return EntityModel.of(etudiantDto);
     }
 
+    @GetMapping("/moyenne")
+    public Map<String, Object> readMoyenneOfAllEtudiants() {
+        // Obtenez la moyenne de tous les étudiants
+        Map<String, Double> individualAverages = etudiantService.readMoyenneOfAllEtudiants();
+
+        // Obtenez les meilleures et pires moyennes de la classe
+        Map<String, Double> averagesAndExtremes = etudiantService.findBestAndWorstAverageOfAllEtudiants();
+
+        // Combine both sets of information into a single map
+        Map<String, Object> result = new HashMap<>();
+        result.put("Moyenne générale", individualAverages);
+        result.put("Meilleur et pire moyenne", averagesAndExtremes);
+
+
+
+        Link allEtudiantsLink = WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(EtudiantController.class).readEtudiant()).withRel("Tous les étudiants");
+        Link allMoyennesLink = WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(EtudiantController.class).readMoyenneOfAllEtudiants()).withRel("Moyennes de tous les étudiants");
+
+        result.put("links", List.of(allEtudiantsLink, allMoyennesLink));
+
+
+        return result;
+    }
 
     @GetMapping("{etudiantId}/moyenne")
-    public double readMoyenneOfEtudiant(@PathVariable String etudiantId) {
+    public Map<String, Object> readMoyenneOfEtudiant(@PathVariable String etudiantId) {
         // Vérifiez d'abord si l'étudiant existe
         EtudiantDto etudiantDto = etudiantService.readOneEtudiant(etudiantId);
         if (etudiantDto == null) {
             // Gérez l'erreur ici (par exemple, renvoyez une réponse 404)
+            // ...
+
+            return null; // Handle the error response appropriately
         }
-//        crée un lien qui revine vers red one etudiant
-        Link selfLink = WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(EtudiantController.class).readOneEtudiant(etudiantId)).withSelfRel();
-        etudiantDto.add(selfLink);
+
         // Ensuite, obtenez la moyenne de l'étudiant
-        double moyenne = etudiantService.readMoyenneOfEtudiant(etudiantDto.getMailID());
-        return moyenne;
+        double moyenneEtudiant = etudiantService.readMoyenneOfEtudiant(etudiantDto.getMailID());
+
+        // Obtenez les meilleures et pires moyennes de la classe
+        Map<String, Double> averagesAndExtremes = etudiantService.findBestAndWorstAverageOfAllEtudiants();
+
+        // Combine both sets of information into a single map
+        Map<String, Object> result = new HashMap<>();
+        result.put("individualAverage", moyenneEtudiant);
+        result.put("classAveragesAndExtremes", averagesAndExtremes);
+
+        Link allEtudiantsLink = WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(EtudiantController.class).readEtudiant()).withRel("Tous les étudiants");
+        Link allMoyennesLink = WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(EtudiantController.class).readMoyenneOfAllEtudiants()).withRel("Moyennes de tous les étudiants");
+
+        result.put("links", List.of(allEtudiantsLink, allMoyennesLink));
+
+        return result;
     }
-
-    @GetMapping("/moyenne")
-    public Map<String, Double> readMoyenneOfAllEtudiants() {
-        // Obtenez la moyenne de tous les étudiants
-        Map<String, Double> moyennes = etudiantService.readMoyenneOfAllEtudiants();
-        return moyennes;
-    }
-
-
 
 
 
@@ -125,7 +165,8 @@ public class EtudiantController {
         }
         Link allControlesLink = WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(EtudiantController.class).readAllControlesOfEtudiant(etudiantId)).withSelfRel();
         Link etudiantLink = WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(EtudiantController.class).readOneEtudiant(etudiantId)).withRel("etudiant");
-        return CollectionModel.of(controleResources, allControlesLink, etudiantLink);
+        Link allEtudiantsLink = WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(EtudiantController.class).readEtudiant()).withRel("Tous les étudiants");
+        return CollectionModel.of(controleResources, allControlesLink, etudiantLink, allEtudiantsLink);
     }
 
     @GetMapping("{etudiantId}/controles/{controleId}")
@@ -142,14 +183,15 @@ public class EtudiantController {
         if (controleDto == null || !controleDto.getMailEtudiantsID().equals(etudiantDto.getMailID())) {
             // Gérez l'erreur ici (par exemple, renvoyez une réponse 404)
         }
-
-        Link allControlesLink = WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(EtudiantController.class).readAllControlesOfEtudiant(etudiantId)).withSelfRel();
+//        lien du controle spécifique ou on est actuellement
+        Link selfLink = WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(EtudiantController.class).readOneControleOfEtudiant(etudiantId, controleId)).withSelfRel();
+        Link allControlesLink = WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(EtudiantController.class).readAllControlesOfEtudiant(etudiantId)).withRel("Controles de l'étudiant");
         Link etudiantLink = WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(EtudiantController.class).readOneEtudiant(etudiantId)).withRel("etudiant");
-        controleDto.add(allControlesLink, etudiantLink);
+        Link allEtudiantsLink = WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(EtudiantController.class).readEtudiant()).withRel("Tous les étudiants");
+        controleDto.add(allControlesLink, etudiantLink, allEtudiantsLink, selfLink);
         return EntityModel.of(controleDto);
 
     }
-
 }
 
 

@@ -30,7 +30,8 @@ public class MatiereController  {
         List<MatiereDto> matieres = matiereService.readMatiere();
         for (MatiereDto matiere : matieres) {
             Link selfLink = WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(MatiereController.class).readOneMatiere(matiere.getId())).withSelfRel();
-            matiere.add(selfLink);
+            Link allMatieresLink = WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(MatiereController.class).readMatiere()).withRel("allMatieres");
+            matiere.add(selfLink, allMatieresLink);
         }
         return matieres;
     }

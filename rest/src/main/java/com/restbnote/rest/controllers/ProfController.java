@@ -32,7 +32,8 @@ public class ProfController {
         List<ProfDto> profs = profService.readProf();
         for (ProfDto prof : profs) {
             Link selfLink = WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(ProfController.class).readOneProf(prof.getId())).withSelfRel();
-            prof.add(selfLink);
+            Link allProfsLink = WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(ProfController.class).readProf()).withRel("allProfs");
+            prof.add(selfLink, allProfsLink);
         }
         return profs;
     }

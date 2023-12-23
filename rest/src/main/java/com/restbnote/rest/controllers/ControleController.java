@@ -30,11 +30,16 @@ public class ControleController {
         @GetMapping("")
         public List<ControleDto> readControle() {
             List<ControleDto> controles = controleService.readControle();
+
+
             for (ControleDto controle : controles) {
                 Link selfLink = WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(ControleController.class).readOneControle(controle.getId())).withSelfRel();
-                controle.add(selfLink);
+                Link allControlesLink = WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(ControleController.class).readControle()).withRel("allControles");
+                controle.add(selfLink, allControlesLink);
             }
+
             return controles;
+
         }
 
         @GetMapping("{id}")
