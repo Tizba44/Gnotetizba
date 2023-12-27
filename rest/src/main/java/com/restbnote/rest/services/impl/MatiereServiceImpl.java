@@ -9,6 +9,8 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+
 
 
 @Service
@@ -16,6 +18,23 @@ import java.util.List;
 public class MatiereServiceImpl implements MatiereService {
 
     private final MatiereRepository matiereRepository;
+
+
+    @Override
+    public List<MatiereDto> readAllMatieresOfProf(String mailProfsID) {
+        List<MatiereEntity> matieres = matiereRepository.findAllByMailProfsID(mailProfsID);
+        List<MatiereDto> matiereDtos = new ArrayList<>();
+        matieres.stream()
+                .map(p -> MatiereDto.builder()
+                        .id(p.getId())
+                        .nomMatiereID(p.getNomMatiereID())
+                        .mailProfsID(p.getMailProfsID())
+                        .build()).forEach(matiereDtos::add);
+        return matiereDtos;
+    }
+
+
+
     @Override
     public MatiereDto createMatiere(MatiereDto matiereDto) {
         MatiereEntity matiere = new MatiereEntity();

@@ -27,7 +27,7 @@ import com.restbnote.rest.repositories.EtudiantRepository;
 @AllArgsConstructor
 public class ControleServiceImpl implements ControleService {
         private final ControleRepository controleRepository;
-        private final EtudiantRepository etudiantRepository;
+
 
 
 
@@ -199,9 +199,8 @@ public class ControleServiceImpl implements ControleService {
 
 
 
-
-
-    @Scheduled(fixedRate = 15000)
+    //jouer quand il y a un changement dans la base de données
+    @Scheduled(fixedRate = 1000)
     public void printStudentAverages() {
         try {
 

@@ -37,8 +37,8 @@ public class EtudiantServiceImpl implements EtudiantService {
         Map<String, Double> result = new HashMap<>();
 
         // Insert the best and worst averages into the result map
-        result.put("bestClassAverage", bestAverage != null ? bestAverage : 0.0);
-        result.put("worstClassAverage", worstAverage != null ? worstAverage : 0.0);
+        result.put("Meilleur moyenne", bestAverage != null ? bestAverage : 0.0);
+        result.put("Pire moyenne", worstAverage != null ? worstAverage : 0.0);
 
         return result;
     }

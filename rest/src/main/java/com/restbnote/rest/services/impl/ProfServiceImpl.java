@@ -16,30 +16,6 @@ import java.util.List;
 public class ProfServiceImpl implements ProfService {
 
     private final ProfRepository profRepository;
-
-    @Override
-    public ProfDto createProf(ProfDto profDto) {
-        ProfEntity prof = new ProfEntity();
-        prof.setMailID(profDto.getMailID());
-        prof.setNom(profDto.getNom());
-        prof.setPrenom(profDto.getPrenom());
-        prof.setTelephone(profDto.getTelephone());
-        prof.setMotDePasse(profDto.getMotDePasse());
-        prof = profRepository.save(prof);
-        return ProfDto.builder()
-                .id(prof.getId())
-                .mailID(prof.getMailID())
-                .nom(prof.getNom())
-                .prenom(prof.getPrenom())
-                .telephone(prof.getTelephone())
-                .motDePasse(prof.getMotDePasse())
-                .build();
-    }
-
-
-
-
-
     @Override
     public List<ProfDto> readProf() {
         List<ProfEntity> profs = profRepository.findAll();
@@ -55,10 +31,6 @@ public class ProfServiceImpl implements ProfService {
                         .build()).forEach(profDtos::add);
         return profDtos;
     }
-
-
-
-
     @Override
     public ProfDto readOneProf(String id) {
         ProfEntity prof = profRepository.findById(id)
@@ -68,6 +40,26 @@ public class ProfServiceImpl implements ProfService {
                                 .message("prof non trouvé")
                                 .build()
                 ));
+        return ProfDto.builder()
+                .id(prof.getId())
+                .mailID(prof.getMailID())
+                .nom(prof.getNom())
+                .prenom(prof.getPrenom())
+                .telephone(prof.getTelephone())
+                .motDePasse(prof.getMotDePasse())
+                .build();
+    }
+
+
+    @Override
+    public ProfDto createProf(ProfDto profDto) {
+        ProfEntity prof = new ProfEntity();
+        prof.setMailID(profDto.getMailID());
+        prof.setNom(profDto.getNom());
+        prof.setPrenom(profDto.getPrenom());
+        prof.setTelephone(profDto.getTelephone());
+        prof.setMotDePasse(profDto.getMotDePasse());
+        prof = profRepository.save(prof);
         return ProfDto.builder()
                 .id(prof.getId())
                 .mailID(prof.getMailID())

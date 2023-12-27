@@ -42,23 +42,9 @@ public class EtudiantController {
         etudiantService.deleteEtudiant(id);
     }
 
-
-
-
-
-
-
-
-
-
-
     @GetMapping("")
     public List<EtudiantDto> readEtudiant() {
         List<EtudiantDto> etudiants = etudiantService.readEtudiant();
-
-
-
-
         for (EtudiantDto etudiant : etudiants) {
             Link selfLink = WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(EtudiantController.class).readOneEtudiant(etudiant.getId())).withSelfRel();
             Link ControlesLink = WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(EtudiantController.class).readAllControlesOfEtudiant(etudiant.getId())).withRel("Controles de l'étudiant");
@@ -97,15 +83,9 @@ public class EtudiantController {
         Map<String, Object> result = new HashMap<>();
         result.put("Moyenne générale", individualAverages);
         result.put("Meilleur et pire moyenne", averagesAndExtremes);
-
-
-
         Link allEtudiantsLink = WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(EtudiantController.class).readEtudiant()).withRel("Tous les étudiants");
-        Link allMoyennesLink = WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(EtudiantController.class).readMoyenneOfAllEtudiants()).withRel("Moyennes de tous les étudiants");
-
-        result.put("links", List.of(allEtudiantsLink, allMoyennesLink));
-
-
+        Link SelfLink = WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(EtudiantController.class).readMoyenneOfAllEtudiants()).withSelfRel();
+        result.put("links", List.of(allEtudiantsLink, SelfLink));
         return result;
     }
 
@@ -116,26 +96,20 @@ public class EtudiantController {
         if (etudiantDto == null) {
             // Gérez l'erreur ici (par exemple, renvoyez une réponse 404)
             // ...
-
             return null; // Handle the error response appropriately
         }
-
         // Ensuite, obtenez la moyenne de l'étudiant
         double moyenneEtudiant = etudiantService.readMoyenneOfEtudiant(etudiantDto.getMailID());
-
         // Obtenez les meilleures et pires moyennes de la classe
         Map<String, Double> averagesAndExtremes = etudiantService.findBestAndWorstAverageOfAllEtudiants();
-
         // Combine both sets of information into a single map
         Map<String, Object> result = new HashMap<>();
-        result.put("individualAverage", moyenneEtudiant);
-        result.put("classAveragesAndExtremes", averagesAndExtremes);
-
+        result.put("moyenne individuel", moyenneEtudiant);
+        result.put("moyenne de la classe", averagesAndExtremes);
         Link allEtudiantsLink = WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(EtudiantController.class).readEtudiant()).withRel("Tous les étudiants");
         Link allMoyennesLink = WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(EtudiantController.class).readMoyenneOfAllEtudiants()).withRel("Moyennes de tous les étudiants");
-
-        result.put("links", List.of(allEtudiantsLink, allMoyennesLink));
-
+        Link SelfLink = WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(EtudiantController.class).readMoyenneOfEtudiant(etudiantId)).withSelfRel();
+        result.put("links", List.of(allEtudiantsLink, allMoyennesLink, SelfLink));
         return result;
     }
 
@@ -190,7 +164,6 @@ public class EtudiantController {
         Link allEtudiantsLink = WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(EtudiantController.class).readEtudiant()).withRel("Tous les étudiants");
         controleDto.add(allControlesLink, etudiantLink, allEtudiantsLink, selfLink);
         return EntityModel.of(controleDto);
-
     }
 }
 
