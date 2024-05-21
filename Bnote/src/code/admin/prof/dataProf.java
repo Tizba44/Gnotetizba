@@ -3,6 +3,8 @@ package code.admin.prof;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
+
+
 public class dataProf {
     private StringProperty mailID;
     private StringProperty nom;

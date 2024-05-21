@@ -95,8 +95,8 @@ public class controlerProf implements Initializable {
                 String regexNomPrenom = "^[a-zA-Z\\s]+";
                 // Regex pour valider le numéro de téléphone
                 String regextelephone = "^[0-9]{10}$";
-                // Regex pour valider le mot de passe
-                String regexPassword = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}$";
+                // Regex pour valider le mot de passe (au moins 8 caractères, au moins une lettre majuscule, une lettre minuscule, un chiffre et un caractère spécial)
+                String regexPassword = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}$"; // comme par exemple : 12345678aA@
 
                 mail.setCellFactory(TextFieldTableCell.forTableColumn());
                 mail.setOnEditCommit(
@@ -311,20 +311,14 @@ public class controlerProf implements Initializable {
                                 erreur.setText("Cet email existe déjà.");
                         } else {
                                 erreur.setText(""); // Clear the error message if all fields are valid
-                                // Encrypt the password
-                                MessageDigest md = MessageDigest.getInstance("SHA-256");
-                                byte[] hash = md.digest(motDePasseInput.getText().getBytes(StandardCharsets.UTF_8));
-                                StringBuilder sb = new StringBuilder();
-                                for (byte b : hash) {
-                                        sb.append(String.format("%02x", b));
-                                }
-                                String encryptedPassword = sb.toString();
+
+
 
                                 dataProf dataProf = new dataProf(
                                         mailInput.getText(),
                                         nomInput.getText(),
                                         prenomInput.getText(),
-                                        encryptedPassword,
+                                        motDePasseInput.getText(),
                                         telephoneInput.getText()
                                 );
                                 ObservableList<dataProf> dataProfs = table.getItems();

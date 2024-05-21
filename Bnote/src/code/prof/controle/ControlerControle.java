@@ -79,15 +79,11 @@ public class ControlerControle implements Initializable {
                 if (choiceBoxMatiere.getItems().isEmpty()) {
                         choiceBoxMatiere.getItems().addAll(Main.matieresProf);
                 }
-                // Sélectionner la première matière par défaut si aucune matiere na deja été selectionnée
-                if (Main.matiereProf == null) {
+                // Sélectionner la première matière par défaut
+
                         choiceBoxMatiere.getSelectionModel().selectFirst();
                         tableaux();
-                } else {
-                        // Sélectionner la matière précédemment sélectionnée
-                        choiceBoxMatiere.getSelectionModel().select(Main.matiereProf);
-                        tableaux();
-                }
+
 
                 // Ajouter un écouteur pour mettre à jour la matière sélectionnée
                 choiceBoxMatiere.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
@@ -198,9 +194,16 @@ public class ControlerControle implements Initializable {
 
 
                                         noteColumn.setOnEditCommit(event -> {
+
+
+
                                                 liaisonMailEtudiantObjetControle note = event.getRowValue();
                                                 ControleData controleData = note.getControles().get(controle.get("intituleID"));
-
+                                                // si la note n'existe pas, créez un nouveau contrôle
+                                                if (controleData == null) {
+                                                        controleData = new ControleData(0, 0, "N/A", LocalDate.now(), choiceBoxMatiere.getValue());
+                                                        note.addControle(controle.get("intituleID"), controleData);
+                                                }
 
                                           if (event.getNewValue().matches(regexNote)) {
                                                   controleData.setNote(Integer.parseInt(event.getNewValue()));
@@ -214,6 +217,11 @@ public class ControlerControle implements Initializable {
                                         coefColumn.setOnEditCommit(event -> {
                                                 liaisonMailEtudiantObjetControle note = event.getRowValue();
                                                 ControleData controleData = note.getControles().get(controle.get("intituleID"));
+                                                // si la note n'existe pas, créez un nouveau contrôle
+                                                if (controleData == null) {
+                                                        controleData = new ControleData(0, 0, "N/A", LocalDate.now(), choiceBoxMatiere.getValue());
+                                                        note.addControle(controle.get("intituleID"), controleData);
+                                                }
                                                 if (event.getNewValue().matches(regexCoef)) {
                                                         controleData.setCoef(Integer.parseInt(event.getNewValue()));
                                                         enregistrer();
@@ -226,6 +234,11 @@ public class ControlerControle implements Initializable {
                                         appreciationColumn.setOnEditCommit(event -> {
                                                 liaisonMailEtudiantObjetControle note = event.getRowValue();
                                                 ControleData controleData = note.getControles().get(controle.get("intituleID"));
+                                                // si la note n'existe pas, créez un nouveau contrôle
+                                                if (controleData == null) {
+                                                        controleData = new ControleData(0, 0, "N/A", LocalDate.now(), choiceBoxMatiere.getValue());
+                                                        note.addControle(controle.get("intituleID"), controleData);
+                                                }
                                                 if (event.getNewValue().matches(regexAppreciation)) {
                                                         controleData.setAppreciation(event.getNewValue());
                                                         enregistrer();
