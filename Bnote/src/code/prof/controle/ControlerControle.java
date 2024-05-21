@@ -44,18 +44,18 @@ public class ControlerControle implements Initializable {
         }
 
         @FXML
-        private TableView<liaisonMailEtudiantObjetControle> table;
+        public TableView<liaisonMailEtudiantObjetControle> table;
         @FXML
-        private Label erreur;
+        public Label erreur;
 
         @FXML
         private TableColumn<liaisonMailEtudiantObjetControle, String> mail;
 
         @FXML
-        private TextField inputCoef;
+        public TextField inputCoef;
 
         @FXML
-        private TextField inputControle;
+        public TextField inputControle;
 
         @FXML
         private TextField inputsuppr;
@@ -66,7 +66,7 @@ public class ControlerControle implements Initializable {
         private Label labelMatiere;
 
         @FXML
-        private ChoiceBox<String> choiceBoxMatiere;
+        public ChoiceBox<String> choiceBoxMatiere;
 
 
 
@@ -344,7 +344,7 @@ public class ControlerControle implements Initializable {
 
 
         @FXML
-        void entrer(ActionEvent event) {
+        public void entrer(ActionEvent event) {
                 if (inputControle.getText().isEmpty() || inputCoef.getText().isEmpty())  {
                         erreur.setText("Veuillez remplir tous les champs.");
                 } else if  (!inputControle.getText().matches("[A-Za-z0-9 ]*")) {
